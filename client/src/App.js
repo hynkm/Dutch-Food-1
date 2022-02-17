@@ -6,7 +6,6 @@ import {
   Link,
   useNavigate
 } from 'react-router-dom';
-import axios from 'axios';
 import CreatePost from './pages/CreatePost';
 import './App.css';
 
