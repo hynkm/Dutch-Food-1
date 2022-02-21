@@ -5,8 +5,8 @@ import { createGlobalStyle } from 'styled-components';
 import { FiAlignJustify } from 'react-icons/fi';
 import { removeCookie, getCookie } from './Cookie';
 
-import LoginModal from '../page/modal/LoginModal';
-import SignupModal from '../page/modal/SignupModal';
+import LoginModal from '../pages/modal/LoginModal';
+import SignupModal from '../pages/modal/SignupModal';
 
 const GlobalStyle = createGlobalStyle`
   body {
