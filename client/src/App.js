@@ -6,14 +6,18 @@ import {
   Link,
   useNavigate
 } from 'react-router-dom';
+import './App.css';
+import Main from './pages/Main';
+import Home from './pages/Home';
+import OAuthKakao from './pages/oauth/OAuthKakao';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
-import './App.css';
-
 
 
 function App() {
+
+  const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState("");
   const [userInfo, setUserInfo] = useState({id: 7,
                                             user_id: "kimcoding@naver.com",
@@ -31,34 +35,35 @@ function App() {
                                           nickname: "닉네임김코딩",
                                           delivery_charge: 4000,
                                           date: "2022.03.16.17:30"});
+                                
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-                                      
   return (
-    <>
-    <CreatePost userInfo={userInfo} accessToken={accessToken} />
-    <EditPost userInfo={userInfo} nowPost={nowPost} accessToken={accessToken} />
-    <ReadPost userInfo={userInfo} nowPost={nowPost}/>
-    </>
-  //  <BrowserRouter>
-  //    <Routes>
-  //      <Route path="/createpost"
-  //             element={<CreatePost />} />
-  //    </Routes>
-  //  </BrowserRouter>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/main"
+          element={
+            <Main
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
+        />
+        <Route
+          path="/kakao/oauth"
+          element={<OAuthKakao setIsLoginCheck={setIsLoginCheck} />}
+        />
+        <Route path="/createpost" 
+               element={<CreatePost userInfo={userInfo} 
+                                    accessToken={accessToken} />} />
+        <Route path="/editpost" 
+               element={<EditPost userInfo={userInfo} nowPost={nowPost} 
+                                  accessToken={accessToken} />} />
+        <Route path="/readpost" 
+               element={<ReadPost userInfo={userInfo} nowPost={nowPost}/>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
