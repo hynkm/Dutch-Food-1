@@ -45,7 +45,7 @@ const CreatePost = (props) => {
   const [inputFee, setInputFee] = useState("");
   const [selectBank, setSelectBank] = useState("");
   const [inputAccount, setInputAccount] = useState("");
-  const [textareaContent, SetTextareaContent] = useState("");
+  const [textareaContent, setTextareaContent] = useState("");
   
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -76,7 +76,7 @@ const CreatePost = (props) => {
 
   const handleTextareaValue = (e) => {
     console.log("textarea 내용 변경");
-    SetTextareaContent(e.target.value);
+    setTextareaContent(e.target.value);
   }
   
   // 도로명주소 찾기 모달창 상태 변경
@@ -115,6 +115,10 @@ const CreatePost = (props) => {
       axios({
         // url: url + '/post',
         method: "post",
+        headers: {
+          Authorization: `Bearer ${props.accessToken}`,
+          "Content-Type": "application/json"
+        },
         data: {
             title: inputTitle,
             address: inputAddress,
@@ -128,7 +132,7 @@ const CreatePost = (props) => {
           withCredentials: true,
       })
         .then(() => {
-          console.log("작성완료")
+          console.log("게시글 작성 완료")
         })
         .catch((err) => console.log(err))
       } else {
@@ -162,15 +166,15 @@ const CreatePost = (props) => {
       }
         <h1> 헤더 컴포넌트 자리 </h1>
         <OuterDiv>
-            <TopDiv>게시물 작성</TopDiv>
+            <TopDiv>게시글 작성</TopDiv>
             <MainDiv>
               <IndexBoxDiv>
                 <IndexDiv>제목</IndexDiv>
                 <IndexInput
                   name="title" 
                   type="text"
-                  maxLength="30"
-                  placeholder="30자 이내로 작성해주세요."
+                  maxLength="22"
+                  placeholder="간단하게 작성해주세요."
                   onChange={handleInputValue} />
               </IndexBoxDiv>
               <IndexBoxDiv>
@@ -180,7 +184,8 @@ const CreatePost = (props) => {
                   type="text"
                   placeholder="클릭 후 도로명주소 찾기"
                   value={inputAddress}
-                  onClick={openAddressModalHandler} />
+                  onClick={openAddressModalHandler}
+                  onChange={openAddressModalHandler} />
               </IndexBoxDiv>
               <IndexBoxDiv>
                 <IndexDiv>메뉴</IndexDiv>

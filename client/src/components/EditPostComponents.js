@@ -208,7 +208,7 @@ export const AlertModalButton = styled.button`
   height: 35%;
   color: #4593fc;
   background-color: #E8F3FF;
-  border: #4593fc;
+  border: 0;
   border-radius: 10px;
   text-align: center;
   margin-left: 80%;
@@ -218,83 +218,84 @@ export const AlertModalButton = styled.button`
   }
 `;
 
-export const MenuSelectBox = (props) => {
-    return (
-      <Select name={props.name} onChange={props.onChange}>
-        <Option value=""> - 선 택 - </Option>
-        <Option key="치킨" value="치킨">
-          치킨
-        </Option>
-        <Option key="피자" value="피자">
-          피자
-        </Option >
-        <Option key="한식" value="한식">
-          한식
-        </Option>
-        <Option key="분식" value="분식">
-          분식
-        </Option>
-        <Option key="카페" value="카페">
-          카페
-        </Option>
-        <Option key="일식" value="일식">
-          일식
-        </Option>
-        <Option key="중국집" value="중국집">
-          중국집
-        </Option>
-        <Option key="야식" value="야식">
-          야식
-        </Option>
-      </Select> 
-    )
-  }
-  
-  export const SelectBoxNum = (props) => {
-    return (
-      <Select name={props.name} onChange={props.onChange}>
-        <Option value=""> - 선 택 - </Option>
-        <Option key="1명" value="1명">
-          1명
-        </Option>
-        <Option key="2명" value="2명">
-          2명
-        </Option>
-        <Option key="3명" value="3명">
-          3명
-        </Option>
-        <Option key="4명" value="4명">
-          4명
-        </Option>
-        <Option key="5명" value="5명">
-          5명
-        </Option>
-      </Select> 
-    )
-  }
 
-  export const BankSelectBox = (props) => {
-    return (
-      <BankSelect name={props.name} onChange={props.onChange}>
-        <Option value=""> 은행 </Option>
-        <Option key="국민" value="국민">
-          국민
-        </Option>
-        <Option key="신한" value="신한">
-          신한
-        </Option>
-        <Option key="하나" value="하나">
-          하나
-        </Option>
-        <Option key="우리" value="우리">
-          우리
-        </Option>
-        <Option key="기업" value="기업">
-          기업
-        </Option>
-        <Option key="농협" value="농협">
-          농협
-        </Option>
-      </BankSelect> 
-    )
-  }
+export const MenuSelectBox = (props) => {
+
+  const OPTIONS = [
+      { name: "치킨" },
+      { name: "피자" },
+      { name: "한식" },
+      { name: "분식" },
+      { name: "카페" },
+      { name: "일식" },
+      { name: "중국집" },
+      { name: "야식" }
+  ]  
+  
+  return (
+    <Select value={props.value} name={props.name} onChange={props.onChange}>
+      <Option value="" hidden> - 선 택 - </Option>
+      {OPTIONS.map((option) => {
+          return (
+                  <Option key={option.name} 
+                          value={option.name}>
+                      {option.name}
+                  </Option>
+          )
+      })}
+    </Select> 
+  )
+}
+
+
+export const SelectBoxNum = (props) => {
+
+  const OPTIONS = [
+    { name: "1명" },
+    { name: "2명" },
+    { name: "3명" },
+    { name: "4명" },
+    { name: "5명" }
+  ]
+
+  return (
+    <Select value={props.value} name={props.name} onChange={props.onChange}>
+      <Option value="" hidden> - 선 택 - </Option>
+      {OPTIONS.map((option) => {
+          return (
+                  <Option key={option.name} 
+                          value={option.name}>
+                      {option.name}
+                  </Option>
+          )
+      })}
+    </Select> 
+  )
+}
+
+
+export const BankSelectBox = (props) => {
+
+    const OPTIONS = [
+        { name: "국민" },
+        { name: "신한" },
+        { name: "하나" },
+        { name: "우리" },
+        { name: "기업" },
+        { name: "농협" }
+    ]  
+        
+  return (
+    <BankSelect value={props.value} name={props.name} onChange={props.onChange}>
+      <Option value="" hidden> 은행 </Option>
+      {OPTIONS.map((option) => {
+          return (
+                  <Option key={option.name} 
+                          value={option.name}>
+                      {option.name}
+                  </Option>
+          )
+      })}
+    </BankSelect> 
+  )
+}
