@@ -15,6 +15,7 @@ import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
 import MyPage from './pages/MyPage';
 
+
 function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
@@ -68,6 +69,7 @@ function App() {
             <EditPost
               userInfo={userInfo}
               currentPost={currentPost}
+
               accessToken={accessToken}
             />
           }
@@ -79,6 +81,7 @@ function App() {
         <Route
           path="/mypage"
           element={<MyPage userInfo={userInfo} currentPost={currentPost} />}
+
         />
       </Routes>
     </BrowserRouter>

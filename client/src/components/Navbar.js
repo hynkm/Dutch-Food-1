@@ -4,6 +4,7 @@ import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
 import { FiAlignJustify } from 'react-icons/fi';
 import { removeCookie, getCookie } from './Cookie';
+import { useNavigate } from 'react-router-dom';
 
 import LoginModal from '../pages/modal/LoginModal';
 import SignupModal from '../pages/modal/SignupModal';
@@ -39,7 +40,7 @@ const NavbarBtn = styled.div`
 
 const NavMenuBox = styled.div`
   background-color: black;
-  height: 130px;
+  height: 140px;
   width: 150px;
   border-bottom-left-radius: 10px;
   border-top-left-radius: 10px;
@@ -53,6 +54,9 @@ const NavMenuBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   word-break: keep-all;
+  &.loginTrue {
+    height: 170px;
+  }
   &.NavMenuBoxClose {
     background-color: black;
     opacity: 0.8;
@@ -149,6 +153,8 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isSignupModal, setIsSignupModal] = useState(false);
 
+  const navigate = useNavigate();
+
   const showSidebar = () => {
     setIsSidebar(!isSidebar);
   };
@@ -198,7 +204,10 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
       <NavbarBtn>
         <FiAlignJustify size={35} className="nav_icon" onClick={showSidebar} />
         {isLoginCheck ? (
-          <NavMenuBox className={isSidebar ? '' : 'NavMenuBoxClose'}>
+          <NavMenuBox className={isSidebar ? 'loginTrue' : 'NavMenuBoxClose'}>
+            <NavMenuList onClick={() => navigate('/createpost')}>
+              게시글작성
+            </NavMenuList>
             <NavMenuList>마이페이지</NavMenuList>
             <NavMenuList onClick={handleLogout}>로그아웃</NavMenuList>
           </NavMenuBox>

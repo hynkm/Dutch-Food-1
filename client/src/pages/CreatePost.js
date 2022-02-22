@@ -5,10 +5,10 @@ import {
   Route,
   Link,
   useNavigate,
-} from "react-router-dom";
-import axios from "axios";
-import styled from "styled-components";
-import DaumPostcode from "react-daum-postcode";
+} from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
 import {
   OuterDiv,
   TopDiv,
@@ -31,21 +31,23 @@ import {
   MenuSelectBox,
   SelectBoxNum,
   BankSelectBox,
-} from "../components/CreatePostComponents";
-import Header from "../components/Header";
+} from '../components/CreatePostComponents';
+import Header from '../components/Header';
 
 // let url = "https://localhost:4000";
 
 const CreatePost = (props) => {
+  
   // 입력창 상태관리
-  const [inputTitle, setInputTitle] = useState("");
-  const [inputAddress, setInputAddress] = useState("");
-  const [selectMenu, setSelectMenu] = useState("");
-  const [selectNum, setSelectNum] = useState("");
-  const [inputFee, setInputFee] = useState("");
-  const [selectBank, setSelectBank] = useState("");
-  const [inputAccount, setInputAccount] = useState("");
-  const [textareaContent, setTextareaContent] = useState("");
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputAddress, setInputAddress] = useState('');
+  const [selectMenu, setSelectMenu] = useState('');
+  const [selectNum, setSelectNum] = useState('');
+  const [inputFee, setInputFee] = useState('');
+  const [selectBank, setSelectBank] = useState('');
+  const [inputAccount, setInputAccount] = useState('');
+  const [textareaContent, setTextareaContent] = useState('');
+
 
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -53,12 +55,14 @@ const CreatePost = (props) => {
 
   // 입력값 변경에 따라 상태 변화
   const handleInputValue = (e) => {
+
     console.log("input 입력값 변경");
     if (e.target.name === "title") {
       setInputTitle(e.target.value);
     } else if (e.target.name === "fee") {
       setInputFee(e.target.value);
     } else if (e.target.name === "account") {
+
       setInputAccount(e.target.value);
     }
   };
@@ -75,7 +79,7 @@ const CreatePost = (props) => {
   };
 
   const handleTextareaValue = (e) => {
-    console.log("textarea 내용 변경");
+    console.log('textarea 내용 변경');
     setTextareaContent(e.target.value);
   };
 
@@ -99,6 +103,7 @@ const CreatePost = (props) => {
   // 작성완료 버튼 클릭
   // 게시물 정보 -> 서버로
   const postCompleteButton = () => {
+
     console.log("작성완료 버튼 클릭");
     console.log(
       inputTitle,
@@ -123,7 +128,7 @@ const CreatePost = (props) => {
     ) {
       axios({
         // url: url + '/post',
-        method: "post",
+        method: 'post',
         headers: {
           Authorization: `Bearer ${props.accessToken}`,
           "Content-Type": "application/json",

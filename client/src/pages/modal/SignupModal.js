@@ -144,7 +144,7 @@ function SignupModal({ loginModalOpen }) {
     isPasswordConfirm: false,
     msgPasswordConfirm: '비밀번호를 재입력해주세요.',
     isNickname: false,
-    msgNickname: '닉네임을 입력해주세요.',
+    msgNickname: '닉네임을 6글자 이내로 입력해주세요.',
   });
 
   const handleInputEmail = (key) => (e) => {
@@ -217,13 +217,13 @@ function SignupModal({ loginModalOpen }) {
       setValidityCheck({
         ...validityCheck,
         isNickname: false,
-        msgNickname: '특수문자,초성,띄어쓰기를 제외해주세요.',
+        msgNickname: '특수문자,띄어쓰기를 제외해주세요.',
       });
     } else if (value.length === 0) {
       setValidityCheck({
         ...validityCheck,
         isNickname: false,
-        msgNickname: '닉네임을 입력해주세요.',
+        msgNickname: '닉네임을 6글자 이내로 입력해주세요.',
       });
     } else {
       setValidityCheck({
@@ -314,7 +314,7 @@ function SignupModal({ loginModalOpen }) {
       });
     } else {
       axios
-        .post('url', signupUserInfo)
+        .post('url', signupUserInfo) //헤더 추가하기
         .then((res) => {
           setSignupMiniModal({
             open: true,
@@ -407,6 +407,7 @@ function SignupModal({ loginModalOpen }) {
       <SignupInputBox
         type="text"
         placeholder="닉네임"
+        maxLength={6}
         onChange={handleInputNickname('nickname')}
         value={signupUserInfo.nickname}
       ></SignupInputBox>

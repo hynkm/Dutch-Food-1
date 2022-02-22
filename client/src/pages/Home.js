@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import styled, { keyframes } from "styled-components";
-import 서울지도 from "../assets/homeImg/서울지도.jpg";
-import PImg1 from "../assets/homeImg/포장1.jpeg";
-import PImg2 from "../assets/homeImg/포장2.jpeg";
-import PImg3 from "../assets/homeImg/포장3.jpeg";
-import PImg4 from "../assets/homeImg/포장4.jpeg";
-import PImg5 from "../assets/homeImg/포장5.jpeg";
+// import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import styled, { keyframes } from 'styled-components';
+// import 서울지도 from '../assets/homeImg/서울지도.jpg';
+import PImg1 from '../assets/homeImg/포장1.jpeg';
+import PImg2 from '../assets/homeImg/포장2.jpeg';
+import PImg3 from '../assets/homeImg/포장3.jpeg';
+import PImg4 from '../assets/homeImg/포장4.jpeg';
+import PImg5 from '../assets/homeImg/포장5.jpeg';
+import PImg6 from '../assets/homeImg/포장6.jpeg';
+import PImg7 from '../assets/homeImg/포장7.jpeg';
+import PImg8 from '../assets/homeImg/포장8.jpeg';
+import PImg9 from '../assets/homeImg/포장9.jpeg';
+
 
 const Map = styled.div`
   margin-top: 200px;
@@ -34,73 +39,73 @@ const StartBtn = styled.div`
   box-shadow: 2px 1px 3px 1px #dadce0;
 `;
 
-const move1 = keyframes`
- 	단계 별로 변화를 주는 코드
-     90% {
-         opacity: 1;
-     }
-     100%{
-     	top: 250px;
-         left: 260px;
-         width: 1%;
-         height: 1%;
-         opacity: 0.5;
-     }
- `;
-const move2 = keyframes`
- 	단계 별로 변화를 주는 코드
-     70% {
-         opacity: 0.8;
-     }
-     100%{
-     	top: 220px;
-         left: 100px;
-         width: 1%;
-         height: 1%;
-         opacity: 0.5;
-     }
- `;
-const move3 = keyframes`
- 	단계 별로 변화를 주는 코드
-     40% {
-         opacity: 1;
-     }
-     100%{
-     	top: 190px;
-         left: 160px;
-         width: 1%;
-         height: 1%;
-         opacity: 0.5;
-     }
- `;
-const move4 = keyframes`
- 	단계 별로 변화를 주는 코드
-     12% {
-         opacity: 0.9;
-     }
-     100%{
-     	top: 210px;
-         left: 200px;
-         width: 1%;
-         height: 1%;
-         opacity: 0.5;
-     }
- `;
-const move5 = keyframes`
- 	단계 별로 변화를 주는 코드
-     25% {
-         opacity: 1;
-     }
-     100%{
-     	top: 200px;
-         left: 250px;
-         width: 1%;
-         height: 1%;
-         opacity: 0.5;
-     }
- `;
+//  const move1 = keyframes`
+//  	단계 별로 변화를 주는 코드
+//      90% {
+//          opacity: 1;
+//      }
+//      100%{
+//      	top: 250px;
+//          left: 260px;
+//          width: 1%;
+//          height: 1%;
+//          opacity: 0.5;
+//      }
+//  `;
+//  const move2 = keyframes`
+//  	단계 별로 변화를 주는 코드
+//      70% {
+//          opacity: 0.8;
+//      }
+//      100%{
+//      	top: 220px;
+//          left: 100px;
+//          width: 1%;
+//          height: 1%;
+//          opacity: 0.5;
+//      }
+//  `;
+//  const move3 = keyframes`
+//  	단계 별로 변화를 주는 코드
+//      40% {
+//          opacity: 1;
+//      }
+//      100%{
+//      	top: 190px;
+//          left: 160px;
+//          width: 1%;
+//          height: 1%;
+//          opacity: 0.5;
+//      }
+//  `;
+//  const move4 = keyframes`
+//  	단계 별로 변화를 주는 코드
+//      12% {
+//          opacity: 0.9;
+//      }
+//      100%{
+//      	top: 210px;
+//          left: 200px;
+//          width: 1%;
+//          height: 1%;
+//          opacity: 0.5;
+//      }
+//  `;
+//  const move5 = keyframes`
+//  	단계 별로 변화를 주는 코드
+//      25% {
+//          opacity: 1;
+//      }
+//      100%{
+//      	top: 200px;
+//          left: 250px;
+//          width: 1%;
+//          height: 1%;
+//          opacity: 0.5;
+//      }
+//  `;
 
-const PackingImg = styled.img`
+/* const PackingImg = styled.img`
   position: absolute;
   margin-top: 250px;
   width: 50%;
@@ -133,7 +138,8 @@ const PackingImg = styled.img`
     left: 150px;
     animation: ${move5} 3.3s 1s infinite;
   }
-`;
+`; */
+
 
 function Home() {
   const navigate = useNavigate();
@@ -146,7 +152,7 @@ function Home() {
         혼자 먹기 서러우셨나요? 배보다 배꼽이 더큰 배달비 이제는 저렴하게!!
       </h1>
       <img
-        src={PImg2}
+        src={PImg7}
         style={{
           position: "absolute",
           width: "100%",
@@ -159,15 +165,14 @@ function Home() {
         }}
       />
       <StartBtn onClick={handelMainMove}>시작하기</StartBtn>
-
-      <Map>
+      {/*<Map>
         <MapImg src={서울지도} />
         <PackingImg src={PImg1} className="P1" />
         <PackingImg src={PImg2} className="P2" />
         <PackingImg src={PImg3} className="P3" />
         <PackingImg src={PImg4} className="P4" />
         <PackingImg src={PImg5} className="P5" />
-      </Map>
+      </Map>*/}
     </div>
   );
 }
