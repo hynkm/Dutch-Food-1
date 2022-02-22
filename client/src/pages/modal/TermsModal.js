@@ -125,7 +125,7 @@ function TermsModal({ handleTermsModalOpen, setIsTermsCheckBox }) {
           </div>
           <div className="termsBtn">
             <span className="termsBtnClose" onClick={handleTermsNotAgreement}>
-              비동의
+              취소
             </span>
             <span className="termsBtnCheck" onClick={handleTermsAgreement}>
               동의
