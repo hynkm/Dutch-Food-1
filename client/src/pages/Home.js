@@ -12,6 +12,7 @@ import PImg7 from '../assets/homeImg/포장7.jpeg';
 import PImg8 from '../assets/homeImg/포장8.jpeg';
 import PImg9 from '../assets/homeImg/포장9.jpeg';
 
+
 const Map = styled.div`
   margin-top: 200px;
   width: 100%;
@@ -139,27 +140,28 @@ const StartBtn = styled.div`
   }
 `; */
 
+
 function Home() {
   const navigate = useNavigate();
   const handelMainMove = () => {
-    navigate('/main');
+    navigate("/main");
   };
   return (
     <div>
-      <h1 style={{ color: 'white' }}>
+      <h1 style={{ color: "white" }}>
         혼자 먹기 서러우셨나요? 배보다 배꼽이 더큰 배달비 이제는 저렴하게!!
       </h1>
       <img
         src={PImg7}
         style={{
-          position: 'absolute',
-          width: '100%',
-          height: '100%',
-          top: '0px',
-          left: '0px',
-          opacity: '0.7',
-          zIndex: '-1',
-          filter: 'brightness(50%)',
+          position: "absolute",
+          width: "100%",
+          height: "100%",
+          top: "0px",
+          left: "0px",
+          opacity: "0.7",
+          zIndex: "-1",
+          filter: "brightness(50%)",
         }}
       />
       <StartBtn onClick={handelMainMove}>시작하기</StartBtn>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 import {
   BrowserRouter,
   Routes,
@@ -37,6 +37,7 @@ import Header from '../components/Header';
 // let url = "https://localhost:4000";
 
 const CreatePost = (props) => {
+  
   // 입력창 상태관리
   const [inputTitle, setInputTitle] = useState('');
   const [inputAddress, setInputAddress] = useState('');
@@ -47,29 +48,32 @@ const CreatePost = (props) => {
   const [inputAccount, setInputAccount] = useState('');
   const [textareaContent, setTextareaContent] = useState('');
 
+
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
   const [isAlertModalOpen, setIsAlertModalOpen] = useState(false);
 
   // 입력값 변경에 따라 상태 변화
   const handleInputValue = (e) => {
-    console.log('input 입력값 변경');
-    if (e.target.name === 'title') {
+
+    console.log("input 입력값 변경");
+    if (e.target.name === "title") {
       setInputTitle(e.target.value);
-    } else if (e.target.name === 'fee') {
+    } else if (e.target.name === "fee") {
       setInputFee(e.target.value);
-    } else if (e.target.name === 'account') {
+    } else if (e.target.name === "account") {
+
       setInputAccount(e.target.value);
     }
   };
 
   const handleSelectValue = (e) => {
-    console.log('셀렉트 박스 변경');
-    if (e.target.name === 'menu') {
+    console.log("셀렉트 박스 변경");
+    if (e.target.name === "menu") {
       setSelectMenu(e.target.value);
-    } else if (e.target.name === 'num') {
+    } else if (e.target.name === "num") {
       setSelectNum(e.target.value);
-    } else if (e.target.name === 'bank') {
+    } else if (e.target.name === "bank") {
       setSelectBank(e.target.value);
     }
   };
@@ -99,7 +103,8 @@ const CreatePost = (props) => {
   // 작성완료 버튼 클릭
   // 게시물 정보 -> 서버로
   const postCompleteButton = () => {
-    console.log('작성완료 버튼 클릭');
+
+    console.log("작성완료 버튼 클릭");
     console.log(
       inputTitle,
       inputAddress,
@@ -126,7 +131,7 @@ const CreatePost = (props) => {
         method: 'post',
         headers: {
           Authorization: `Bearer ${props.accessToken}`,
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         data: {
           title: inputTitle,
@@ -141,7 +146,7 @@ const CreatePost = (props) => {
         withCredentials: true,
       })
         .then(() => {
-          console.log('게시글 작성 완료');
+          console.log("게시글 작성 완료");
         })
         .catch((err) => console.log(err));
     } else {
@@ -234,8 +239,8 @@ const CreatePost = (props) => {
         </MainDiv>
         <BottomDiv>
           <CompleteButton onClick={postCompleteButton}>
-            {' '}
-            작 성 완 료{' '}
+            {" "}
+            작 성 완 료{" "}
           </CompleteButton>
         </BottomDiv>
       </OuterDiv>

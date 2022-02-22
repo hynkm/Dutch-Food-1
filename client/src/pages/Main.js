@@ -12,10 +12,10 @@ function Main({ setIsLoginCheck, isLoginCheck }) {
       <div>
         <img
           src={kakaoApiTestImg}
-          style={{ width: '100%', height: '400px', marginTop: '-5px' }}
+          style={{ width: "100%", height: "400px", marginTop: "-5px" }}
         />
       </div>
-      <div style={{ width: '100%', height: '300px', textAlign: 'center' }}>
+      <div style={{ width: "100%", height: "300px", textAlign: "center" }}>
         메뉴
         <button onClick={() => navigate('/readpost')}>게시글 보러가기</button>
       </div>
