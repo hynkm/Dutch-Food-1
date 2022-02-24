@@ -47,6 +47,8 @@ const CreatePost = (props) => {
   const [textareaContent, setTextareaContent] = useState('');
 
   useEffect(() => {
+    console.log('수정해야할 기존 입력값 불러오기');
+
     setInputTitle(props.currentPost.title);
     setInputAddress(props.currentPost.address);
     setSelectMenu(props.currentPost.menu);
@@ -91,16 +93,19 @@ const CreatePost = (props) => {
 
   // 도로명주소 찾기 모달창 상태 변경
   const openAddressModalHandler = () => {
+    console.log('주소 찾기 모달창 상태 변경');
     setIsAddressModalOpen(!isAddressModalOpen);
   };
 
   // 입력 누락 알림 모달창 상태 변경
   const openAlertModalHandler = () => {
+    console.log('입력 누락 알림 모달창 상태 변경');
     setIsAlertModalOpen(!isAlertModalOpen);
   };
 
   // 도로명주소 찾기에서 원하는 주소를 클릭했을때
   const onCompletePost = (data) => {
+    console.log('상세 주소 클릭함');
     console.log(data.roadAddress);
     setInputAddress(data.roadAddress);
     setIsAddressModalOpen(!isAddressModalOpen);
@@ -132,10 +137,11 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        // url: url + `/post${props.nowPost.id}`,
+        // url: url + `/post/${props.currentPost.id}`,
         method: 'patch',
         headers: {
-          Authorization: `Bearer ${props.accessToken}`,
+          // Authorization: `Bearer ${props.accessToken}`,
+
           'Content-Type': 'application/json',
         },
         data: {
@@ -150,11 +156,13 @@ const CreatePost = (props) => {
         },
         withCredentials: true,
       })
-        .then(() => {
+        .then((res) => {
           console.log('게시글 수정 완료');
+          console.log(res);
         })
         .catch((err) => console.log(err));
     } else {
+      console.log('누락된 입력값이 있음');
       openAlertModalHandler();
     }
   };
@@ -258,8 +266,7 @@ const CreatePost = (props) => {
         </MainDiv>
         <BottomDiv>
           <CompleteButton onClick={postCompleteButton}>
-            {' '}
-            수 정 완 료{' '}
+            수 정 완 료
           </CompleteButton>
         </BottomDiv>
       </OuterDiv>

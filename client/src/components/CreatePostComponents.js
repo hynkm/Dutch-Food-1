@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-
- // 위쪽 Styled-Component 아래쪽 Selectbox
-
+// 위쪽 Styled-Component 아래쪽 Selectbox
 
 export const OuterDiv = styled.div`
   display: flex;
@@ -40,7 +38,7 @@ export const Select = styled.select`
   text-align: center;
   font-size: 1.2rem;
   background-color: white;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -50,7 +48,7 @@ export const Option = styled.option`
   height: 100%;
   text-align: center;
   font-size: 1.2rem;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -76,14 +74,14 @@ export const IndexInput = styled.input`
   height: 100%;
   font-size: 1.2rem;
   text-align: center;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   ::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
   }
-`; 
+`;
 
 export const BankAccountBoxDiv = styled.div`
   width: 100%;
@@ -96,7 +94,7 @@ export const BankSelect = styled.select`
   text-align: center;
   font-size: 1.2rem;
   background-color: white;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -108,7 +106,7 @@ export const AccountInput = styled.input`
   text-align: center;
   margin-left: 1%;
   margin-top: 0;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   ::-webkit-inner-spin-button {
     appearance: none;
@@ -135,10 +133,9 @@ export const ContentTextarea = styled.textarea`
   height: 91%;
   padding: 0.5rem 0.5rem;
   font-size: 1.1rem;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   resize: none;
-
 `;
 
 export const BottomDiv = styled.div`
@@ -146,7 +143,6 @@ export const BottomDiv = styled.div`
   height: 5%;
   display: flex;
   flex-direction: column;
-
   align-items: center;
   margin-top: 1%;
   margin-bottom: 1%;
@@ -162,11 +158,10 @@ export const CompleteButton = styled.button`
   border: 0;
   border-radius: 10px;
   cursor: pointer;
-  &:hover{
+  &:hover {
     font-weight: bold;
   }
 `;
-
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -175,7 +170,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
 `;
@@ -207,94 +202,94 @@ export const AlertModalButton = styled.button`
   width: 15%;
   height: 35%;
   color: #4593fc;
-  background-color: #E8F3FF;
+  background-color: #e8f3ff;
   border: #4593fc;
   border-radius: 10px;
   text-align: center;
   margin-left: 80%;
   cursor: pointer;
-  &:hover{
-    border: solid 1px #4593fc;
+  &:hover {
+    font-weight: bold;
   }
 `;
 
 export const MenuSelectBox = (props) => {
-    return (
-      <Select name={props.name} onChange={props.onChange}>
-        <Option value=""> - 선 택 - </Option>
-        <Option key="치킨" value="치킨">
-          치킨
-        </Option>
-        <Option key="피자" value="피자">
-          피자
-        </Option >
-        <Option key="한식" value="한식">
-          한식
-        </Option>
-        <Option key="분식" value="분식">
-          분식
-        </Option>
-        <Option key="카페" value="카페">
-          카페
-        </Option>
-        <Option key="일식" value="일식">
-          일식
-        </Option>
-        <Option key="중국집" value="중국집">
-          중국집
-        </Option>
-        <Option key="야식" value="야식">
-          야식
-        </Option>
-      </Select> 
-    )
-  }
-  
-  export const SelectBoxNum = (props) => {
-    return (
-      <Select name={props.name} onChange={props.onChange}>
-        <Option value=""> - 선 택 - </Option>
-        <Option key="1명" value="1명">
-          1명
-        </Option>
-        <Option key="2명" value="2명">
-          2명
-        </Option>
-        <Option key="3명" value="3명">
-          3명
-        </Option>
-        <Option key="4명" value="4명">
-          4명
-        </Option>
-        <Option key="5명" value="5명">
-          5명
-        </Option>
-      </Select> 
-    )
-  }
+  return (
+    <Select name={props.name} onChange={props.onChange}>
+      <Option value=""> - 선 택 - </Option>
+      <Option key="치킨" value="치킨">
+        치킨
+      </Option>
+      <Option key="피자" value="피자">
+        피자
+      </Option>
+      <Option key="한식" value="한식">
+        한식
+      </Option>
+      <Option key="분식" value="분식">
+        분식
+      </Option>
+      <Option key="카페" value="카페">
+        카페
+      </Option>
+      <Option key="일식" value="일식">
+        일식
+      </Option>
+      <Option key="중국집" value="중국집">
+        중국집
+      </Option>
+      <Option key="야식" value="야식">
+        야식
+      </Option>
+    </Select>
+  );
+};
 
-  export const BankSelectBox = (props) => {
-    return (
-      <BankSelect name={props.name} onChange={props.onChange}>
-        <Option value=""> 은행 </Option>
-        <Option key="국민" value="국민">
-          국민
-        </Option>
-        <Option key="신한" value="신한">
-          신한
-        </Option>
-        <Option key="하나" value="하나">
-          하나
-        </Option>
-        <Option key="우리" value="우리">
-          우리
-        </Option>
-        <Option key="기업" value="기업">
-          기업
-        </Option>
-        <Option key="농협" value="농협">
-          농협
-        </Option>
-      </BankSelect> 
-    )
-  }
+export const SelectBoxNum = (props) => {
+  return (
+    <Select name={props.name} onChange={props.onChange}>
+      <Option value=""> - 선 택 - </Option>
+      <Option key="1명" value="1명">
+        1명
+      </Option>
+      <Option key="2명" value="2명">
+        2명
+      </Option>
+      <Option key="3명" value="3명">
+        3명
+      </Option>
+      <Option key="4명" value="4명">
+        4명
+      </Option>
+      <Option key="5명" value="5명">
+        5명
+      </Option>
+    </Select>
+  );
+};
+
+export const BankSelectBox = (props) => {
+  return (
+    <BankSelect name={props.name} onChange={props.onChange}>
+      <Option value=""> 은행 </Option>
+      <Option key="국민" value="국민">
+        국민
+      </Option>
+      <Option key="신한" value="신한">
+        신한
+      </Option>
+      <Option key="하나" value="하나">
+        하나
+      </Option>
+      <Option key="우리" value="우리">
+        우리
+      </Option>
+      <Option key="기업" value="기업">
+        기업
+      </Option>
+      <Option key="농협" value="농협">
+        농협
+      </Option>
+    </BankSelect>
+  );
+};

@@ -21,7 +21,7 @@ export const PostSectionDiv = styled.div`
   padding-bottom: 0.5rem;
   text-align: center;
   line-height: 5vh;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
 `;
 
@@ -32,7 +32,7 @@ export const TitleBoxDiv = styled.div`
   flex-wrap: wrap;
   width: 98%;
   height: 7%;
-  border-bottom: solid 1px #4593fc;
+  border-bottom: solid 1px #90c2ff;
 `;
 
 export const TitleDiv = styled.div`
@@ -65,7 +65,7 @@ export const ContentTextarea = styled.textarea`
   padding: 0.3rem;
   font-size: 1rem;
   border: 0;
-  border-bottom: solid 1px #4593fc;
+  border-bottom: solid 1px #90c2ff;
   resize: none;
 `;
 
@@ -75,7 +75,7 @@ export const InformationOuterDiv = styled.div`
   width: 98%;
   height: 8%;
   margin-top: 0.5rem;
-  border-bottom: solid 1px #4593fc;
+  border-bottom: solid 1px #90c2ff;
 `;
 
 export const InformationBoxDiv = styled.div`
@@ -91,7 +91,7 @@ export const InformationIndexDiv = styled.div`
   height: 45%;
   margin-bottom: 1%;
   font-size: 1rem;
-  border-bottom: dotted 1px #4593fc;
+  border-bottom: dotted 1px #90c2ff;
 `;
 
 export const InformationDiv = styled.div`
@@ -108,7 +108,7 @@ export const BankAccountOuterDiv = styled.div`
   width: 98%;
   height: 8%;
   margin-top: 0.5rem;
-  border-bottom: solid 1px #4593fc;
+  border-bottom: solid 1px #90c2ff;
 `;
 
 export const BankAccountIndexDiv = styled.div`
@@ -161,8 +161,8 @@ export const MapIndexDiv = styled.div`
 export const MapDiv = styled.div`
   width: 100%;
   height: 88%;
-  border-top: solid 1px #4593fc;
-  border-bottom: solid 1px #4593fc;
+  border-top: solid 1px #90c2ff;
+  border-bottom: solid 1px #90c2ff;
 `;
 
 export const BottomDiv = styled.div`
@@ -189,7 +189,7 @@ export const BottomTextarea = styled.textarea`
   padding: 0.3rem;
   font-size: 1rem;
   padding: 0.3rem;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   resize: none;
 `;
 
@@ -259,7 +259,7 @@ export const CommentSectionDiv = styled.button`
   padding-bottom: 0.5rem;
   text-align: center;
   background-color: white;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
 `;
 
@@ -268,7 +268,7 @@ export const CommentIndexDiv = styled.div`
   margin-top: 1%;
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: solid 1px #4593fc;
+  border-bottom: solid 1px #90c2ff;
 `;
 
 export const CommentOuterDiv = styled.div`
@@ -285,7 +285,7 @@ export const CommentBoxDiv = styled.div`
   width: 100%;
   height: 5rem;
   margin-top: 1%;
-  border-bottom: dotted 1px #4593fc;
+  border-bottom: dotted 1px #90c2ff;
 `;
 
 export const CommentApplicantBoxDiv = styled.div`
@@ -377,7 +377,7 @@ export const AlertModalButton = styled.button`
   margin-left: 80%;
   cursor: pointer;
   &:hover {
-    border: solid 2px #90c2ff;
+    font-weight: bold;
   }
 `;
 
@@ -401,7 +401,7 @@ export const CancelAlertModalButton = styled.button`
   text-align: center;
   cursor: pointer;
   &:hover {
-    border: solid 2px #90c2ff;
+    font-weight: bold;
   }
 `;
 
@@ -415,6 +415,6 @@ export const DeleteAlertModalButton = styled.button`
   text-align: center;
   cursor: pointer;
   &:hover {
-    border: solid 2px #ef9a9a;
+    font-weight: bold;
   }
 `;

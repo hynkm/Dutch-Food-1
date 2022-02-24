@@ -19,9 +19,9 @@ function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState({
-    id: 7,
+    id: 1,
     user_id: 'kimcoding@naver.com',
-    nickname: '닉네임삼코딩',
+    nickname: '닉네임김코딩',
   });
   const [allPost, setAllPost] = useState([]);
   const [currentPost, setCurrentPost] = useState({

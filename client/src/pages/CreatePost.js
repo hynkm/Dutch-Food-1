@@ -81,17 +81,21 @@ const CreatePost = (props) => {
 
   // 도로명주소 찾기 모달창 상태 변경
   const openAddressModalHandler = () => {
+    console.log('주소 찾기 모달창 상태 변경');
     setIsAddressModalOpen(!isAddressModalOpen);
   };
 
   // 입력 누락 알림 모달창 상태 변경
   const openAlertModalHandler = () => {
+    console.log('입력 누락 알림 모달창 상태 변경');
     setIsAlertModalOpen(!isAlertModalOpen);
   };
 
   // 도로명주소 찾기에서 원하는 주소를 클릭했을때
   const onCompletePost = (data) => {
+    console.log('상세주소 클릭함');
     console.log(data.roadAddress);
+
     setInputAddress(data.roadAddress);
     setIsAddressModalOpen(!isAddressModalOpen);
   };
@@ -125,7 +129,7 @@ const CreatePost = (props) => {
         // url: url + '/post',
         method: 'post',
         headers: {
-          Authorization: `Bearer ${props.accessToken}`,
+          // Authorization: `Bearer ${props.accessToken}`,
           'Content-Type': 'application/json',
         },
         data: {
@@ -145,6 +149,7 @@ const CreatePost = (props) => {
         })
         .catch((err) => console.log(err));
     } else {
+      console.log('누락된 입력값이 있음');
       openAlertModalHandler();
     }
   };

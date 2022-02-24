@@ -267,7 +267,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
             <NavMenuList onClick={() => navigate('/createpost')}>
               게시글작성
             </NavMenuList>
-            <NavMenuList>마이페이지</NavMenuList>
+            <NavMenuList onClick={() => navigate('/mypage')}>마이페이지</NavMenuList>
             <NavMenuList onClick={handleLogoutModal}>로그아웃</NavMenuList>
           </NavMenuBox>
         ) : (

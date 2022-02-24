@@ -32,6 +32,7 @@ function Header({ setIsLoginCheck, isLoginCheck }) {
   return (
     <>
       <HeaderBack>
+
         <img className="logo" src={logo} onClick={() => navigate('/main')} />
 
         <button
@@ -39,7 +40,7 @@ function Header({ setIsLoginCheck, isLoginCheck }) {
           style={{ marginLeft: '200px' }}
         >
           로그인/로그아웃
-        </button>
+        </button> */}
         <Navbar setIsLoginCheck={setIsLoginCheck} isLoginCheck={isLoginCheck} />
       </HeaderBack>
     </>

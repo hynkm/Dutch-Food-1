@@ -79,12 +79,12 @@ const ReadPost = (props) => {
       content: '양념순살 3마리 같이 주문시켜주세요!',
       date: '2022.03.03.17:33',
     },
-    {
-      id: 4,
-      nickname: '닉네임사코딩',
-      content: '양념순살 4마리 같이 주문시켜주세요!',
-      date: '2022.03.04.17:34',
-    },
+    // {
+    //   id: 4,
+    //   nickname: '닉네임사코딩',
+    //   content: '양념순살 4마리 같이 주문시켜주세요!',
+    //   date: '2022.03.04.17:34',
+    // },
     {
       id: 5,
       nickname: '닉네임오코딩',
@@ -93,18 +93,15 @@ const ReadPost = (props) => {
     },
   ]);
 
-  // 신청댓글 리스트를 GET요청
+  // 신청댓글 리스트를 GET 요청
   useEffect(() => {
     console.log('comment리스트를 불러옵니다.');
     axios({
-      // url: url + '/comment',
+      // url: url + `/comment${props.currentPost.id}`,
       method: 'get',
       headers: {
-        Authorization: `Bearer ${props.accessToken}`,
+        // Authorization: `Bearer ${props.accessToken}`,
         'Content-Type': 'application/json',
-      },
-      data: {
-        id: props.currentPost.id,
       },
       withCredentials: true,
     })
@@ -120,6 +117,7 @@ const ReadPost = (props) => {
 
   // 게시글에 이미 신청했는지 여부
   useEffect(() => {
+    console.log('유저가 이미 신청한 게시글인지 확인합니다.');
     for (let i = 0; i < commentList.length; i++) {
       if (commentList[i].nickname === props.userInfo.nickname) {
         setIsDuplicated(!isDuplicated);
@@ -159,22 +157,25 @@ const ReadPost = (props) => {
 
   // 입력 누락 알림 모달창 상태 변경
   const openBlankAlertModalHandler = () => {
+    console.log('입력 누락 알림 모달창 상태 변경');
     setIsBlankAlertModalOpen(!isBlankAlertModalOpen);
   };
 
   // 중복 신청 알림 모달창 상태 변경
   const openDuplicateAlertModalHandler = () => {
+    console.log('중복 신청 알림 모달창 상태 변경');
     setIsDuplicateModalOpen(!isDuplicateAlertModalOpen);
   };
 
   // 게시글 삭제 확인 알림 모달창 상태 변경
   const openPostDeleteAlertModalHandler = () => {
+    console.log('게시글 삭제 확인 모달창 상태 변경');
     setIsPostDeleteAlretModalOpen(!isPostDeleteAlertModalOpen);
   };
 
   // 신청댓글 삭제 확인 알림 모달창 상태 변경
   const openCommentDeleteAlertModalHandler = (commentId) => {
-    console.log('댓글창에 있는 삭제 버튼 클릭');
+    console.log('신청댓글 삭제 확인 모달창 상태 변경');
     setSelectedCommentId(commentId);
     setIsCommentDeleteAlretModalOpen(!isCommentDeleteAlertModalOpen);
   };
@@ -183,14 +184,14 @@ const ReadPost = (props) => {
   // 신청자 작성 내용 -> 서버로
   const onClickApplyButton = () => {
     console.log('신청하기 버튼 눌림');
-    console.log(textareaContent);
 
     // 이미 신청한 사람이면 중복 신청 모달 띄우기
     if (isDuplicated === true) {
+      console.log('중복 신청임');
       openDuplicateAlertModalHandler();
     }
 
-    // 신청하기 버튼 누르면 신청자 정보 POST요청
+    // 신청하기 버튼 누르면 신청자 정보 POST 요청
     else if (textareaContent.length > 0) {
       axios({
         // url: url + '/comment',
@@ -209,6 +210,7 @@ const ReadPost = (props) => {
         console.log('신청 완료');
       });
     } else {
+      console.log('신청자 세부내용 입력값이 없음');
       openBlankAlertModalHandler();
     }
   };
@@ -219,9 +221,9 @@ const ReadPost = (props) => {
     navigate('/editpost');
   };
 
-  // 게시글 삭제 DELETE요청
+  // 게시글 삭제 DELETE 요청
   const onClickPostDeleteButton = () => {
-    console.log('게시글 삭제 버튼 클릭');
+    console.log('게시글 삭제 확인 모달창 삭제 버튼 클릭');
 
     axios({
       // url: url + `/post:${props.currentPost.id}`,
@@ -235,9 +237,9 @@ const ReadPost = (props) => {
       .catch((err) => console.log(err));
   };
 
-  // 신청내역 댓글 삭제 DELETE요청
+  // 신청내역 댓글 삭제 DELETE 요청
   const onClickCommentDeleteButton = (commentId) => {
-    console.log('확인 모달창에 있는 삭제 버튼 클릭');
+    console.log('신청내역 삭제 확인 모달창 삭제 버튼 클릭');
     console.log(`삭제될 comment의 id는 ${commentId}입니다.`);
 
     axios({
@@ -246,6 +248,7 @@ const ReadPost = (props) => {
       withCredentials: true,
     })
       .then((res) => {
+        console.log('신청댓글 삭제 요청에 대한 응답이 옴');
         console.log(res.data);
         navigate('/readpost');
       })
