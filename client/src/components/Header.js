@@ -21,9 +21,9 @@ function Header({ setIsLoginCheck, isLoginCheck }) {
         <div className="logoText" onClick={() => navigate('/main')}>
           Dutch-Food
         </div>
-        <button onClick={() => setIsLoginCheck(!isLoginCheck)}>
+        {/* <button onClick={() => setIsLoginCheck(!isLoginCheck)}>
           로그인/로그아웃
-        </button>
+        </button> */}
         <Navbar setIsLoginCheck={setIsLoginCheck} isLoginCheck={isLoginCheck} />
       </HeaderBack>
     </>

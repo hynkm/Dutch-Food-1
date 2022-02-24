@@ -1,9 +1,7 @@
-import React, { useState } from "react";
-import styled from "styled-components";
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-
- // 위쪽 Styled-Component 아래쪽 Selectbox
-
+// 위쪽 Styled-Component 아래쪽 Selectbox
 
 export const OuterDiv = styled.div`
   display: flex;
@@ -40,7 +38,7 @@ export const Select = styled.select`
   text-align: center;
   font-size: 1.2rem;
   background-color: white;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -50,7 +48,7 @@ export const Option = styled.option`
   height: 100%;
   text-align: center;
   font-size: 1.2rem;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -76,14 +74,14 @@ export const IndexInput = styled.input`
   height: 100%;
   font-size: 1.2rem;
   text-align: center;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   ::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
     -webkit-appearance: none;
   }
-`; 
+`;
 
 export const BankAccountBoxDiv = styled.div`
   width: 100%;
@@ -96,7 +94,7 @@ export const BankSelect = styled.select`
   text-align: center;
   font-size: 1.2rem;
   background-color: white;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
 `;
@@ -108,7 +106,7 @@ export const AccountInput = styled.input`
   text-align: center;
   margin-left: 1%;
   margin-top: 0;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   ::-webkit-inner-spin-button {
     appearance: none;
@@ -135,10 +133,9 @@ export const ContentTextarea = styled.textarea`
   height: 91%;
   padding: 0.5rem 0.5rem;
   font-size: 1.1rem;
-  border: solid 1px #4593fc;
+  border: solid 1px #90c2ff;
   border-radius: 5px;
   resize: none;
-
 `;
 
 export const BottomDiv = styled.div`
@@ -162,11 +159,10 @@ export const CompleteButton = styled.button`
   border: 0;
   border-radius: 10px;
   cursor: pointer;
-  &:hover{
+  &:hover {
     font-weight: bold;
   }
 `;
-
 
 export const ModalBackdrop = styled.div`
   position: fixed;
@@ -175,7 +171,7 @@ export const ModalBackdrop = styled.div`
   left: 0;
   bottom: 0;
   right: 0;
-  background-color: rgba(0,0,0,0.4);
+  background-color: rgba(0, 0, 0, 0.4);
   display: grid;
   place-items: center;
 `;
@@ -207,95 +203,95 @@ export const AlertModalButton = styled.button`
   width: 15%;
   height: 35%;
   color: #4593fc;
-  background-color: #E8F3FF;
+  background-color: #e8f3ff;
   border: 0;
   border-radius: 10px;
   text-align: center;
   margin-left: 80%;
   cursor: pointer;
-  &:hover{
-    border: solid 1px #4593fc;
+  &:hover {
+    font-weight: bold;
   }
 `;
 
-
 export const MenuSelectBox = (props) => {
-
   const OPTIONS = [
-      { name: "치킨" },
-      { name: "피자" },
-      { name: "한식" },
-      { name: "분식" },
-      { name: "카페" },
-      { name: "일식" },
-      { name: "중국집" },
-      { name: "야식" }
-  ]  
-  
+    { name: '치킨' },
+    { name: '피자' },
+    { name: '한식' },
+    { name: '분식' },
+    { name: '카페' },
+    { name: '일식' },
+    { name: '중국집' },
+    { name: '야식' },
+  ];
+
   return (
     <Select value={props.value} name={props.name} onChange={props.onChange}>
-      <Option value="" hidden> - 선 택 - </Option>
+      <Option value="" hidden>
+        {' '}
+        - 선 택 -{' '}
+      </Option>
       {OPTIONS.map((option) => {
-          return (
-                  <Option key={option.name} 
-                          value={option.name}>
-                      {option.name}
-                  </Option>
-          )
+        return (
+          <Option key={option.name} value={option.name}>
+            {option.name}
+          </Option>
+        );
       })}
-    </Select> 
-  )
-}
-
+    </Select>
+  );
+};
 
 export const SelectBoxNum = (props) => {
-
   const OPTIONS = [
-    { name: "1명" },
-    { name: "2명" },
-    { name: "3명" },
-    { name: "4명" },
-    { name: "5명" }
-  ]
+    { name: '1명' },
+    { name: '2명' },
+    { name: '3명' },
+    { name: '4명' },
+    { name: '5명' },
+  ];
 
   return (
     <Select value={props.value} name={props.name} onChange={props.onChange}>
-      <Option value="" hidden> - 선 택 - </Option>
+      <Option value="" hidden>
+        {' '}
+        - 선 택 -{' '}
+      </Option>
       {OPTIONS.map((option) => {
-          return (
-                  <Option key={option.name} 
-                          value={option.name}>
-                      {option.name}
-                  </Option>
-          )
+        return (
+          <Option key={option.name} value={option.name}>
+            {option.name}
+          </Option>
+        );
       })}
-    </Select> 
-  )
-}
-
+    </Select>
+  );
+};
 
 export const BankSelectBox = (props) => {
+  const OPTIONS = [
+    { name: '국민' },
+    { name: '신한' },
+    { name: '하나' },
+    { name: '우리' },
+    { name: '기업' },
+    { name: '농협' },
+  ];
 
-    const OPTIONS = [
-        { name: "국민" },
-        { name: "신한" },
-        { name: "하나" },
-        { name: "우리" },
-        { name: "기업" },
-        { name: "농협" }
-    ]  
-        
   return (
     <BankSelect value={props.value} name={props.name} onChange={props.onChange}>
-      <Option value="" hidden> 은행 </Option>
+      <Option value="" hidden>
+        {' '}
+        은행{' '}
+      </Option>
       {OPTIONS.map((option) => {
-          return (
-                  <Option key={option.name} 
-                          value={option.name}>
-                      {option.name}
-                  </Option>
-          )
+        return (
+          <Option key={option.name} value={option.name}>
+            {option.name}
+          </Option>
+        );
       })}
-    </BankSelect> 
-  )
-}
+    </BankSelect>
+  );
+};

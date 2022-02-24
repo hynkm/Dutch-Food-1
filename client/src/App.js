@@ -15,14 +15,13 @@ import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
 import MyPage from './pages/MyPage';
 
-
 function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState({
-    id: 7,
-    user_id: 'kimcoding1@naver.com',
-    nickname: '닉네임삼코딩',
+    id: 1,
+    user_id: 'kimcoding@naver.com',
+    nickname: '닉네임김코딩',
   });
   const [allPost, setAllPost] = useState([]);
   const [currentPost, setCurrentPost] = useState({
@@ -69,7 +68,6 @@ function App() {
             <EditPost
               userInfo={userInfo}
               currentPost={currentPost}
-
               accessToken={accessToken}
             />
           }
@@ -80,8 +78,13 @@ function App() {
         />
         <Route
           path="/mypage"
-          element={<MyPage userInfo={userInfo} currentPost={currentPost} />}
-
+          element={
+            <MyPage
+              userInfo={userInfo}
+              currentPost={currentPost}
+              setCurrentPost={setCurrentPost}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

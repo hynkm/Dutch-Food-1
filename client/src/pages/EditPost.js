@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 import {
   BrowserRouter,
   Routes,
   Route,
   Link,
   useNavigate,
-} from "react-router-dom";
-import axios from "axios";
-import styled from "styled-components";
-import DaumPostcode from "react-daum-postcode";
+} from 'react-router-dom';
+import axios from 'axios';
+import styled from 'styled-components';
+import DaumPostcode from 'react-daum-postcode';
 import {
   OuterDiv,
   TopDiv,
@@ -31,30 +31,31 @@ import {
   MenuSelectBox,
   SelectBoxNum,
   BankSelectBox,
-} from "../components/EditPostComponents";
-import Header from "../components/Header";
+} from '../components/EditPostComponents';
+import Header from '../components/Header';
 
 // let url = "https://localhost:4000";
 
 const CreatePost = (props) => {
-  const [inputTitle, setInputTitle] = useState("");
-  const [inputAddress, setInputAddress] = useState("");
-  const [selectMenu, setSelectMenu] = useState("");
-  const [selectNum, setSelectNum] = useState("");
-  const [inputFee, setInputFee] = useState("");
-  const [selectBank, setSelectBank] = useState("");
-  const [inputAccount, setInputAccount] = useState("");
-  const [textareaContent, setTextareaContent] = useState("");
+  const [inputTitle, setInputTitle] = useState('');
+  const [inputAddress, setInputAddress] = useState('');
+  const [selectMenu, setSelectMenu] = useState('');
+  const [selectNum, setSelectNum] = useState('');
+  const [inputFee, setInputFee] = useState('');
+  const [selectBank, setSelectBank] = useState('');
+  const [inputAccount, setInputAccount] = useState('');
+  const [textareaContent, setTextareaContent] = useState('');
 
   useEffect(() => {
-    setInputTitle(props.nowPost.title);
-    setInputAddress(props.nowPost.address);
-    setSelectMenu(props.nowPost.menu);
-    setSelectNum(props.nowPost.recruit_volume);
-    setInputFee(props.nowPost.delivery_charge);
-    setSelectBank(props.nowPost.bank_name);
-    setInputAccount(props.nowPost.account_number);
-    setTextareaContent(props.nowPost.content);
+    console.log('수정해야할 기존 입력값 불러오기');
+    setInputTitle(props.currentPost.title);
+    setInputAddress(props.currentPost.address);
+    setSelectMenu(props.currentPost.menu);
+    setSelectNum(props.currentPost.recruit_volume);
+    setInputFee(props.currentPost.delivery_charge);
+    setSelectBank(props.currentPost.bank_name);
+    setInputAccount(props.currentPost.account_number);
+    setTextareaContent(props.currentPost.content);
   }, []);
 
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
@@ -63,44 +64,47 @@ const CreatePost = (props) => {
 
   // 입력값 변경에 따라 상태 변화
   const handleInputValue = (e) => {
-    console.log("input 입력값 변경");
-    if (e.target.name === "title") {
+    console.log('input 입력값 변경');
+    if (e.target.name === 'title') {
       setInputTitle(e.target.value);
-    } else if (e.target.name === "fee") {
+    } else if (e.target.name === 'fee') {
       setInputFee(e.target.value);
-    } else if (e.target.name === "account") {
+    } else if (e.target.name === 'account') {
       setInputAccount(e.target.value);
     }
   };
 
   const handleSelectValue = (e) => {
-    console.log("셀렉트 박스 변경");
-    if (e.target.name === "menu") {
+    console.log('셀렉트 박스 변경');
+    if (e.target.name === 'menu') {
       setSelectMenu(e.target.value);
-    } else if (e.target.name === "num") {
+    } else if (e.target.name === 'num') {
       setSelectNum(e.target.value);
-    } else if (e.target.name === "bank") {
+    } else if (e.target.name === 'bank') {
       setSelectBank(e.target.value);
     }
   };
 
   const handleTextareaValue = (e) => {
-    console.log("textarea 내용 변경");
+    console.log('textarea 내용 변경');
     setTextareaContent(e.target.value);
   };
 
   // 도로명주소 찾기 모달창 상태 변경
   const openAddressModalHandler = () => {
+    console.log('주소 찾기 모달창 상태 변경');
     setIsAddressModalOpen(!isAddressModalOpen);
   };
 
   // 입력 누락 알림 모달창 상태 변경
   const openAlertModalHandler = () => {
+    console.log('입력 누락 알림 모달창 상태 변경');
     setIsAlertModalOpen(!isAlertModalOpen);
   };
 
   // 도로명주소 찾기에서 원하는 주소를 클릭했을때
   const onCompletePost = (data) => {
+    console.log('상세 주소 클릭함');
     console.log(data.roadAddress);
     setInputAddress(data.roadAddress);
     setIsAddressModalOpen(!isAddressModalOpen);
@@ -109,7 +113,7 @@ const CreatePost = (props) => {
   // 작성완료 버튼 클릭
   // 게시물 정보 -> 서버로
   const postCompleteButton = () => {
-    console.log("수정완료 버튼 클릭");
+    console.log('수정완료 버튼 클릭');
     console.log(
       inputTitle,
       inputAddress,
@@ -132,11 +136,11 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        // url: url + `/post${props.nowPost.id}`,
-        method: "patch",
+        // url: url + `/post/${props.currentPost.id}`,
+        method: 'patch',
         headers: {
-          Authorization: `Bearer ${props.accessToken}`,
-          "Content-Type": "application/json",
+          // Authorization: `Bearer ${props.accessToken}`,
+          'Content-Type': 'application/json',
         },
         data: {
           title: inputTitle,
@@ -150,11 +154,13 @@ const CreatePost = (props) => {
         },
         withCredentials: true,
       })
-        .then(() => {
-          console.log("게시글 수정 완료");
+        .then((res) => {
+          console.log('게시글 수정 완료');
+          console.log(res);
         })
         .catch((err) => console.log(err));
     } else {
+      console.log('누락된 입력값이 있음');
       openAlertModalHandler();
     }
   };
@@ -255,8 +261,7 @@ const CreatePost = (props) => {
         </MainDiv>
         <BottomDiv>
           <CompleteButton onClick={postCompleteButton}>
-            {" "}
-            수 정 완 료{" "}
+            수 정 완 료
           </CompleteButton>
         </BottomDiv>
       </OuterDiv>
