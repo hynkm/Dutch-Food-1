@@ -54,7 +54,6 @@ const CreatePost = (props) => {
   // 입력값 변경에 따라 상태 변화
   const handleInputValue = (e) => {
     console.log('input 입력값 변경');
-
     if (e.target.name === 'title') {
       setInputTitle(e.target.value);
     } else if (e.target.name === 'fee') {
@@ -66,7 +65,6 @@ const CreatePost = (props) => {
 
   const handleSelectValue = (e) => {
     console.log('셀렉트 박스 변경');
-
     if (e.target.name === 'menu') {
       setSelectMenu(e.target.value);
     } else if (e.target.name === 'num') {
@@ -175,7 +173,10 @@ const CreatePost = (props) => {
           </AlertModalView>
         </ModalBackdrop>
       ) : null}
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <OuterDiv>
         <TopDiv>게시글 작성</TopDiv>
         <MainDiv>

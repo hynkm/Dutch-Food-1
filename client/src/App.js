@@ -60,7 +60,14 @@ function App() {
         />
         <Route
           path="/createpost"
-          element={<CreatePost userInfo={userInfo} accessToken={accessToken} />}
+          element={
+            <CreatePost
+              userInfo={userInfo}
+              accessToken={accessToken}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
         />
         <Route
           path="/editpost"
@@ -69,12 +76,21 @@ function App() {
               userInfo={userInfo}
               currentPost={currentPost}
               accessToken={accessToken}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
             />
           }
         />
         <Route
           path="/readpost"
-          element={<ReadPost userInfo={userInfo} currentPost={currentPost} />}
+          element={
+            <ReadPost
+              userInfo={userInfo}
+              currentPost={currentPost}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
         />
         <Route
           path="/mypage"
@@ -82,7 +98,8 @@ function App() {
             <MyPage
               userInfo={userInfo}
               currentPost={currentPost}
-              setCurrentPost={setCurrentPost}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
             />
           }
         />

@@ -315,7 +315,10 @@ const ReadPost = (props) => {
         </ModalBackdrop>
       ) : null}
 
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <OuterDiv>
         <PostSectionDiv>
           <TitleBoxDiv>

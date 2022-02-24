@@ -48,6 +48,7 @@ const CreatePost = (props) => {
 
   useEffect(() => {
     console.log('수정해야할 기존 입력값 불러오기');
+
     setInputTitle(props.currentPost.title);
     setInputAddress(props.currentPost.address);
     setSelectMenu(props.currentPost.menu);
@@ -140,6 +141,7 @@ const CreatePost = (props) => {
         method: 'patch',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,
+
           'Content-Type': 'application/json',
         },
         data: {
@@ -184,7 +186,10 @@ const CreatePost = (props) => {
           </AlertModalView>
         </ModalBackdrop>
       ) : null}
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <OuterDiv>
         <TopDiv>게시글 수정</TopDiv>
         <MainDiv>
