@@ -5,8 +5,8 @@ import {
   Route,
   Link,
   useNavigate,
-import Header from '../components/Header';
 } from 'react-router-dom';
+import Header from '../components/Header';
 import {
   OuterDiv,
   PostSectionDiv,
@@ -127,7 +127,6 @@ const ReadPost = (props) => {
     }
   }, [commentList]);
 
-
   // 가격에 ',' 표시 붙이기
   let stringCharge = String(props.currentPost.delivery_charge);
   let charge = `${stringCharge.slice(
@@ -137,7 +136,6 @@ const ReadPost = (props) => {
 
   // 입력창 상태관리
   const [textareaContent, setIsTextareaContent] = useState('');
-
 
   // 누락 알림 모달창 상태관리
   const [isBlankAlertModalOpen, setIsBlankAlertModalOpen] = useState(false);
@@ -152,7 +150,6 @@ const ReadPost = (props) => {
   // 신청댓글 삭제 확인 알림 모달창 상태관리
   const [isCommentDeleteAlertModalOpen, setIsCommentDeleteAlretModalOpen] =
     useState(false);
-
 
   // 신청자 입렵값 변경에 따라 상태 변화
   const handleTextareaValue = (e) => {
@@ -195,7 +192,6 @@ const ReadPost = (props) => {
 
     // 신청하기 버튼 누르면 신청자 정보 POST요청
     else if (textareaContent.length > 0) {
-
       axios({
         // url: url + '/comment',
         method: 'post',
@@ -316,11 +312,13 @@ const ReadPost = (props) => {
         </ModalBackdrop>
       ) : null}
 
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <OuterDiv>
         <PostSectionDiv>
           <TitleBoxDiv>
-
             <TitleDiv>{props.currentPost.title}</TitleDiv>
             <NicknameSpan>{props.currentPost.nickname}</NicknameSpan>
             <TimeSpan>{props.currentPost.date}</TimeSpan>

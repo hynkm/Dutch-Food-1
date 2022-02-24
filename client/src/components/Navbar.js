@@ -148,10 +148,59 @@ const ModalChangBtn = styled.div`
   }
 `;
 
+const LogoutModlaBack = styled.div`
+  background-color: rgba(0, 0, 0, 0.4);
+  z-index: 999;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: grid;
+  place-items: center;
+`;
+
+const LogoutModlaView = styled.div`
+  width: 250px;
+  height: 130px;
+  background-color: white;
+  border-radius: 15px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  text-align: center;
+  align-items: center;
+  font-size: 20px;
+  text-align: left;
+`;
+
+const LogoutModalBtn = styled.div`
+  width: 80px;
+  height: 30px;
+  margin-top: 70px;
+  background-color: #e8f3ff;
+  border: #90c2ff;
+  color: #90c2ff;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  box-shadow: 1px 1px 1px 1px #dadce0;
+  &.cancel {
+    color: #ef9a9a;
+    background-color: #ffebee;
+    border: #ef9a9a;
+  }
+  &:hover {
+    transform: scale(1.1);
+  }
+`;
+
 function Navbar({ setIsLoginCheck, isLoginCheck }) {
   const [isSidebar, setIsSidebar] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isSignupModal, setIsSignupModal] = useState(false);
+  const [isLogoutModal, setIsLogoutModal] = useState(false);
 
   const navigate = useNavigate();
 
@@ -177,8 +226,17 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
     setIsSignupModal(false);
   };
 
+  const handleLogoutModal = () => {
+    setIsLogoutModal(!isLogoutModal);
+    setIsLoginModal(false);
+    setIsSidebar(false);
+    setIsSignupModal(false);
+  };
+
   //! 로그아웃
   const handleLogout = () => {
+    //로그아웃 여부 모달창 띄우고 확인 시 axios 요청
+    //취소하면 모달창 다시 닫기
     axios
       .get('url', {
         headers: { withCredentials: true },
@@ -186,6 +244,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
       .then((res) => {
         setIsLoginCheck(false);
         removeCookie('accessToken');
+        navigate('/main');
       })
       .catch((err) => {
         console.log(err, '로그아웃 err');
@@ -209,7 +268,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
               게시글작성
             </NavMenuList>
             <NavMenuList>마이페이지</NavMenuList>
-            <NavMenuList onClick={handleLogout}>로그아웃</NavMenuList>
+            <NavMenuList onClick={handleLogoutModal}>로그아웃</NavMenuList>
           </NavMenuBox>
         ) : (
           <NavMenuBox className={isSidebar ? '' : 'NavMenuBoxClose'}>
@@ -267,6 +326,31 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
               <SignupModal loginModalOpen={loginModalOpen} />
             </ModalView>
           </ModlaBack>
+        )}
+        {isLogoutModal && (
+          <LogoutModlaBack>
+            <LogoutModlaView>
+              <div style={{ position: 'absolute', top: '35px' }}>
+                로그아웃 하시겠습니까?
+              </div>
+
+              <LogoutModalBtn
+                className="cancel"
+                onClick={() => {
+                  handleLogoutModal();
+                }}
+              >
+                취소
+              </LogoutModalBtn>
+              <LogoutModalBtn
+                onClick={() => {
+                  handleLogout();
+                }}
+              >
+                확인
+              </LogoutModalBtn>
+            </LogoutModlaView>
+          </LogoutModlaBack>
         )}
       </NavbarBtn>
     </React.Fragment>

@@ -15,13 +15,12 @@ import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
 import MyPage from './pages/MyPage';
 
-
 function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState({
     id: 7,
-    user_id: 'kimcoding1@naver.com',
+    user_id: 'kimcoding@naver.com',
     nickname: '닉네임삼코딩',
   });
   const [allPost, setAllPost] = useState([]);
@@ -61,7 +60,14 @@ function App() {
         />
         <Route
           path="/createpost"
-          element={<CreatePost userInfo={userInfo} accessToken={accessToken} />}
+          element={
+            <CreatePost
+              userInfo={userInfo}
+              accessToken={accessToken}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
         />
         <Route
           path="/editpost"
@@ -69,19 +75,33 @@ function App() {
             <EditPost
               userInfo={userInfo}
               currentPost={currentPost}
-
               accessToken={accessToken}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
             />
           }
         />
         <Route
           path="/readpost"
-          element={<ReadPost userInfo={userInfo} currentPost={currentPost} />}
+          element={
+            <ReadPost
+              userInfo={userInfo}
+              currentPost={currentPost}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
         />
         <Route
           path="/mypage"
-          element={<MyPage userInfo={userInfo} currentPost={currentPost} />}
-
+          element={
+            <MyPage
+              userInfo={userInfo}
+              currentPost={currentPost}
+              setIsLoginCheck={setIsLoginCheck}
+              isLoginCheck={isLoginCheck}
+            />
+          }
         />
       </Routes>
     </BrowserRouter>

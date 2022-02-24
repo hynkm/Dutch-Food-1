@@ -12,7 +12,10 @@ import axios from 'axios';
 const MyPage = (props) => {
   return (
     <>
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <h1>마이페이지 작업중</h1>
     </>
   );
