@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import styled, { keyframes, createGlobalStyle } from 'styled-components';
+import { HiChevronDoubleDown } from 'react-icons/hi';
 // import 서울지도 from '../assets/homeImg/서울지도.jpg';
 import PImg1 from '../assets/homeImg/포장1.jpeg';
 import PImg2 from '../assets/homeImg/포장2.jpeg';
@@ -14,31 +15,70 @@ import PImg9 from '../assets/homeImg/포장9.jpeg';
 import HomeImg from '../assets/img/img1.png';
 
 const GlobalStyle = createGlobalStyle`
-   head,body {
+  h1{
+    margin: 0px;
+    font-family: 'IBM Plex Sans KR', sans-serif;
+  }
+
+   html body {
     height: 100vh;
+    width: 100vw;
     margin: 0px;
     padding: 0px;
     font-family: 'IBM Plex Sans KR', sans-serif;
   }`;
 
 const HomeBack = styled.div`
-  width: 100%;
-  height: 100%;
-  background-color: green;
+  width: 100vw;
+  height: 100vh;
+  background-color: #48d1cc;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
 `;
 
 const StartBtn = styled.div`
-  margin-bottom: 100px;
   cursor: pointer;
+  font-size: 22px;
+  letter-spacing: 5px;
   text-align: center;
-  width: 170px;
-  height: 30px;
+  line-height: 50px;
+  width: 250px;
+  height: 50px;
   color: white;
-  padding: 10px;
   border-radius: 10px;
-  background-color: green;
-  box-shadow: 2px 1px 3px 1px #dadce0;
+  background-color: #ff5e5e;
+  box-shadow: 2px 3px 3px 2px #dadce0;
 `;
+
+const moveArrow = keyframes`
+     0% {
+         bottom: 20px;
+         
+     }
+     100%{
+         bottom: 0px;
+        
+     }
+`;
+const IconArrow = styled.div`
+  position: absolute;
+  bottom: 0px;
+  align-items: center;
+  > .icon {
+    position: absolute;
+    bottom: 0px;
+    left: -16px;
+    color: rgba(0, 0, 0, 0.5);
+    transform: scale(1);
+    animation: ${moveArrow} 2s 10s infinite;
+  }
+`;
+// transform: scale(1);
+// left: 100px;
+// top: 300px;
+// animation: ${move1} 4s 1s infinite;
 
 /*
 const Map = styled.div`
@@ -160,15 +200,16 @@ function Home() {
     <React.Fragment>
       <GlobalStyle />
       <HomeBack>
-        <h1 style={{ color: 'black' }}>
-          혼자 먹기 서러우셨나요? 배보다 배꼽이 더큰 배달비 이제는 저렴하게!!
+        <h1 style={{ color: 'white' }}>
+          배달음식을 시켜먹고 싶은데 배달비가 너무 비싸 걱정이셨나요? 배달비도
+          더치하자!
         </h1>
         <img
           src={HomeImg}
           style={{
             position: 'absolute',
-            width: '100%',
-            height: '100%',
+            width: '50%',
+            height: '50%',
             top: '0px',
             left: '0px',
             opacity: '0.7',
@@ -177,6 +218,9 @@ function Home() {
           }}
         />
         <StartBtn onClick={handelMainMove}>시작하기</StartBtn>
+        <IconArrow>
+          <HiChevronDoubleDown className="icon" size={35} />
+        </IconArrow>
         {/*<Map>
         <MapImg src={서울지도} />
         <PackingImg src={PImg1} className="P1" />
