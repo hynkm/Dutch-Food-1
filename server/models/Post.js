@@ -31,7 +31,25 @@ module.exports = class Post extends Sequelize.Model {
           allowNull: false,
           unique: true,
         },
-        title: {
+        recruit_volume: {
+          //seqelize는 기본적으로 pr키 아이디가 생략되었음.
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          unique: true,
+        },
+        bank_name: {
+          //seqelize는 기본적으로 pr키 아이디가 생략되었음.
+          type: Sequelize.STRING(20),
+          allowNull: false,
+          unique: true,
+        },
+        account_number: {
+          //seqelize는 기본적으로 pr키 아이디가 생략되었음.
+          type: Sequelize.INTEGER,
+          allowNull: false,
+          unique: true,
+        },
+        content: {
           //seqelize는 기본적으로 pr키 아이디가 생략되었음.
           type: Sequelize.STRING(100),
           allowNull: false,
