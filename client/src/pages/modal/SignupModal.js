@@ -314,7 +314,10 @@ function SignupModal({ loginModalOpen }) {
       });
     } else {
       axios
-        .post('url', signupUserInfo) //헤더 추가하기
+        .post('http://localhost:8080/', signupUserInfo, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }) //헤더 추가하기
         .then((res) => {
           setSignupMiniModal({
             open: true,

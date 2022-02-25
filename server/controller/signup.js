@@ -25,6 +25,7 @@ module.exports = {
   nicknameCheck: (req, res) => {
     const { nickname } = req.query;
 
+
     user
       .findOne({ where: { nickname } })
       .then((data) => {
@@ -42,6 +43,7 @@ module.exports = {
   },
 
   signup: async (req, res) => {
+
     const { email, password, nickname } = req.body;
     const hashPw = await hashPassword(password);
 
