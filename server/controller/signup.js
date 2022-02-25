@@ -5,7 +5,6 @@ const { hashPassword } = require('./functions/secure');
 module.exports = {
   emailCheck: (req, res) => {
     const { userEmail } = req.query;
-    console.log('회원가입 이메일 중복');
 
     user
       .findOne({ where: { email: userEmail } })
@@ -25,7 +24,7 @@ module.exports = {
 
   nicknameCheck: (req, res) => {
     const { nickname } = req.query;
-    console.log('회원가입 닉네임 중복');
+
 
     user
       .findOne({ where: { nickname } })
@@ -44,7 +43,7 @@ module.exports = {
   },
 
   signup: async (req, res) => {
-    console.log('회원가입 서버');
+
     const { email, password, nickname } = req.body;
     const hashPw = await hashPassword(password);
 

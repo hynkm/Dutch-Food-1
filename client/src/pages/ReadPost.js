@@ -323,7 +323,7 @@ const ReadPost = (props) => {
         <PostSectionDiv>
           <TitleBoxDiv>
             <TitleDiv>{props.currentPost.title}</TitleDiv>
-            <NicknameSpan>{props.currentPost.nickname}</NicknameSpan>
+            <NicknameSpan>{props.userInfo.nickname}</NicknameSpan>
             <TimeSpan>{props.currentPost.date}</TimeSpan>
           </TitleBoxDiv>
           <ContentTextarea
