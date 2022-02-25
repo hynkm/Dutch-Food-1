@@ -20,7 +20,7 @@ function App() {
   const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState({
     id: 1,
-    user_id: 'kimcoding@naver.com',
+    user_id: 'kimcoding1@naver.com',
     nickname: '닉네임김코딩',
   });
   const [allPost, setAllPost] = useState([]);
@@ -38,7 +38,7 @@ function App() {
     comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
     nickname: '닉네임김코딩',
     delivery_charge: 4000,
-    date: '2022.03.16.17:30',
+    date: '2017-08-28 17:22',
   });
 
   return (

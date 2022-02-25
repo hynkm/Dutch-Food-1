@@ -148,11 +148,11 @@ const CreatePost = (props) => {
           title: inputTitle,
           address: inputAddress,
           menu: selectMenu,
+          delivery_charge: inputFee,
           recruit_volume: selectNum,
           bank_name: selectBank,
           accout_number: inputAccount,
           content: textareaContent,
-          delivery_chare: inputFee,
         },
         withCredentials: true,
       })
