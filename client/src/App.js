@@ -23,22 +23,63 @@ function App() {
     user_id: 'kimcoding1@naver.com',
     nickname: '닉네임김코딩',
   });
-  const [allPost, setAllPost] = useState([]);
+  const [allPostList, setAllPostList] = useState([
+    {
+      id: 1,
+      user_id: 'kimcoding@naver.com',
+      title: '코드스테이츠 빌딩에서 같이 치킨시켜드실분',
+      address: '서울시 강남구 코드스테이츠 빌딩 1층',
+      menu: '치킨',
+      delivery_charge: 4000,
+      recruit_volume: '5명',
+      bank_name: '국민',
+      account_number: 12345678912345,
+      content:
+        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
+      created_at: '2017-08-28 17:22',
+    },
+    {
+      id: 2,
+      user_id: 'kimcoding@naver.com',
+      title: '코드스테이츠 빌딩에서 같이 치킨시켜드실분',
+      address: '서울시 강남구 코드스테이츠 빌딩 1층',
+      menu: '치킨',
+      delivery_charge: 4000,
+      recruit_volume: '5명',
+      bank_name: '국민',
+      account_number: 12345678912345,
+      content:
+        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
+      created_at: '2017-08-28 17:22',
+    },
+    {
+      id: 3,
+      user_id: 'kimcoding@naver.com',
+      title: '코드스테이츠 빌딩에서 같이 치킨시켜드실분',
+      address: '서울시 강남구 코드스테이츠 빌딩 1층',
+      menu: '치킨',
+      delivery_charge: 4000,
+      recruit_volume: '5명',
+      bank_name: '국민',
+      account_number: 12345678912345,
+      content:
+        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
+      created_at: '2017-08-28 17:22',
+    },
+  ]);
   const [currentPost, setCurrentPost] = useState({
     id: 1,
     user_id: 'kimcoding@naver.com',
     title: '코드스테이츠 빌딩에서 같이 치킨시켜드실분',
     address: '서울시 강남구 코드스테이츠 빌딩 1층',
     menu: '치킨',
+    delivery_charge: 4000,
     recruit_volume: '5명',
     bank_name: '국민',
     account_number: 12345678912345,
     content:
       '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-    comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
-    nickname: '닉네임김코딩',
-    delivery_charge: 4000,
-    date: '2017-08-28 17:22',
+    created_at: '2017-08-28 17:22',
   });
 
   return (
@@ -98,6 +139,8 @@ function App() {
             <MyPage
               userInfo={userInfo}
               currentPost={currentPost}
+              allPostList={allPostList}
+              setAllPostList={setAllPostList}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
             />
