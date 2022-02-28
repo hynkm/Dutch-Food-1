@@ -1,5 +1,6 @@
 require('dotenv').config();
 const axios = require('axios');
+const crypto = require('crypto');
 const { google } = require('googleapis');
 const { user } = require('../models');
 const { generateAccessToken, sendAccessToken, isAuthorized } = require('./functions/user');
@@ -28,14 +29,29 @@ module.exports = {
         `https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokens.access_token}`
       );
 
-      const { email, nickname } = userInfo.data;
+      const { email } = userInfo.data;
+
+      let dontBreak = true;
+      let uniqueNickName;
+      const nickNameData = await user.findAll({ attributes: ['nickName'] });
+      const nickNames = nickNameData.map((el) => el.dataValues.nickName);
+
+      while (dontBreak) {
+        const key1 = crypto.randomBytes(256).toString('hex').substr(100, 4);
+        const randomNum = parseInt(key1, 16);
+        const nick = '구글' + randomNum;
+        if (!nickNames.includes(nick)) {
+          uniqueNickName = nick;
+          dontBreak = false;
+        }
+      }
 
       user
         .findOrCreate({
           where: { email: email , social: 'google',},
           defaults: {
             email: email,
-            nickName: nickname,
+            nickName: uniqueNickName,
           },
         })
         .then(([data, created]) => {
@@ -76,7 +92,17 @@ module.exports = {
         withCredentials: true,
       });
 
-      const { nickname, email } = userInfo.data.kakao_account.profile;
+      const { email } = userInfo.data.kakao_account.profile;
+
+      while (dontBreak) {
+        const key1 = crypto.randomBytes(256).toString('hex').substr(100, 4);
+        const randomNum = parseInt(key1, 16);
+        const nick = '카카오' + randomNum;
+        if (!nickNames.includes(nick)) {
+          uniqueNickName = nick;
+          dontBreak = false;
+        }
+      }
 
       const [userData] = await user.findOrCreate({
         where: {
@@ -85,7 +111,7 @@ module.exports = {
         },
         defaults: {
           email: email,
-          nickname: nickname,
+          nickname: uniqueNickName,
         },
       });
 
@@ -98,3 +124,4 @@ module.exports = {
     }
   },  
 }
+// 

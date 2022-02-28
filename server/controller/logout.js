@@ -1,7 +1,7 @@
 require('dotenv').config();
 
 module.exports = {
-  logout: (req, res) => {
+  logout: async (req, res) => {
     res
       .clearCookie('accessToken', {
         httpOnly: true,

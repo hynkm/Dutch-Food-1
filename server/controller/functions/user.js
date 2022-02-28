@@ -64,12 +64,12 @@ const authorized = (accessToken) => {
         }
       }
 
-      const userData = await user.findOne({ where: { userId: accessToken.userId } });
-      const match = await bcrypt.compare(req.body.password, userData.dataValues.password);
-      if (!match) {
-        resObject.code = 400;
-        throw '비밀번호를 잘못 입력하였습니다';
-      }
+      // const userData = await user.findOne({ where: { userId: accessToken.userId } });
+      // const match = await bcrypt.compare(req.body.password, userData.dataValues.password);
+      // if (!match) {
+      //   resObject.code = 400;
+      //   throw '비밀번호를 잘못 입력하였습니다';
+      // }
       
       await user
         .update(req.body, {
@@ -162,12 +162,12 @@ const authorized = (accessToken) => {
         //   return resObject;
         // }
   
-        const userData = await user.findOne({ where: { userId: accessToken.userId } });
-        const match = await bcrypt.compare(req.body.password, userData.dataValues.password);
-        if (!match) {
-          resObject.code = 400;
-          throw '비밀번호를 잘못 입력하였습니다';
-        }
+        // const userData = await user.findOne({ where: { userId: accessToken.userId } });
+        // const match = await bcrypt.compare(req.body.password, userData.dataValues.password);
+        // if (!match) {
+        //   resObject.code = 400;
+        //   throw '비밀번호를 잘못 입력하였습니다';
+        // }
   
         await user
           .update(
