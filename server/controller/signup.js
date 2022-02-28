@@ -11,11 +11,11 @@ module.exports = {
       .then((data) => {
         if (data) {
           return res
-            .status(200)
+            .status(404)
             .json({ success: false, message: '사용이 불가능한 이메일입니다' });
         } else {
           return res
-            .status(404)
+            .status(200)
             .json({ success: true, message: '사용이 가능한 이메일입니다' });
         }
       })
@@ -25,17 +25,16 @@ module.exports = {
   nicknameCheck: (req, res) => {
     const { nickname } = req.query;
 
-
     user
-      .findOne({ where: { nickname } })
+      .findOne({ where: { nickname: nickname } })
       .then((data) => {
         if (data) {
           return res
-            .status(200)
+            .status(404)
             .json({ success: false, message: '사용이 불가능한 별명입니다' });
         } else {
           return res
-            .status(404)
+            .status(200)
             .json({ success: true, message: '사용이 가능한 별명입니다' });
         }
       })
