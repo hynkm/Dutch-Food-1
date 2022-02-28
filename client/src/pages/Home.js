@@ -72,7 +72,7 @@ const IconArrow = styled.div`
     left: -16px;
     color: rgba(0, 0, 0, 0.5);
     transform: scale(1);
-    animation: ${moveArrow} 2s 10s infinite;
+    animation: ${moveArrow} 2s 5s infinite;
   }
 `;
 // transform: scale(1);
