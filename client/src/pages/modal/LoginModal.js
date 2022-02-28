@@ -2,10 +2,11 @@ import axios from 'axios';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import kakaoIcon from '../../assets/icons/kakao_login_large_wide.png';
+//import GoogleLoginBtn from '../oauth/React_GoogleLogin';
+import googleLogo from '../../assets/icons/google-logo.jpeg';
 
-import { setCookie, getCookie, removeCookie } from '../../components/Cookie';
+import { setCookie } from '../../components/Cookie';
 
-//* styled components - start
 const LoginInputBox = styled.input`
   width: 260px;
   height: 40px;
@@ -73,13 +74,43 @@ const ModalSNS = styled.div`
   margin: 0px 16px;
   font-size: 15px;
 `;
-const KakoIcon = styled.img`
-  width: 260px;
-  height: 35px;
-  margin-left: 15px;
+const SocialIcon = styled.img`
+  width: 250px;
+  height: 37px;
+  margin-left: 25px;
+  border-radius: 5px;
+  margin-top: 3px;
+  box-shadow: 1px 1px 1px 1px #dadce0;
   cursor: pointer;
   &:hover {
-    box-shadow: 1px 1px 1px 1px #dadce0;
+    transform: scale(1.02);
+  }
+`;
+
+const SocialIconGoogle = styled.div`
+  width: 250px;
+  height: 35px;
+  color: black;
+  text-align: center;
+  line-height: 35px;
+  margin-left: 25px;
+  border-radius: 5px;
+  margin-top: 1px;
+  box-shadow: 1px 1px 1px 2px #dadce0;
+  position: relative;
+  font-size: 14px;
+  font-weight: 400;
+
+  cursor: pointer;
+  > .logo {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    left: 11px;
+    top: 9px;
+  }
+  &:hover {
+    transform: scale(1.02);
   }
 `;
 
@@ -109,20 +140,24 @@ const AletModalView = styled.div`
   align-items: center;
 
   > div.AletBtn {
-    width: 50%;
+    width: 40%;
     height: 30px;
     border-radius: 10px;
-    background-color: #708090;
     text-align: center;
     line-height: 30px;
-    color: white;
+    background-color: #e8f3ff;
+    border: #90c2ff;
+    color: #90c2ff;
+    box-shadow: 1px 1px 1px 1px #dadce0;
     cursor: pointer;
+    &:hover {
+      transform: scale(1.1);
+    }
   }
   > div.AletMsg {
     color: #dc143c;
   }
 `;
-//* styled components -end
 
 function LoginModal({ setIsLoginCheck, handleCloseModal }) {
   const [loginUserInfo, setLoginUserInfo] = useState({
@@ -184,6 +219,13 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
     handleCloseModal();
   };
 
+  const handleGoogleLogin = () => {
+    window.location.assign(
+      `https://accounts.google.com/o/oauth2/v2/auth?client_id=${process.env.REACT_APP_GOOGLE_CLIENT_ID}&redirect_uri=${process.env.REACT_APP_GOOGLE_REDIRECT_URI}&response_type=token&scope=https://www.googleapis.com/auth/userinfo.email`
+    );
+    handleCloseModal();
+  };
+
   return (
     <>
       <div className="inputBox">
@@ -206,7 +248,11 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
       <div>
         <LineSNSLogin>또는</LineSNSLogin>
         <ModalSNS>SNS계정 간편로그인</ModalSNS>
-        <KakoIcon src={kakaoIcon} onClick={handleKakaoLogin} />
+        <SocialIcon src={kakaoIcon} onClick={handleKakaoLogin} />
+        <SocialIconGoogle onClick={handleGoogleLogin}>
+          <img src={googleLogo} className="logo" alt="profile" />
+          &nbsp;&nbsp;&nbsp; 구글 로그인
+        </SocialIconGoogle>
       </div>
       {isAletModal && (
         <AletModlaBack>

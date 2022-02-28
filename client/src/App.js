@@ -9,7 +9,8 @@ import {
 import './App.css';
 import Main from './pages/Main';
 import Home from './pages/Home';
-import OAuthKakao from './pages/oauth/OAuthKakao';
+import OauthKakao from './pages/oauth/OauthKakao';
+import OauthGoogle from './pages/oauth/OauthGoogle';
 import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
@@ -97,7 +98,11 @@ function App() {
         />
         <Route
           path="/kakao/oauth"
-          element={<OAuthKakao setIsLoginCheck={setIsLoginCheck} />}
+          element={<OauthKakao setIsLoginCheck={setIsLoginCheck} />}
+        />
+        <Route
+          path="/google/oauth"
+          element={<OauthGoogle setIsLoginCheck={setIsLoginCheck} />}
         />
         <Route
           path="/createpost"

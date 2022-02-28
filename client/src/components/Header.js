@@ -32,7 +32,12 @@ function Header({ setIsLoginCheck, isLoginCheck }) {
   return (
     <>
       <HeaderBack>
-        <img className="logo" src={logo} onClick={() => navigate('/main')} />
+        <img
+          className="logo"
+          src={logo}
+          onClick={() => navigate('/main')}
+          style={{ cursor: 'pointer' }}
+        />
 
         <button
           onClick={() => setIsLoginCheck(!isLoginCheck)}

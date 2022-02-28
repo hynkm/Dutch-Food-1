@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { setCookie } from '../../components/Cookie';
 
-function OAuthKakao({ setIsLoginCheck }) {
+function OauthKakao({ setIsLoginCheck }) {
   const navigate = useNavigate();
   let code = new URL(window.location.href).searchParams.get('code');
 
@@ -26,4 +26,4 @@ function OAuthKakao({ setIsLoginCheck }) {
   return <div>카카오 로그인중</div>;
 }
 
-export default OAuthKakao;
+export default OauthKakao;

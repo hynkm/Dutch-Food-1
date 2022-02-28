@@ -25,10 +25,42 @@ const SignupInputBox = styled.input`
   }
 `;
 
+const CheckBtn = styled.div`
+  background-color: #dcdcdc;
+  color: #808080;
+  text-align: center;
+  letter-spacing: 1px;
+  line-height: 19px;
+  right: 20px;
+  top: 107px;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  padding: 3px;
+  width: 75px;
+  height: 25px;
+  margin-top: 14px;
+  margin-right: 22px;
+  box-shadow: 2px 1px 2px 1px #dadce0;
+  font-size: 13px;
+  cursor: pointer;
+  &:active {
+    box-shadow: 1px 1px 1px 0px #dadce0;
+    position: relative;
+    right: -1px;
+    top: 1px;
+  }
+  &:hover {
+    border: 1px solid;
+    background-color: #708090;
+    color: white;
+  }
+`;
+
 const SignupMsg = styled.div`
   margin-left: 15px;
   font-size: 12px;
   color: #5f9ea0;
+
   &.green {
     color: green;
   }
@@ -98,29 +130,34 @@ const SignupMiniModlaBack = styled.div`
 `;
 
 const SignupMiniModlaView = styled.div`
-  width: 250px;
-  height: 200px;
+  width: 210px;
+  height: 120px;
   background-color: white;
-  border-radius: 3px;
+  border-radius: 10px;
   position: relative;
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
   text-align: center;
   align-items: center;
-  font-size: 20px;
-  text-align: left;
+  font-size: 15px;
+  padding: 20px;
+  text-align: center;
+  white-space: pre-wrap;
   > div.signupMiniModalBtn {
+    margin-top: 10px;
     width: 30%;
     height: 30px;
     border-radius: 3px;
-    background-color: #708090;
+    background-color: #e8f3ff;
+    border: #90c2ff;
+    color: #90c2ff;
     text-align: center;
     line-height: 30px;
     cursor: pointer;
-    color: white;
+    box-shadow: 1px 1px 1px 1px #dadce0;
     &:hover {
-      box-shadow: 1px 1px 1px 1px #dadce0;
+      transform: scale(1.1);
     }
   }
 `;
@@ -145,6 +182,8 @@ function SignupModal({ loginModalOpen }) {
     msgPasswordConfirm: '비밀번호를 재입력해주세요.',
     isNickname: false,
     msgNickname: '닉네임을 6글자 이내로 입력해주세요.',
+    isEmailCheck: false,
+    isNicknameCheck: false,
   });
 
   const handleInputEmail = (key) => (e) => {
@@ -156,18 +195,21 @@ function SignupModal({ loginModalOpen }) {
     if (emailReplace.test(value)) {
       setValidityCheck({
         ...validityCheck,
-        isEmail: true,
-        msgEmail: '사용 가능한 이메일 입니다.',
+        isEmailCheck: true,
+        isEmail: false,
+        msgEmail: '이메일 중복확인을 해주세요.',
       });
     } else if (value.length === 0) {
       setValidityCheck({
         ...validityCheck,
+        isEmailCheck: false,
         isEmail: false,
         msgEmail: '이메일을 입력해주세요.',
       });
     } else {
       setValidityCheck({
         ...validityCheck,
+        isEmailCheck: false,
         isEmail: false,
         msgEmail: '올바른 이메일 형식이 아닙니다.',
       });
@@ -216,20 +258,23 @@ function SignupModal({ loginModalOpen }) {
     if (nicknameReplace.test(value)) {
       setValidityCheck({
         ...validityCheck,
+        isNicknameCheck: false,
         isNickname: false,
-        msgNickname: '특수문자,띄어쓰기를 제외해주세요.',
+        msgNickname: '특수문자,자음,모음,띄어쓰기를 제외해주세요.',
       });
     } else if (value.length === 0) {
       setValidityCheck({
         ...validityCheck,
+        isNicknameCheck: false,
         isNickname: false,
         msgNickname: '닉네임을 6글자 이내로 입력해주세요.',
       });
     } else {
       setValidityCheck({
         ...validityCheck,
-        isNickname: true,
-        msgNickname: '사용 가능한 닉네임입니다.',
+        isNicknameCheck: true,
+        isNickname: false,
+        msgNickname: '닉네임 중복확인을 해주세요.',
       });
     }
     setSignupUserInfo({ ...signupUserInfo, [key]: value });
@@ -292,6 +337,68 @@ function SignupModal({ loginModalOpen }) {
     setIsTermsModal(!isTermsModal);
   };
 
+  const handleEmailCheck = () => {
+    if (
+      !validityCheck.isEmailCheck ||
+      validityCheck.isEmail ||
+      signupUserInfo.email.length === 0
+    ) {
+      return;
+    } else {
+      axios
+        .post('url', signupUserInfo.email, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setValidityCheck({
+            ...validityCheck,
+            isEmail: true,
+            msgEmail: '사용 가능한 이메일입니다.',
+          });
+        })
+        .catch((err) => {
+          setValidityCheck({
+            ...validityCheck,
+            isEmail: false,
+            msgEmail: '중복된 이메일입니다.',
+          });
+          console.log(err, '이메일 중복체크 err');
+        });
+    }
+  };
+
+  const handleNicknameCheck = () => {
+    if (
+      !validityCheck.isNicknameCheck ||
+      validityCheck.isNickname ||
+      signupUserInfo.nickname.length === 0
+    ) {
+      return;
+    } else {
+      axios
+        .post('url', signupUserInfo.nickname, {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+        .then((res) => {
+          setValidityCheck({
+            ...validityCheck,
+            isNickname: true,
+            msgNickname: '사용 가능한 닉네임입니다.',
+          });
+        })
+        .catch((err) => {
+          setValidityCheck({
+            ...validityCheck,
+            isNickname: false,
+            msgNickname: '중복된 닉네임입니다.',
+          });
+          console.log(err, '닉네임중복체크 err');
+        });
+    }
+  };
+
   const handleSignup = () => {
     if (
       !(
@@ -317,7 +424,7 @@ function SignupModal({ loginModalOpen }) {
         .post('http://localhost:8080/', signupUserInfo, {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
-        }) //헤더 추가하기
+        })
         .then((res) => {
           setSignupMiniModal({
             open: true,
@@ -325,18 +432,7 @@ function SignupModal({ loginModalOpen }) {
             msg: '회원가입에 성공하셨습니다. 로그인을 진행해주세요.',
           });
         })
-        .catch(
-          (err) =>
-            //중복체크 미통과시 확인하라는 모달창
-            // 1. 이메일 2. 닉네임
-            console.log(err, '회원가입 err'),
-          setSignupMiniModal({
-            open: true,
-            is: false,
-            msg: '이메일 아이디 중복',
-          })
-          // 이메일, 닉네임 중복시 유효성검사 메세지에 중복이라는 문구 or 모달창에 문구
-        );
+        .catch((err) => console.log(err, '회원가입 err'));
     }
   };
   const [signupMiniModal, setSignupMiniModal] = useState({
@@ -356,12 +452,16 @@ function SignupModal({ loginModalOpen }) {
 
   return (
     <div>
-      <SignupInputBox
-        type="email"
-        onChange={handleInputEmail('email')}
-        placeholder="이메일"
-        value={signupUserInfo.email}
-      ></SignupInputBox>
+      <div style={{ display: 'flex' }}>
+        <SignupInputBox
+          type="email"
+          onChange={handleInputEmail('email')}
+          placeholder="이메일"
+          value={signupUserInfo.email}
+        ></SignupInputBox>
+        <CheckBtn onClick={handleEmailCheck}>중복확인</CheckBtn>
+      </div>
+
       <SignupMsg
         className={
           validityCheck.isEmail
@@ -407,13 +507,16 @@ function SignupModal({ loginModalOpen }) {
       >
         {validityCheck.msgPasswordConfirm}
       </SignupMsg>
-      <SignupInputBox
-        type="text"
-        placeholder="닉네임"
-        maxLength={6}
-        onChange={handleInputNickname('nickname')}
-        value={signupUserInfo.nickname}
-      ></SignupInputBox>
+      <div style={{ display: 'flex' }}>
+        <SignupInputBox
+          type="text"
+          placeholder="닉네임"
+          maxLength={6}
+          onChange={handleInputNickname('nickname')}
+          value={signupUserInfo.nickname}
+        ></SignupInputBox>
+        <CheckBtn onClick={handleNicknameCheck}>중복확인</CheckBtn>
+      </div>
       <SignupMsg
         className={
           validityCheck.isNickname
