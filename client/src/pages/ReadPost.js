@@ -98,7 +98,7 @@ const ReadPost = (props) => {
     console.log('comment리스트를 불러옵니다.');
 
     axios({
-      // url: url + `/comment/${props.currentPost.id}`,
+      // url: url + `/comment/post/${props.currentPost.id}`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
