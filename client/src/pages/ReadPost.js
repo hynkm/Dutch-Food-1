@@ -64,40 +64,41 @@ const ReadPost = (props) => {
     {
       id: 1,
       nickname: '닉네임일코딩',
-      content: '양념순살 1마리 같이 주문시켜주세요!',
-      date: '2022.03.01.17:31',
+      comment_content: '양념순살 1마리 같이 주문시켜주세요!',
+      created_at: '2022.03.01.17:31',
     },
     {
       id: 2,
       nickname: '닉네임이코딩',
-      content: '양념순살 2마리 같이 주문시켜주세요!',
-      date: '2022.03.02.17:32',
+      comment_content: '양념순살 2마리 같이 주문시켜주세요!',
+      created_at: '2022.03.02.17:32',
     },
     {
       id: 3,
       nickname: '닉네임삼코딩',
-      content: '양념순살 3마리 같이 주문시켜주세요!',
-      date: '2022.03.03.17:33',
+      comment_content: '양념순살 3마리 같이 주문시켜주세요!',
+      created_at: '2022.03.03.17:33',
     },
     // {
     //   id: 4,
     //   nickname: '닉네임사코딩',
     //   content: '양념순살 4마리 같이 주문시켜주세요!',
-    //   date: '2022.03.04.17:34',
+    //   created_at: '2022.03.04.17:34',
     // },
     {
       id: 5,
       nickname: '닉네임오코딩',
       content: '양념순살 5마리 같이 주문시켜주세요!',
-      date: '2022.03.05.17:35',
+      created_at: '2022.03.05.17:35',
     },
   ]);
 
   // 신청댓글 리스트를 GET 요청
   useEffect(() => {
     console.log('comment리스트를 불러옵니다.');
+
     axios({
-      // url: url + `/comment${props.currentPost.id}`,
+      // url: url + `/comment/post/${props.currentPost.id}`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -201,14 +202,19 @@ const ReadPost = (props) => {
           'Content-Type': 'application/json',
         },
         data: {
-          id: props.currentPost.id,
-          comment_nickname: props.userInfo.nickname,
+          post_id: props.currentPost.id,
+          applicant_id: props.userInfo.id,
           comment_content: textareaContent,
         },
         withCredentials: true,
-      }).then(() => {
-        console.log('신청 완료');
-      });
+      })
+        .then((res) => {
+          console.log('신청 하고 응답옴');
+          console.log(res);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
     } else {
       console.log('신청자 세부내용 입력값이 없음');
       openBlankAlertModalHandler();
@@ -231,7 +237,7 @@ const ReadPost = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log(res.data);
+        console.log(res);
         navigate('/main');
       })
       .catch((err) => console.log(err));
@@ -249,7 +255,7 @@ const ReadPost = (props) => {
     })
       .then((res) => {
         console.log('신청댓글 삭제 요청에 대한 응답이 옴');
-        console.log(res.data);
+        console.log(res);
         navigate('/readpost');
       })
       .catch((err) => console.log(err));
@@ -324,7 +330,7 @@ const ReadPost = (props) => {
           <TitleBoxDiv>
             <TitleDiv>{props.currentPost.title}</TitleDiv>
             <NicknameSpan>{props.userInfo.nickname}</NicknameSpan>
-            <TimeSpan>{props.currentPost.date}</TimeSpan>
+            <TimeSpan>{props.currentPost.created_at}</TimeSpan>
           </TitleBoxDiv>
           <ContentTextarea
             value={props.currentPost.content}
@@ -401,7 +407,7 @@ const ReadPost = (props) => {
                       {comment.nickname}
                     </CommentApplicantNickDiv>
                     <CommentApplicantTimeDiv>
-                      {comment.date}
+                      {comment.created_at}
                     </CommentApplicantTimeDiv>
                     {props.userInfo.nickname === comment.nickname ||
                     props.userInfo.nickname === props.currentPost.nickname ? (
