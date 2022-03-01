@@ -34,7 +34,7 @@ import {
 } from '../components/EditPostComponents';
 import Header from '../components/Header';
 
-// let url = "https://localhost:4000";
+let url = 'https://localhost:3002';
 
 const CreatePost = (props) => {
   const [inputTitle, setInputTitle] = useState('');
@@ -137,7 +137,7 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        // url: url + `/post/${props.currentPost.id}`,
+        url: url + `/post/${props.currentPost.id}`,
         method: 'patch',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,

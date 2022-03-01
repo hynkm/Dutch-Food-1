@@ -57,7 +57,9 @@ const NavMenuBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   word-break: keep-all;
-  z-index: 960;
+
+  z-index: 15;
+
   &.loginTrue {
     height: 170px;
   }
