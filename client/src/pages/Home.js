@@ -55,7 +55,6 @@ const StartBtn = styled.div`
 const moveArrow = keyframes`
      0% {
          bottom: 20px;
-         
      }
      100%{
          bottom: 0px;
