@@ -23,7 +23,7 @@ sequelize
 
 app.use(
   cors({
-    origin: true,
+    origin: ['http://localhost:3000'],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'authorization'],
@@ -42,7 +42,7 @@ app.use('/logout', logoutPage);
 app.use('/main', mainPage);
 app.use('/mypage', mypagePage);
 app.use('/oauth', oauthPage);
-app.use('/siginup', signupPage);
+app.use('/signup', signupPage);
 
 // let server = app.listen(HTTPS_PORT);
 // // eslint-disable-next-line no-console

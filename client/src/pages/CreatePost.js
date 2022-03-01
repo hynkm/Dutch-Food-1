@@ -34,7 +34,7 @@ import {
 } from '../components/CreatePostComponents';
 import Header from '../components/Header';
 
-// let url = "https://localhost:4000";
+let url = 'https://localhost:3002';
 
 const CreatePost = (props) => {
   // 입력창 상태관리
@@ -126,7 +126,7 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        // url: url + '/post',
+        url: url + '/post',
         method: 'post',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,

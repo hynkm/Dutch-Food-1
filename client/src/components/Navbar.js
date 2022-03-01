@@ -54,6 +54,7 @@ const NavMenuBox = styled.div`
   display: flex;
   justify-content: space-evenly;
   word-break: keep-all;
+  z-index: 15;
   &.loginTrue {
     height: 170px;
   }
@@ -267,7 +268,9 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
             <NavMenuList onClick={() => navigate('/createpost')}>
               게시글작성
             </NavMenuList>
-            <NavMenuList onClick={() => navigate('/mypage')}>마이페이지</NavMenuList>
+            <NavMenuList onClick={() => navigate('/mypage')}>
+              마이페이지
+            </NavMenuList>
             <NavMenuList onClick={handleLogoutModal}>로그아웃</NavMenuList>
           </NavMenuBox>
         ) : (
