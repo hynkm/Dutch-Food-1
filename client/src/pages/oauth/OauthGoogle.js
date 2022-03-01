@@ -15,7 +15,7 @@ function OauthGoogle({ setIsLoginCheck }) {
     const code = hash.split('=')[1].split('&')[0];
 
     axios
-      .post('url', code, {
+      .post('http://localhost:8080/oauth/google', code, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then((res) => {

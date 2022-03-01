@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
 
+
 // 전체화면 100vh로 감싸주는 div
 export const OuterDiv = styled.div`
   display: flex;

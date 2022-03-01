@@ -169,6 +169,7 @@ function SignupModal({ loginModalOpen }) {
   //입력 이벤트
   //유효성검사
   //메세지
+  let url = 'http://localhost:8080';
   const [signupUserInfo, setSignupUserInfo] = useState({
     email: '',
     password: '',
@@ -348,10 +349,14 @@ function SignupModal({ loginModalOpen }) {
       return;
     } else {
       axios
-        .post(url + '/signup/emailCheck', signupUserInfo.email, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        })
+        .post(
+          url + '/signup/emailCheck',
+          { email: signupUserInfo.email },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           setValidityCheck({
             ...validityCheck,
@@ -379,10 +384,14 @@ function SignupModal({ loginModalOpen }) {
       return;
     } else {
       axios
-        .post(url, signupUserInfo.nickname, {
-          headers: { 'Content-Type': 'application/json' },
-          withCredentials: true,
-        })
+        .post(
+          url + '/signup/nicknameCheck',
+          { nickname: signupUserInfo.nickname },
+          {
+            headers: { 'Content-Type': 'application/json' },
+            withCredentials: true,
+          }
+        )
         .then((res) => {
           setValidityCheck({
             ...validityCheck,
@@ -423,7 +432,7 @@ function SignupModal({ loginModalOpen }) {
       });
     } else {
       axios
-        .post('http://localhost:8080/', signupUserInfo, {
+        .post(url + '/signup/signup', signupUserInfo, {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         })
@@ -531,8 +540,11 @@ function SignupModal({ loginModalOpen }) {
         {validityCheck.msgNickname}
       </SignupMsg>
       <Terms>
-        [사이트 약관]
-        <span style={{ fontSize: '10px', color: '#DC143C', marginLeft: '5px' }}>
+        <span onClick={handleTermsModalOpen}>[사이트 약관]</span>
+        <span
+          style={{ fontSize: '10px', color: '#DC143C', marginLeft: '5px' }}
+          onClick={handleTermsModalOpen}
+        >
           약관을 클릭하여 읽어보신 후 동의해주세요.
         </span>
         <div className="termsBox">

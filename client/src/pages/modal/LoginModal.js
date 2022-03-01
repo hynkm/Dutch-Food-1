@@ -2,7 +2,6 @@ import axios from 'axios';
 import { useState, useRef } from 'react';
 import styled from 'styled-components';
 import kakaoIcon from '../../assets/icons/kakao_login_large_wide.png';
-//import GoogleLoginBtn from '../oauth/React_GoogleLogin';
 import googleLogo from '../../assets/icons/google-logo.jpeg';
 
 import { setCookie } from '../../components/Cookie';
@@ -160,6 +159,7 @@ const AletModalView = styled.div`
 `;
 
 function LoginModal({ setIsLoginCheck, handleCloseModal }) {
+  let url = 'http://localhost:8080';
   const [loginUserInfo, setLoginUserInfo] = useState({
     email: '',
     password: '',
@@ -190,7 +190,7 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
       setIsAletModal(true);
     } else {
       axios
-        .post('url', loginUserInfo, {
+        .post(url + '/login', loginUserInfo, {
           headers: { 'Content-Type': 'application/json' },
         })
         //
