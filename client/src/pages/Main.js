@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
-import kakaoApiTestImg from '../assets/icons/지도테스트이미지.png';
 import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
-
 
 // 전체화면 100vh로 감싸주는 div
 export const OuterDiv = styled.div`
