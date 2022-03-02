@@ -5,8 +5,7 @@ export const OuterDiv = styled.div`
   flex-direction: column;
   align-items: center;
   width: 100%;
-  background-color: white;
-  margin-top: 1rem;
+  background-color: #f2f4f6;
   padding-bottom: 0.5rem;
 `;
 
@@ -20,8 +19,9 @@ export const PostSectionDiv = styled.div`
   padding-bottom: 0.5rem;
   text-align: center;
   line-height: 5vh;
-  border: solid 1px #90c2ff;
+  /* border: solid 1px #90c2ff; */
   border-radius: 5px;
+  background-color: white;
 `;
 
 export const TitleBoxDiv = styled.div`
@@ -64,7 +64,7 @@ export const ContentTextarea = styled.textarea`
   padding: 0.3rem;
   font-size: 1rem;
   border: 0;
-  border-bottom: solid 1px #90c2ff;
+  /* border-bottom: solid 1px #90c2ff; */
   resize: none;
 `;
 
@@ -189,6 +189,7 @@ export const BottomTextarea = styled.textarea`
   font-size: 1rem;
   padding: 0.3rem;
   border: solid 1px #90c2ff;
+  background-color: #f9fafb;
   resize: none;
 `;
 
@@ -248,7 +249,7 @@ export const DeleteButton = styled.button`
   }
 `;
 
-export const CommentSectionDiv = styled.button`
+export const CommentSectionDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -258,7 +259,7 @@ export const CommentSectionDiv = styled.button`
   padding-bottom: 0.5rem;
   text-align: center;
   background-color: white;
-  border: solid 1px #90c2ff;
+  /* border: solid 1px #90c2ff; */
   border-radius: 5px;
 `;
 
@@ -267,7 +268,7 @@ export const CommentIndexDiv = styled.div`
   margin-top: 1%;
   font-size: 1.2rem;
   font-weight: bold;
-  border-bottom: solid 1px #90c2ff;
+  /* border-bottom: solid 1px #90c2ff; */
 `;
 
 export const CommentOuterDiv = styled.div`

@@ -10,6 +10,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import {
+  BodyDiv,
   OuterDiv,
   TopDiv,
   MainDiv,
@@ -190,86 +191,88 @@ const CreatePost = (props) => {
         setIsLoginCheck={props.setIsLoginCheck}
         isLoginCheck={props.isLoginCheck}
       />
-      <OuterDiv>
-        <TopDiv>게시글 수정</TopDiv>
-        <MainDiv>
-          <IndexBoxDiv>
-            <IndexDiv>제목</IndexDiv>
-            <IndexInput
-              name="title"
-              type="text"
-              maxLength="30"
-              value={inputTitle}
-              onChange={handleInputValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>도로명주소</IndexDiv>
-            <IndexInput
-              name="address"
-              type="text"
-              value={inputAddress}
-              onClick={openAddressModalHandler}
-              onChange={openAddressModalHandler}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>메뉴</IndexDiv>
-            <MenuSelectBox
-              value={selectMenu}
-              name="menu"
-              onChange={handleSelectValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>모집 인원</IndexDiv>
-            <SelectBoxNum
-              value={selectNum}
-              name="num"
-              onChange={handleSelectValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>전체 배달료</IndexDiv>
-            <IndexInput
-              name="fee"
-              type="number"
-              value={inputFee}
-              onChange={handleInputValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>입금받을 은행 및 계좌번호</IndexDiv>
-            <BankAccountBoxDiv>
-              <BankSelectBox
-                value={selectBank}
-                name="bank"
-                onChange={handleSelectValue}
-              />
-              <AccountInput
-                name="account"
-                type="number"
-                value={inputAccount}
+      <BodyDiv>
+        <OuterDiv>
+          <TopDiv>게시글 수정</TopDiv>
+          <MainDiv>
+            <IndexBoxDiv>
+              <IndexDiv>제목</IndexDiv>
+              <IndexInput
+                name="title"
+                type="text"
+                maxLength="30"
+                value={inputTitle}
                 onChange={handleInputValue}
               />
-            </BankAccountBoxDiv>
-          </IndexBoxDiv>
-          <ContentIndexBoxDiv>
-            <ContentIndexDiv>내용</ContentIndexDiv>
-            <ContentTextarea
-              name="content"
-              type="text"
-              value={textareaContent}
-              onChange={handleTextareaValue}
-            />
-          </ContentIndexBoxDiv>
-        </MainDiv>
-        <BottomDiv>
-          <CompleteButton onClick={postCompleteButton}>
-            수 정 완 료
-          </CompleteButton>
-        </BottomDiv>
-      </OuterDiv>
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>도로명주소</IndexDiv>
+              <IndexInput
+                name="address"
+                type="text"
+                value={inputAddress}
+                onClick={openAddressModalHandler}
+                onChange={openAddressModalHandler}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>메뉴</IndexDiv>
+              <MenuSelectBox
+                value={selectMenu}
+                name="menu"
+                onChange={handleSelectValue}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>모집 인원</IndexDiv>
+              <SelectBoxNum
+                value={selectNum}
+                name="num"
+                onChange={handleSelectValue}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>전체 배달료</IndexDiv>
+              <IndexInput
+                name="fee"
+                type="number"
+                value={inputFee}
+                onChange={handleInputValue}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>입금받을 은행 및 계좌번호</IndexDiv>
+              <BankAccountBoxDiv>
+                <BankSelectBox
+                  value={selectBank}
+                  name="bank"
+                  onChange={handleSelectValue}
+                />
+                <AccountInput
+                  name="account"
+                  type="number"
+                  value={inputAccount}
+                  onChange={handleInputValue}
+                />
+              </BankAccountBoxDiv>
+            </IndexBoxDiv>
+            <ContentIndexBoxDiv>
+              <ContentIndexDiv>내용</ContentIndexDiv>
+              <ContentTextarea
+                name="content"
+                type="text"
+                value={textareaContent}
+                onChange={handleTextareaValue}
+              />
+            </ContentIndexBoxDiv>
+          </MainDiv>
+          <BottomDiv>
+            <CompleteButton onClick={postCompleteButton}>
+              수 정 완 료
+            </CompleteButton>
+          </BottomDiv>
+        </OuterDiv>
+      </BodyDiv>
     </>
   );
 };

@@ -10,6 +10,7 @@ import axios from 'axios';
 import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import {
+  BodyDiv,
   OuterDiv,
   TopDiv,
   MainDiv,
@@ -177,76 +178,78 @@ const CreatePost = (props) => {
         setIsLoginCheck={props.setIsLoginCheck}
         isLoginCheck={props.isLoginCheck}
       />
-      <OuterDiv>
-        <TopDiv>게시글 작성</TopDiv>
-        <MainDiv>
-          <IndexBoxDiv>
-            <IndexDiv>제목</IndexDiv>
-            <IndexInput
-              name="title"
-              type="text"
-              maxLength="22"
-              placeholder="간단하게 작성해주세요."
-              onChange={handleInputValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>도로명주소</IndexDiv>
-            <IndexInput
-              name="address"
-              type="text"
-              placeholder="클릭 후 도로명주소 찾기"
-              value={inputAddress}
-              onClick={openAddressModalHandler}
-              onChange={openAddressModalHandler}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>메뉴</IndexDiv>
-            <MenuSelectBox name="menu" onChange={handleSelectValue} />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>모집 인원</IndexDiv>
-            <SelectBoxNum name="num" onChange={handleSelectValue} />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>전체 배달료</IndexDiv>
-            <IndexInput
-              name="fee"
-              type="number"
-              placeholder="숫자로만 입력해주세요. 예) 4000"
-              onChange={handleInputValue}
-            />
-          </IndexBoxDiv>
-          <IndexBoxDiv>
-            <IndexDiv>입금받을 은행 및 계좌번호</IndexDiv>
-            <BankAccountBoxDiv>
-              <BankSelectBox name="bank" onChange={handleSelectValue} />
-              <AccountInput
-                name="account"
-                type="number"
-                placeholder="숫자로만 입력 예) 3020429020091"
+      <BodyDiv>
+        <OuterDiv>
+          <TopDiv>게시글 작성</TopDiv>
+          <MainDiv>
+            <IndexBoxDiv>
+              <IndexDiv>제목</IndexDiv>
+              <IndexInput
+                name="title"
+                type="text"
+                maxLength="22"
+                placeholder="간단하게 작성해주세요."
                 onChange={handleInputValue}
               />
-            </BankAccountBoxDiv>
-          </IndexBoxDiv>
-          <ContentIndexBoxDiv>
-            <ContentIndexDiv>내용</ContentIndexDiv>
-            <ContentTextarea
-              name="content"
-              type="text"
-              placeholder="세부사항 및 브랜드 등의 정보를 적어주세요."
-              onChange={handleTextareaValue}
-            />
-          </ContentIndexBoxDiv>
-        </MainDiv>
-        <BottomDiv>
-          <CompleteButton onClick={postCompleteButton}>
-            {' '}
-            작 성 완 료{' '}
-          </CompleteButton>
-        </BottomDiv>
-      </OuterDiv>
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>도로명주소</IndexDiv>
+              <IndexInput
+                name="address"
+                type="text"
+                placeholder="클릭 후 도로명주소 찾기"
+                value={inputAddress}
+                onClick={openAddressModalHandler}
+                onChange={openAddressModalHandler}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>메뉴</IndexDiv>
+              <MenuSelectBox name="menu" onChange={handleSelectValue} />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>모집 인원</IndexDiv>
+              <SelectBoxNum name="num" onChange={handleSelectValue} />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>전체 배달료</IndexDiv>
+              <IndexInput
+                name="fee"
+                type="number"
+                placeholder="숫자로만 입력해주세요. 예) 4000"
+                onChange={handleInputValue}
+              />
+            </IndexBoxDiv>
+            <IndexBoxDiv>
+              <IndexDiv>입금받을 은행 및 계좌번호</IndexDiv>
+              <BankAccountBoxDiv>
+                <BankSelectBox name="bank" onChange={handleSelectValue} />
+                <AccountInput
+                  name="account"
+                  type="number"
+                  placeholder="숫자로만 입력 예) 3020429020091"
+                  onChange={handleInputValue}
+                />
+              </BankAccountBoxDiv>
+            </IndexBoxDiv>
+            <ContentIndexBoxDiv>
+              <ContentIndexDiv>내용</ContentIndexDiv>
+              <ContentTextarea
+                name="content"
+                type="text"
+                placeholder="세부사항 및 브랜드 등의 정보를 적어주세요."
+                onChange={handleTextareaValue}
+              />
+            </ContentIndexBoxDiv>
+          </MainDiv>
+          <BottomDiv>
+            <CompleteButton onClick={postCompleteButton}>
+              {' '}
+              작 성 완 료{' '}
+            </CompleteButton>
+          </BottomDiv>
+        </OuterDiv>
+      </BodyDiv>
     </>
   );
 };
