@@ -3,14 +3,26 @@ import styled from 'styled-components';
 
 // 위쪽 Styled-Component 아래쪽 Selectbox
 
-export const OuterDiv = styled.div`
+export const BodyDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
   /* justify-content: center; */
-  margin-top: 1%;
+  /* margin-top: 1%; */
   width: 100%;
   height: 100vh;
+  background-color: #f2f4f6; ;
+`;
+
+export const OuterDiv = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 97%;
+  height: 99%;
+  margin-top: 1%;
+  background-color: white;
+  border-radius: 5px;
 `;
 
 export const TopDiv = styled.div`
@@ -37,7 +49,7 @@ export const Select = styled.select`
   height: 100%;
   text-align: center;
   font-size: 1.2rem;
-  background-color: white;
+  background-color: #f9fafb;
   border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
@@ -76,6 +88,7 @@ export const IndexInput = styled.input`
   text-align: center;
   border: solid 1px #90c2ff;
   border-radius: 5px;
+  background-color: #f9fafb;
   ::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
@@ -93,7 +106,7 @@ export const BankSelect = styled.select`
   height: 100%;
   text-align: center;
   font-size: 1.2rem;
-  background-color: white;
+  background-color: #f9fafb;
   border: solid 1px #90c2ff;
   border-radius: 5px;
   cursor: pointer;
@@ -108,6 +121,7 @@ export const AccountInput = styled.input`
   margin-top: 0;
   border: solid 1px #90c2ff;
   border-radius: 5px;
+  background-color: #f9fafb;
   ::-webkit-inner-spin-button {
     appearance: none;
     -moz-appearance: none;
@@ -136,6 +150,7 @@ export const ContentTextarea = styled.textarea`
   border: solid 1px #90c2ff;
   border-radius: 5px;
   resize: none;
+  background-color: #f9fafb; ;
 `;
 
 export const BottomDiv = styled.div`

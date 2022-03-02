@@ -91,6 +91,7 @@ function App() {
           path="/main"
           element={
             <Main
+              setCurrentPost={setCurrentPost}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
             />

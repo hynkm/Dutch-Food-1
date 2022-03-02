@@ -4,19 +4,23 @@ export const OuterDiv = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 1%;
+  /* margin-top: 1%; */
   width: 100%;
   height: 100vh;
+  background-color: #f2f4f6; ;
 `;
 
 export const TopDiv = styled.div`
-  width: 98%;
-  height: 5%;
+  width: 96.05%;
+  height: 4%;
   margin-top: 1%;
   text-align: center;
   font-weight: bold;
   font-size: 1.5rem;
   line-height: 5vh;
+  background-color: white;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 `;
 
 export const MainDiv = styled.div`
@@ -25,7 +29,7 @@ export const MainDiv = styled.div`
   align-items: center;
   width: 98%;
   height: 95%;
-  margin-top: 1%;
+  /* margin-top: 1%; */
   margin-bottom: 1%;
 `;
 
@@ -35,9 +39,11 @@ export const MyListOuterDiv = styled.div`
   align-items: center;
   width: 98%;
   height: 40%;
-  margin-top: 1%;
-  border: solid 1px #90c2ff;
-  border-radius: 5px;
+  /* margin-top: 1%; */
+  background-color: white;
+  /* border: solid 1px #90c2ff; */
+  border-bottom: 5px;
+  margin-bottom: 7px;
 `;
 
 export const MyListTitleDiv = styled.div`
@@ -83,7 +89,7 @@ export const MyListBoxDiv = styled.div`
   overflow-y: scroll;
   &::-webkit-scrollbar {
     width: 8px;
-    background-color: #c9e2ff;
+    background-color: #f2f4f6;
     border-radius: 5px;
     z-index: 999;
   }
@@ -142,7 +148,8 @@ export const MyInformationOuterDiv = styled.div`
   height: 18%;
   margin-top: 1%;
   margin-bottom: 1%;
-  border: solid 1px #90c2ff;
+  background-color: white;
+  /* border: solid 1px #90c2ff; */
   border-radius: 5px;
 `;
 
@@ -206,6 +213,7 @@ export const EditNicknameInput = styled.input`
   margin-top: 1%;
   margin-right: 5%;
   margin-bottom: 1%;
+  background-color: #f2f4f6;
   border: solid 2px #90c2ff;
 `;
 

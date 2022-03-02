@@ -31,6 +31,25 @@ export default function MainPageMap(props) {
             map: map,
             position: coords,
           });
+
+          // 마커가 지도 위에 표시되도록 설정합니다
+          marker.setMap(map);
+
+          var bounds = map.getBounds();
+
+          // 영역정보의 남서쪽 정보를 얻어옵니다
+          var swLatlng = bounds.getSouthWest();
+
+          // 영역정보의 북동쪽 정보를 얻어옵니다
+          var neLatlng = bounds.getNorthEast();
+
+          console.log(bounds);
+          props.setCurrentBoundLocation([
+            swLatlng.La,
+            swLatlng.Ma,
+            neLatlng.La,
+            neLatlng.Ma,
+          ]);
         }
       });
     });
