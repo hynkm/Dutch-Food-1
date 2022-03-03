@@ -1,18 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
-<<<<<<< HEAD
-import kakaoApiTestImg from '../assets/icons/지도테스트이미지.png';
-=======
->>>>>>> a7a49efc08e69b8a89d01afac8ff198bd69c3d3a
 import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
 
-<<<<<<< HEAD
-
-=======
->>>>>>> a7a49efc08e69b8a89d01afac8ff198bd69c3d3a
 // 전체화면 100vh로 감싸주는 div
 export const OuterDiv = styled.div`
   display: flex;
@@ -25,7 +17,6 @@ export const OuterDiv = styled.div`
 export const MapDiv = styled.div`
   width: 100%;
   height: 100%;
-  border: solid 1px blue;
 `;
 
 export const PostDiv = styled.div`

@@ -18,7 +18,10 @@ const LoginInputBox = styled.input`
   border-left: 0px solid #eee;
   border-right: 0px solid #eee;
   border-bottom: 3px solid #eee;
+
   &:focus {
+    transition: 0.5s;
+    width: 260px;
     border-bottom: 3px solid #b0c4de;
   }
   ::placeholder {
@@ -236,6 +239,7 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
           onKeyPress={enterKey}
           ref={refInputEmaile}
         />
+
         <LoginInputBox
           type="password"
           placeholder="비밀번호"
