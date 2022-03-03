@@ -53,7 +53,7 @@ import {
 import Header from '../components/Header';
 import axios from 'axios';
 
-// let url = "https://localhost:4000";
+let url = 'https://localhost:3002';
 
 const MyPage = (props) => {
   const navigate = useNavigate();
@@ -324,7 +324,7 @@ const MyPage = (props) => {
     console.log('내가 쓴 게시물과 신청댓글을 불러옵니다.');
 
     axios({
-      // url: url + `/post/${props.userInfo.user_id}`,
+      url: url + `/post/${props.userInfo.user_id}`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -366,7 +366,7 @@ const MyPage = (props) => {
   // 전체 신청댓글 리스트 불러오기
   useEffect(() => {
     axios({
-      // url: url + `/comment`,
+      url: url + `/comment`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -545,7 +545,7 @@ const MyPage = (props) => {
     console.log('내가 쓴 신청댓글 클릭');
 
     axios({
-      // url: url + `/post/${comment.post_id}`,
+      url: url + `/post/${comment.post_id}`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -569,7 +569,7 @@ const MyPage = (props) => {
 
     if (inputNickname.length > 0) {
       axios({
-        // url: url + `/users/${props.userInfo.user_id}`,
+        url: url + `/users/${props.userInfo.user_id}`,
         method: 'patch',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,
@@ -599,7 +599,7 @@ const MyPage = (props) => {
     console.log('비밀번호 변경 완료 버튼 클릭');
 
     axios({
-      // url: url + `/users/password/${props.userInfo.user_id}`,
+      url: url + `/users/password/${props.userInfo.user_id}`,
       method: 'patch',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -631,7 +631,7 @@ const MyPage = (props) => {
     console.log('탈퇴확인 모달창에서 탈퇴버튼 눌림');
 
     axios({
-      // url: url + `/users/${props.userInfo.user_id}`,
+      url: url + `/users/${props.userInfo.user_id}`,
       method: 'delete',
       withCredentials: true,
     })

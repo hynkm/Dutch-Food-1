@@ -3,6 +3,9 @@ import styled from 'styled-components';
 import axios from 'axios';
 import { createGlobalStyle } from 'styled-components';
 import { FiAlignJustify } from 'react-icons/fi';
+import { FaUserPlus } from 'react-icons/fa';
+import { BsFillPersonFill } from 'react-icons/bs';
+import { AiFillEdit, AiFillLock, AiFillUnlock } from 'react-icons/ai';
 import { removeCookie, getCookie } from './Cookie';
 import { useNavigate } from 'react-router-dom';
 
@@ -48,12 +51,13 @@ const NavMenuBox = styled.div`
   position: absolute;
   right: 0px;
   top: 70px;
-  transform: translateX(200px, 0);
+  /* transform: translateX(4px, 100px); */
   transition: 0.5s;
   flex-direction: column;
   display: flex;
   justify-content: space-evenly;
   word-break: keep-all;
+  z-index: 15;
   &.loginTrue {
     height: 170px;
   }
@@ -67,14 +71,17 @@ const NavMenuBox = styled.div`
 
 const NavMenuList = styled.div`
   color: white;
-  margin-left: 30px;
+  margin-left: 45px;
   font-family: 'IBM Plex Sans KR', sans-serif;
 
-  font-size: 25px;
+  font-size: 20px;
   line-height: 1.2;
   &:hover {
-    transform: scale(1.1);
     cursor: pointer;
+  }
+  > svg.icon {
+    position: absolute;
+    left: 14px;
   }
 `;
 
@@ -197,6 +204,7 @@ const LogoutModalBtn = styled.div`
 `;
 
 function Navbar({ setIsLoginCheck, isLoginCheck }) {
+  let url = 'http://localhost:8080';
   const [isSidebar, setIsSidebar] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
   const [isSignupModal, setIsSignupModal] = useState(false);
@@ -238,7 +246,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
     //로그아웃 여부 모달창 띄우고 확인 시 axios 요청
     //취소하면 모달창 다시 닫기
     axios
-      .get('url', {
+      .post(url + '/logout/logout', {
         headers: { withCredentials: true },
       })
       .then((res) => {
@@ -265,15 +273,28 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
         {isLoginCheck ? (
           <NavMenuBox className={isSidebar ? 'loginTrue' : 'NavMenuBoxClose'}>
             <NavMenuList onClick={() => navigate('/createpost')}>
+              <AiFillEdit className="icon" />
               게시글작성
             </NavMenuList>
-            <NavMenuList onClick={() => navigate('/mypage')}>마이페이지</NavMenuList>
-            <NavMenuList onClick={handleLogoutModal}>로그아웃</NavMenuList>
+            <NavMenuList onClick={() => navigate('/mypage')}>
+              <BsFillPersonFill className="icon" />
+              마이페이지
+            </NavMenuList>
+            <NavMenuList onClick={handleLogoutModal}>
+              <AiFillLock className="icon" />
+              로그아웃
+            </NavMenuList>
           </NavMenuBox>
         ) : (
           <NavMenuBox className={isSidebar ? '' : 'NavMenuBoxClose'}>
-            <NavMenuList onClick={loginModalOpen}>로그인</NavMenuList>
-            <NavMenuList onClick={signupModalOpen}>회원가입</NavMenuList>
+            <NavMenuList onClick={loginModalOpen}>
+              <AiFillUnlock className="icon" />
+              로그인
+            </NavMenuList>
+            <NavMenuList onClick={signupModalOpen}>
+              <FaUserPlus className="icon" />
+              회원가입
+            </NavMenuList>
           </NavMenuBox>
         )}
         {isLoginModal && (

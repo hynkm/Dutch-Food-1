@@ -5,13 +5,14 @@ import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../components/Cookie';
 
 function OauthKakao({ setIsLoginCheck }) {
+  let url = 'http://localhost:8080';
   const navigate = useNavigate();
   let code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
     axios
       //.get(`http://{서버주소}?code=${code}`) 퀴리 스트링
-      .post('url', code, {
+      .post(url + '/oauth/kakao', code, {
         headers: { 'Content-Type': 'application/json' },
       })
       .then((res) => {

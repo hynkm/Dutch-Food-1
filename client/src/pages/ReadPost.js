@@ -51,9 +51,10 @@ import {
   CancelAlertModalButton,
   DeleteAlertModalButton,
 } from '../components/ReadPostComponents';
+import { ReadPostMap } from '../components/Map';
 import axios from 'axios';
 
-// let url = "https://localhost:4000";
+let url = 'https://localhost:3002';
 
 const ReadPost = (props) => {
   const navigate = useNavigate();
@@ -98,7 +99,7 @@ const ReadPost = (props) => {
     console.log('comment리스트를 불러옵니다.');
 
     axios({
-      // url: url + `/comment/post/${props.currentPost.id}`,
+      url: url + `/comment/post/${props.currentPost.id}`,
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -365,7 +366,9 @@ const ReadPost = (props) => {
             <MapIndexDiv>
               배달받을 장소: {props.currentPost.address}
             </MapIndexDiv>
-            <MapDiv>KAKAO 지도 API 예정</MapDiv>
+            <MapDiv>
+              <ReadPostMap currentPost={props.currentPost} />
+            </MapDiv>
           </MapBoxDiv>
           <BottomDiv>
             <BottomIndexDiv>원하는 메뉴 및 세부사항</BottomIndexDiv>

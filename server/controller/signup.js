@@ -4,6 +4,7 @@ const { hashPassword } = require('./functions/security');
 
 module.exports = {
   emailCheck: (req, res) => {
+    console.log('확인');
     const { userEmail } = req.query;
 
     user
@@ -42,7 +43,6 @@ module.exports = {
   },
 
   signup: async (req, res) => {
-
     const { email, password, nickname } = req.body;
     const hashPw = await hashPassword(password);
 
