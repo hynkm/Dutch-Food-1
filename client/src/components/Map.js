@@ -4,6 +4,8 @@ const { kakao } = window;
 export default function MainPageMap(props) {
   // 게시물 올라온 모든 위치에 마커 표시하기
   useEffect(() => {
+    console.log('체크');
+    console.log(props.allPostList);
     // 지도를 담을 영역의 DOM 레퍼런스
     let mapContainer = document.getElementById('map');
     let mapOption = {

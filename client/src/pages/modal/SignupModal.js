@@ -440,6 +440,7 @@ function SignupModal({ loginModalOpen }) {
           withCredentials: true,
         })
         .then((res) => {
+          console.log('성공!!');
           setSignupMiniModal({
             open: true,
             is: true,
