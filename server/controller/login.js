@@ -9,7 +9,7 @@ const {
 
 module.exports = {
   login: async (req, res) => {
-    console.log(req);
+    console.log(req.body);
     const { email, password } = req.body;
     if (isAdmin) {
       if (!email)

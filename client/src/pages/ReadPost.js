@@ -54,7 +54,7 @@ import {
 import { ReadPostMap } from '../components/Map';
 import axios from 'axios';
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
 
 const ReadPost = (props) => {
   const navigate = useNavigate();
@@ -399,39 +399,41 @@ const ReadPost = (props) => {
             )}
           </BottomDiv>
         </PostSectionDiv>
-        <CommentSectionDiv>
-          <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
-          <CommentOuterDiv>
-            {commentList.map((comment) => {
-              return (
-                <CommentBoxDiv key={comment.id}>
-                  <CommentApplicantBoxDiv>
-                    <CommentApplicantNickDiv>
-                      {comment.nickname}
-                    </CommentApplicantNickDiv>
-                    <CommentApplicantTimeDiv>
-                      {comment.created_at}
-                    </CommentApplicantTimeDiv>
-                    {props.userInfo.nickname === comment.nickname ||
-                    props.userInfo.nickname === props.currentPost.nickname ? (
-                      <CommentApplicantDeleteButton
-                        onClick={() =>
-                          openCommentDeleteAlertModalHandler(comment.id)
-                        }
-                      >
-                        삭제
-                      </CommentApplicantDeleteButton>
-                    ) : null}
-                  </CommentApplicantBoxDiv>
-                  <CommentContentTextarea
-                    readOnly
-                    value={comment.content}
-                  ></CommentContentTextarea>
-                </CommentBoxDiv>
-              );
-            })}
-          </CommentOuterDiv>
-        </CommentSectionDiv>
+        {commentList.length === 0 ? null : (
+          <CommentSectionDiv>
+            <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
+            <CommentOuterDiv>
+              {commentList.map((comment) => {
+                return (
+                  <CommentBoxDiv key={comment.id}>
+                    <CommentApplicantBoxDiv>
+                      <CommentApplicantNickDiv>
+                        {comment.nickname}
+                      </CommentApplicantNickDiv>
+                      <CommentApplicantTimeDiv>
+                        {comment.created_at}
+                      </CommentApplicantTimeDiv>
+                      {props.userInfo.nickname === comment.nickname ||
+                      props.userInfo.nickname === props.currentPost.nickname ? (
+                        <CommentApplicantDeleteButton
+                          onClick={() =>
+                            openCommentDeleteAlertModalHandler(comment.id)
+                          }
+                        >
+                          삭제
+                        </CommentApplicantDeleteButton>
+                      ) : null}
+                    </CommentApplicantBoxDiv>
+                    <CommentContentTextarea
+                      readOnly
+                      value={comment.content}
+                    ></CommentContentTextarea>
+                  </CommentBoxDiv>
+                );
+              })}
+            </CommentOuterDiv>
+          </CommentSectionDiv>
+        )}
       </OuterDiv>
     </>
   );

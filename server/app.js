@@ -12,6 +12,8 @@ const mypagePage = require('./router/mypagePage');
 const oauthPage = require('./router/oauthPage');
 const signupPage = require('./router/signupPage');
 
+app.use(express.json());
+
 sequelize
   .sync({ force: false })
   .then(() => {
