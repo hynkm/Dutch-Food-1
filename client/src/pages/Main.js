@@ -22,9 +22,7 @@ import {
   PostDateDiv,
 } from '../components/MainComponents';
 
-
-let url = 'https://localhost:8080';
-
+let url = 'http://localhost:8080';
 
 function Main(props) {
   const navigate = useNavigate();
@@ -32,7 +30,7 @@ function Main(props) {
   const [currentBoundLocation, setCurrentBoundLocation] = useState([]); // 남서쪽 위도, 남서쪽 경도, 북동쪽 위도, 북동쪽 경도
   const [filteredAllPost, setFilteredAllPost] = useState([]);
   const [isOpenBottombar, setIsOpenBottombar] = useState(true);
-
+  const [allPostList, setAllPostList] = useState([]);
   const openBottombarHandler = () => {
     setIsOpenBottombar(!isOpenBottombar);
   };
@@ -40,7 +38,7 @@ function Main(props) {
   // 모든 게시물 정보를 불러온다.
   useEffect(() => {
     axios({
-      url: url + '/post',
+      url: url + '/main/post',
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -50,8 +48,11 @@ function Main(props) {
     })
       .then((res) => {
         console.log('모든 게시물 불러왔음');
-        console.log(res.body);
-        props.setAllPostList(res.body);
+        console.log(res.data.data);
+        props.setAllPostList(res.data.data);
+        setTimeout(() => {
+          console.log(props.allPostList);
+        }, 4000);
       })
       .catch((err) => {
         console.log(err);

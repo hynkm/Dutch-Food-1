@@ -252,6 +252,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
       .then((res) => {
         setIsLoginCheck(false);
         removeCookie('accessToken');
+        setIsLogoutModal(!isLogoutModal);
         navigate('/main');
       })
       .catch((err) => {
