@@ -1,72 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
 
-// 전체화면 100vh로 감싸주는 div
-export const OuterDiv = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100vh;
-  border: solid 1px black;
-`;
-
-export const MapDiv = styled.div`
-  width: 100%;
-  height: 100%;
-`;
-
-export const PostDiv = styled.div`
-  width: 100%;
-  height: 30vh;
-  position: absolute;
-  bottom: 0;
-  opacity: 0.5;
-  background-color: red;
-  border: solid 2px red;
-  z-index: 100;
-`;
+import { CgChevronUp, CgChevronDown } from 'react-icons/cg';
+import {
+  OuterDiv,
+  MapDiv,
+  BoardOuterDiv,
+  BoardTopDiv,
+  BoardMainDiv,
+  PostBoxDiv,
+  PostMenuImgDiv,
+  MenuImg,
+  PostContentDiv,
+  PostTitleDiv,
+  PostInformationDiv,
+  PostChargeDiv,
+  PostVolumeDiv,
+  PostDateDiv,
+} from '../components/MainComponents';
 
 let url = 'https://localhost:8080';
 
-function Main({ setIsLoginCheck, isLoginCheck }) {
+function Main(props) {
   const navigate = useNavigate();
 
-  const [allPost, setAllPost] = useState([
-    {
-      id: 1,
-      user_id: 'kimcoding@naver.com',
-      title: '카카오 빌딩에서 같이 치킨시켜드실분',
-      address: '경기도 성남시 분당구 판교역로 235',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-    {
-      id: 2,
-      user_id: 'kimcoding@naver.com',
-      title: '코드스테이츠 빌딩에서 같이 치킨시켜드실분',
-      address: '서울특별시 서초구 서초대로 396',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-  ]);
   const [currentBoundLocation, setCurrentBoundLocation] = useState([]); // 남서쪽 위도, 남서쪽 경도, 북동쪽 위도, 북동쪽 경도
   const [filteredAllPost, setFilteredAllPost] = useState([]);
+  const [isOpenBottombar, setIsOpenBottombar] = useState(true);
+
+  const openBottombarHandler = () => {
+    setIsOpenBottombar(!isOpenBottombar);
+  };
+
+  // 모든 게시물 정보를 불러온다.
   useEffect(() => {
     axios({
       url: url + '/post',
@@ -79,18 +48,23 @@ function Main({ setIsLoginCheck, isLoginCheck }) {
     })
       .then((res) => {
         console.log('모든 게시물 불러왔음');
-        setAllPost(res);
+        console.log(res.body);
+        props.setAllPostList(res.body);
       })
       .catch((err) => {
         console.log(err);
       });
   }, []);
 
+  // 지도 상 현재 위치가 변경될 때마다 필터링 되는 게시물 업데이트
   useEffect(() => {
-    setFilteredAllPost(filterPost(allPost));
+    setFilteredAllPost(filterPost(props.allPostList));
+    console.log(currentBoundLocation);
   }, [currentBoundLocation]);
 
+  // 화면 영역 안에 존재하는 마커 필터링하는 함수
   const filterPost = (list) => {
+    console.log(currentBoundLocation);
     return list.filter((post) => {
       return (
         parseFloat(post.latitude) >= currentBoundLocation[0] &&
@@ -101,12 +75,18 @@ function Main({ setIsLoginCheck, isLoginCheck }) {
     });
   };
 
+  const openPost = (post) => {
+    console.log(post);
+    props.setCurrentPost(post);
+    navigate('/readpost');
+  };
+
   return (
     <>
       <OuterDiv>
         <Header
-          setIsLoginCheck={setIsLoginCheck}
-          isLoginCheck={isLoginCheck}
+          setIsLoginCheck={props.setIsLoginCheck}
+          isLoginCheck={props.isLoginCheck}
           className="map"
         />
         <MapDiv>
@@ -114,14 +94,50 @@ function Main({ setIsLoginCheck, isLoginCheck }) {
             currentBoundLocation={currentBoundLocation}
             currentLevel={currentBoundLocation}
             setCurrentBoundLocation={setCurrentBoundLocation}
-            allPost={allPost}
-            setAllPost={setAllPost}
+            allPostList={props.allPostList}
+            setAllPostList={props.setAllPostList}
+            setFilteredAllPost={setFilteredAllPost}
           />
-          <PostDiv>
-            {filteredAllPost.map((post) => {
-              return <div>{post.title}</div>;
-            })}
-          </PostDiv>
+          <BoardOuterDiv className={isOpenBottombar ? 'open' : 'close'}>
+            <BoardTopDiv
+              className={isOpenBottombar ? 'open' : 'close'}
+              onClick={openBottombarHandler}
+            >
+              {isOpenBottombar === true ? (
+                <>
+                  <CgChevronDown className="icon" />이 구역 게시물{' '}
+                  {filteredAllPost.length}개
+                </>
+              ) : (
+                `이 구역 게시물 ${filteredAllPost.length}개 보기`
+              )}
+            </BoardTopDiv>
+            <BoardMainDiv className={isOpenBottombar ? 'open' : 'close'}>
+              {filteredAllPost.map((post) => {
+                const menu = post.menu;
+                const imgUrl = '/menu_img/' + menu + '.png';
+                return (
+                  <PostBoxDiv onClick={() => openPost(post)}>
+                    <PostMenuImgDiv>
+                      <MenuImg src={imgUrl}></MenuImg>
+                    </PostMenuImgDiv>
+                    <PostContentDiv>
+                      <PostTitleDiv>{post.title}</PostTitleDiv>
+                      <PostInformationDiv>
+                        <PostChargeDiv>
+                          전체 배달료: {post.delivery_charge}원
+                        </PostChargeDiv>
+                        <PostVolumeDiv>
+                          모집인원: {post.recruit_volume}
+                        </PostVolumeDiv>
+                      </PostInformationDiv>
+                      <PostDateDiv>작성시간: {post.created_at}</PostDateDiv>
+                    </PostContentDiv>
+                  </PostBoxDiv>
+                );
+              })}
+            </BoardMainDiv>
+          </BoardOuterDiv>
         </MapDiv>
       </OuterDiv>
     </>

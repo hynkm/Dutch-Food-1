@@ -51,15 +51,13 @@ const NavMenuBox = styled.div`
   position: absolute;
   right: 0px;
   top: 70px;
-  transform: translateX(200px, 0);
+  /* transform: translateX(4px, 100px); */
   transition: 0.5s;
   flex-direction: column;
   display: flex;
   justify-content: space-evenly;
   word-break: keep-all;
-
   z-index: 15;
-
   &.loginTrue {
     height: 170px;
   }
