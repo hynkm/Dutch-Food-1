@@ -1,20 +1,24 @@
 require('dotenv').config();
-const { user } = require('../models');
+const { User } = require('../models');
 const { hashPassword } = require('./functions/security');
 
 module.exports = {
   emailCheck: (req, res) => {
     console.log('확인');
-    const { userEmail } = req.query;
+    console.log(req.body);
+    console.log(User);
+    const { email } = req.body;
 
-    user
-      .findOne({ where: { email: userEmail } })
+    User.findOne({ where: { email: email } })
       .then((data) => {
         if (data) {
+          console.log('400번대');
           return res
             .status(404)
             .json({ success: false, message: '사용이 불가능한 이메일입니다' });
         } else {
+          console.log('200번대');
+
           return res
             .status(200)
             .json({ success: true, message: '사용이 가능한 이메일입니다' });
@@ -24,10 +28,9 @@ module.exports = {
   },
 
   nicknameCheck: (req, res) => {
-    const { nickname } = req.query;
+    const { nickname } = req.body;
 
-    user
-      .findOne({ where: { nickname: nickname } })
+    User.findOne({ where: { nickname: nickname } })
       .then((data) => {
         if (data) {
           return res
@@ -46,9 +49,13 @@ module.exports = {
     const { email, password, nickname } = req.body;
     const hashPw = await hashPassword(password);
 
-    user.findOrCreate({
-      where: { userId },
-      defaults: { email, password: hashPw, nickname },
+    User.findOrCreate({
+      where: { email },
+      defaults: { password: hashPw, nickname },
+    }).then((data) => {
+      return res
+        .status(200)
+        .json({ success: true, message: '회원가입에 성공하였습니다' });
     });
   },
 };
