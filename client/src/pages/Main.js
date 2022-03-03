@@ -3,6 +3,7 @@ import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
+
 import { CgChevronUp, CgChevronDown } from 'react-icons/cg';
 import {
   OuterDiv,
@@ -21,7 +22,9 @@ import {
   PostDateDiv,
 } from '../components/MainComponents';
 
+
 let url = 'https://localhost:8080';
+
 
 function Main(props) {
   const navigate = useNavigate();
