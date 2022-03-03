@@ -1,6 +1,6 @@
 require('dotenv').config();
 const { user } = require('../models');
-const { hashPassword } = require('./functions/secure');
+const { hashPassword } = require('./functions/security');
 
 module.exports = {
   emailCheck: (req, res) => {

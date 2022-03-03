@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require("express")
 const cors = require('cors');
 const app = express()
-const port = 8080
+const port = 8081
 const { sequelize } = require("./models");
 
 const loginPage = require('./router/loginPage');
@@ -43,10 +43,8 @@ app.use('/logout', logoutPage);
 app.use('/main', mainPage);
 app.use('/mypage', mypagePage);
 app.use('/oauth', oauthPage);
-app.use('/siginup', signupPage);
+app.use('/signup', signupPage);
 
-let server = app.listen(HTTPS_PORT);
-// eslint-disable-next-line no-console
-console.log(`server running at ${HTTPS_PORT}`);
-
-module.exports = server;
+// let server = app.listen(HTTPS_PORT);
+// // eslint-disable-next-line no-console
+// console.log(`server running at ${HTTPS_PORT}`);
