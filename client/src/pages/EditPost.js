@@ -7,7 +7,6 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import {
   BodyDiv,
@@ -35,30 +34,34 @@ import {
 } from '../components/EditPostComponents';
 import Header from '../components/Header';
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
 
 const CreatePost = (props) => {
-  const [inputTitle, setInputTitle] = useState('');
-  const [inputAddress, setInputAddress] = useState('');
-  const [selectMenu, setSelectMenu] = useState('');
-  const [selectNum, setSelectNum] = useState('');
-  const [inputFee, setInputFee] = useState('');
-  const [selectBank, setSelectBank] = useState('');
-  const [inputAccount, setInputAccount] = useState('');
-  const [textareaContent, setTextareaContent] = useState('');
+  const [inputTitle, setInputTitle] = useState(props.currentPost.title);
+  const [inputAddress, setInputAddress] = useState(props.currentPost.address);
+  const [selectMenu, setSelectMenu] = useState(props.currentPost.menu);
+  const [selectNum, setSelectNum] = useState(props.currentPost.recruit_volume);
+  const [inputFee, setInputFee] = useState(props.currentPost.delivery_charge);
+  const [selectBank, setSelectBank] = useState(props.currentPost.bank_name);
+  const [inputAccount, setInputAccount] = useState(
+    props.currentPost.account_number
+  );
+  const [textareaContent, setTextareaContent] = useState(
+    props.currentPost.content
+  );
 
-  useEffect(() => {
-    console.log('수정해야할 기존 입력값 불러오기');
+  // useEffect(() => {
+  //   console.log('수정해야할 기존 입력값 불러오기');
 
-    setInputTitle(props.currentPost.title);
-    setInputAddress(props.currentPost.address);
-    setSelectMenu(props.currentPost.menu);
-    setSelectNum(props.currentPost.recruit_volume);
-    setInputFee(props.currentPost.delivery_charge);
-    setSelectBank(props.currentPost.bank_name);
-    setInputAccount(props.currentPost.account_number);
-    setTextareaContent(props.currentPost.content);
-  }, []);
+  //   setInputTitle(props.currentPost.title);
+  //   setInputAddress(props.currentPost.address);
+  //   setSelectMenu(props.currentPost.menu);
+  //   setSelectNum(props.currentPost.recruit_volume);
+  //   setInputFee(props.currentPost.delivery_charge);
+  //   setSelectBank(props.currentPost.bank_name);
+  //   setInputAccount(props.currentPost.account_number);
+  //   setTextareaContent(props.currentPost.content);
+  // }, []);
 
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);

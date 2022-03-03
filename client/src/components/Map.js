@@ -15,7 +15,7 @@ export default function MainPageMap(props) {
     // 주소-좌표 변환 객체를 생성합니다
     var geocoder = new kakao.maps.services.Geocoder();
 
-    props.allPost.forEach(function (post) {
+    props.allPostList.forEach(function (post) {
       geocoder.addressSearch(post.address, function (result, status) {
         //정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
@@ -24,7 +24,7 @@ export default function MainPageMap(props) {
           // 게시물 데이터에 좌표 정보를 넣어주기
           post.latitude = result[0].x;
           post.longitude = result[0].y;
-          props.setAllPost(props.allPost);
+          props.setAllPostList(props.allPostList);
 
           // 결과값으로 받은 위치를 마커로 표시합니다
           var marker = new kakao.maps.Marker({
@@ -102,7 +102,6 @@ export function ReadPostMap(props) {
       function (result, status) {
         // 정상적으로 검색이 완료됐으면
         if (status === kakao.maps.services.Status.OK) {
-          console.log(result);
           var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
 
           // 결과값으로 받은 위치를 마커로 표시합니다
@@ -110,6 +109,9 @@ export function ReadPostMap(props) {
             map: map,
             position: coords,
           });
+
+          // 마커가 지도 위에 표시되도록 설정합니다
+          marker.setMap(map);
 
           // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
           map.setCenter(coords);

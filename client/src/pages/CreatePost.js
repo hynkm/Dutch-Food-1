@@ -7,7 +7,6 @@ import {
   useNavigate,
 } from 'react-router-dom';
 import axios from 'axios';
-import styled from 'styled-components';
 import DaumPostcode from 'react-daum-postcode';
 import {
   BodyDiv,
@@ -35,7 +34,7 @@ import {
 } from '../components/CreatePostComponents';
 import Header from '../components/Header';
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
 
 const CreatePost = (props) => {
   // 입력창 상태관리

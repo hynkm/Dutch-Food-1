@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Header from '../components/Header';
 import { useNavigate } from 'react-router-dom';
-import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
 
@@ -24,69 +23,12 @@ import {
 } from '../components/MainComponents';
 
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
+
 
 function Main(props) {
   const navigate = useNavigate();
 
-  const [allPost, setAllPost] = useState([
-    {
-      id: 1,
-      user_id: 'kimcoding@naver.com',
-      title: '카카오 빌딩에서 같이 치킨시켜드실분',
-      address: '경기도 성남시 분당구 판교역로 235',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-    {
-      id: 2,
-      user_id: 'kimcoding@naver.com',
-      title: '코드스테이츠 빌딩에서 같이 피자 시켜드실분',
-      address: '서울특별시 서초구 서초대로 396',
-      menu: '피자',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-    {
-      id: 3,
-      user_id: 'kimcoding@naver.com',
-      title: '서울시청 근처에서 같이 야식 시키실 분',
-      address: '서울특별시 중구 세종대로 110',
-      menu: '야식',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-    {
-      id: 4,
-      user_id: 'kimcoding@naver.com',
-      title: '잠실 롯데타워 근처에서 스시 시키실 분',
-      address: '서울특별시 송파구 올림픽로 300',
-      menu: '일식',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2017-08-28 17:22',
-    },
-  ]);
   const [currentBoundLocation, setCurrentBoundLocation] = useState([]); // 남서쪽 위도, 남서쪽 경도, 북동쪽 위도, 북동쪽 경도
   const [filteredAllPost, setFilteredAllPost] = useState([]);
   const [isOpenBottombar, setIsOpenBottombar] = useState(true);
@@ -108,7 +50,8 @@ function Main(props) {
     })
       .then((res) => {
         console.log('모든 게시물 불러왔음');
-        setAllPost(res);
+        console.log(res.body);
+        props.setAllPostList(res.body);
       })
       .catch((err) => {
         console.log(err);
@@ -117,7 +60,7 @@ function Main(props) {
 
   // 지도 상 현재 위치가 변경될 때마다 필터링 되는 게시물 업데이트
   useEffect(() => {
-    setFilteredAllPost(filterPost(allPost));
+    setFilteredAllPost(filterPost(props.allPostList));
     console.log(currentBoundLocation);
   }, [currentBoundLocation]);
 
@@ -153,8 +96,8 @@ function Main(props) {
             currentBoundLocation={currentBoundLocation}
             currentLevel={currentBoundLocation}
             setCurrentBoundLocation={setCurrentBoundLocation}
-            allPost={allPost}
-            setAllPost={setAllPost}
+            allPostList={props.allPostList}
+            setAllPostList={props.setAllPostList}
             setFilteredAllPost={setFilteredAllPost}
           />
           <BoardOuterDiv className={isOpenBottombar ? 'open' : 'close'}>

@@ -1,4 +1,4 @@
-const Sequelize = require("sequelize");
+const Sequelize = require('sequelize');
 
 module.exports = class Comment extends Sequelize.Model {
   static init(sequelize) {
@@ -8,7 +8,7 @@ module.exports = class Comment extends Sequelize.Model {
           type: Sequelize.INTEGER,
         },
         applicant_id: {
-          type: Sequelize.STRING(100),
+          type: Sequelize.INTEGER,
         },
         comment_content: {
           //seqelize는 기본적으로 pr키 아이디가 생략되었음.
@@ -21,11 +21,11 @@ module.exports = class Comment extends Sequelize.Model {
         sequelize,
         timestamps: true,
         underscored: false,
-        modelName: "Comment",
-        tableName: "comments",
+        modelName: 'Comment',
+        tableName: 'comments',
         paranoid: true,
-        charset: "utf8",
-        collate: "utf8_general_ci",
+        charset: 'utf8',
+        collate: 'utf8_general_ci',
       }
     );
   }
@@ -33,14 +33,13 @@ module.exports = class Comment extends Sequelize.Model {
   static associate(db) {
     db.Comment.belongsTo(db.Post),
       {
-        foreignKey: "post_id",
-        targetkey: "id",
+        foreignKey: 'post_id',
+        targetkey: 'id',
       };
-      db.Comment.belongsTo(db.User),
+    db.Comment.belongsTo(db.User),
       {
-        foreignKey: "applicant_id",
-        targetkey: "id",
+        foreignKey: 'applicant_id',
+        targetkey: 'id',
       };
   }
-  
 };

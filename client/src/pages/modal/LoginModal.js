@@ -161,8 +161,9 @@ const AletModalView = styled.div`
   }
 `;
 
+let url = 'http://localhost:8080';
+
 function LoginModal({ setIsLoginCheck, handleCloseModal }) {
-  let url = 'http://localhost:8080';
   const [loginUserInfo, setLoginUserInfo] = useState({
     email: '',
     password: '',
@@ -192,9 +193,11 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
       //console.log(조회);
       setIsAletModal(true);
     } else {
+      console.log(loginUserInfo);
       axios
         .post(url + '/login', loginUserInfo, {
           headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         })
         //
         .then((res) => {

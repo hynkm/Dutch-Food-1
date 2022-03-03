@@ -53,7 +53,7 @@ import {
 import Header from '../components/Header';
 import axios from 'axios';
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
 
 const MyPage = (props) => {
   const navigate = useNavigate();
