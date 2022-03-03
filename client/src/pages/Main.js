@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 import MainPageMap from '../components/Map';
 import axios from 'axios';
+
 import { CgChevronUp, CgChevronDown } from 'react-icons/cg';
 import {
   OuterDiv,
@@ -21,6 +22,7 @@ import {
   PostVolumeDiv,
   PostDateDiv,
 } from '../components/MainComponents';
+
 
 let url = 'https://localhost:3002';
 

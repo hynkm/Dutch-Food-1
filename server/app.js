@@ -23,12 +23,16 @@ sequelize
 
 app.use(
   cors({
-    origin: ['http://localhost:3000'],
+    origin: ['http://localhost:3002'],
     credentials: true,
     methods: ['GET', 'POST', 'OPTIONS', 'PUT', 'DELETE', 'PATCH'],
     allowedHeaders: ['Content-Type', 'authorization'],
   })
 );
+
+// json형식으로 올때 body 파싱
+// app.use(express.json());
+// app.use(express.urlencoded({ extended: false }));
 
 app.get('/', (req, res) => {
   res.send('연결됐다.');
