@@ -30,7 +30,7 @@ export const PostDiv = styled.div`
   z-index: 100;
 `;
 
-let url = 'https://localhost:3002';
+let url = 'https://localhost:8080';
 
 function Main({ setIsLoginCheck, isLoginCheck }) {
   const navigate = useNavigate();

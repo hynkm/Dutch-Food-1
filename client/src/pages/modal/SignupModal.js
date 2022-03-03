@@ -162,8 +162,6 @@ const SignupMiniModlaView = styled.div`
   }
 `;
 
-let url = 'https://localhost:3002';
-
 function SignupModal({ loginModalOpen }) {
   //유저정보 담을 창
   //입력 이벤트
