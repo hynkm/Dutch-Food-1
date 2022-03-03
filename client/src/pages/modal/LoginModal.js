@@ -189,9 +189,11 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
       //console.log(조회);
       setIsAletModal(true);
     } else {
+      console.log(loginUserInfo);
       axios
         .post(url + '/login', loginUserInfo, {
           headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
         })
         //
         .then((res) => {

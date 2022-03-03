@@ -62,36 +62,36 @@ const ReadPost = (props) => {
   const [isDuplicated, setIsDuplicated] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState('');
   const [commentList, setCommentList] = useState([
-    {
-      id: 1,
-      nickname: '닉네임일코딩',
-      comment_content: '양념순살 1마리 같이 주문시켜주세요!',
-      created_at: '2022.03.01.17:31',
-    },
-    {
-      id: 2,
-      nickname: '닉네임이코딩',
-      comment_content: '양념순살 2마리 같이 주문시켜주세요!',
-      created_at: '2022.03.02.17:32',
-    },
-    {
-      id: 3,
-      nickname: '닉네임삼코딩',
-      comment_content: '양념순살 3마리 같이 주문시켜주세요!',
-      created_at: '2022.03.03.17:33',
-    },
+    // {
+    //   id: 1,
+    //   nickname: '닉네임일코딩',
+    //   comment_content: '양념순살 1마리 같이 주문시켜주세요!',
+    //   created_at: '2022.03.01.17:31',
+    // },
+    // {
+    //   id: 2,
+    //   nickname: '닉네임이코딩',
+    //   comment_content: '양념순살 2마리 같이 주문시켜주세요!',
+    //   created_at: '2022.03.02.17:32',
+    // },
+    // {
+    //   id: 3,
+    //   nickname: '닉네임삼코딩',
+    //   comment_content: '양념순살 3마리 같이 주문시켜주세요!',
+    //   created_at: '2022.03.03.17:33',
+    // },
     // {
     //   id: 4,
     //   nickname: '닉네임사코딩',
     //   content: '양념순살 4마리 같이 주문시켜주세요!',
     //   created_at: '2022.03.04.17:34',
     // },
-    {
-      id: 5,
-      nickname: '닉네임오코딩',
-      content: '양념순살 5마리 같이 주문시켜주세요!',
-      created_at: '2022.03.05.17:35',
-    },
+    // {
+    //   id: 5,
+    //   nickname: '닉네임오코딩',
+    //   content: '양념순살 5마리 같이 주문시켜주세요!',
+    //   created_at: '2022.03.05.17:35',
+    // },
   ]);
 
   // 신청댓글 리스트를 GET 요청
