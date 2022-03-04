@@ -53,7 +53,7 @@ import {
 import Header from '../components/Header';
 import axios from 'axios';
 
-let url = 'https://localhost:8080';
+let url = 'http://localhost:8080';
 
 const MyPage = (props) => {
   const navigate = useNavigate();
@@ -69,262 +69,148 @@ const MyPage = (props) => {
     msgNewPasswordConfirm: '비밀번호를 재입력해주세요.',
   });
   const [passwordResponseMSG, setPasswordResponseMSG] = useState('');
-  const [myPostList, setMyPostList] = useState([
-    {
-      id: 1,
-      user_id: 'kimcoding@naver.com',
-      title: '1층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:31',
-    },
-    {
-      id: 2,
-      user_id: 'kimcoding@naver.com',
-      title: '2층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '4명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:32',
-    },
-    {
-      id: 3,
-      user_id: 'kimcoding@naver.com',
-      title: '3층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '4명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:33',
-    },
-    {
-      id: 4,
-      user_id: 'kimcoding@naver.com',
-      title: '4층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:34',
-    },
-    {
-      id: 5,
-      user_id: 'kimcoding@naver.com',
-      title: '5층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '4명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:35',
-    },
-    {
-      id: 6,
-      user_id: 'kimcoding@naver.com',
-      title: '6층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:36',
-    },
-    {
-      id: 7,
-      user_id: 'kimcoding@naver.com',
-      title: '7층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '4명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:37',
-    },
-    {
-      id: 8,
-      user_id: 'kimcoding@naver.com',
-      title: '8층 코딩 빌딩에서 같이 치킨 시키실 분!!',
-      address: '서울시 강남구 코드스테이츠 빌딩 1층',
-      menu: '치킨',
-      delivery_charge: 4000,
-      recruit_volume: '5명',
-      bank_name: '국민',
-      account_number: 12345678912345,
-      content:
-        '7시에 비비큐에 치킨주문 예정입니다. 주문하실 구체적인 메뉴랑 몇 마리 주문하실지 댓글로 적어주세요!!',
-      created_at: '2022-03-16 17:38',
-    },
-  ]);
+  const [myPostList, setMyPostList] = useState([]);
 
   const [myCommentList, setMyCommentList] = useState([
-    {
-      id: 1,
-      post_id: 1,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:31',
-    },
-    {
-      id: 2,
-      post_id: 2,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:32',
-    },
-    {
-      id: 3,
-      post_id: 3,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:33',
-    },
-    {
-      id: 4,
-      post_id: 4,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:34',
-    },
-    {
-      id: 5,
-      post_id: 5,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:35',
-    },
-    {
-      id: 6,
-      post_id: 6,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:36',
-    },
-    {
-      id: 7,
-      post_id: 7,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:37',
-    },
-    {
-      id: 8,
-      post_id: 8,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:38',
-    },
+    // {
+    //   id: 1,
+    //   post_id: 1,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:31',
+    // },
+    // {
+    //   id: 2,
+    //   post_id: 2,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:32',
+    // },
+    // {
+    //   id: 3,
+    //   post_id: 3,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:33',
+    // },
+    // {
+    //   id: 4,
+    //   post_id: 4,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:34',
+    // },
+    // {
+    //   id: 5,
+    //   post_id: 5,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:35',
+    // },
+    // {
+    //   id: 6,
+    //   post_id: 6,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:36',
+    // },
+    // {
+    //   id: 7,
+    //   post_id: 7,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:37',
+    // },
+    // {
+    //   id: 8,
+    //   post_id: 8,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:38',
+    // },
   ]);
 
   const [allCommentList, setAllCommentList] = useState([
-    {
-      id: 1,
-      post_id: 1,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:31',
-    },
-    {
-      id: 2,
-      post_id: 1,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:32',
-    },
-    {
-      id: 3,
-      post_id: 3,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:33',
-    },
-    {
-      id: 4,
-      post_id: 4,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:34',
-    },
-    {
-      id: 5,
-      post_id: 5,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:35',
-    },
-    {
-      id: 6,
-      post_id: 6,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:36',
-    },
-    {
-      id: 7,
-      post_id: 7,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:37',
-    },
-    {
-      id: 8,
-      post_id: 8,
-      applicant_id: 'kimcoding@naver.com',
-      comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
-      nickname: '닉네임김코딩',
-      created_at: '2022-03-16 17:38',
-    },
+    // {
+    //   id: 1,
+    //   post_id: 1,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:31',
+    // },
+    // {
+    //   id: 2,
+    //   post_id: 1,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:32',
+    // },
+    // {
+    //   id: 3,
+    //   post_id: 3,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:33',
+    // },
+    // {
+    //   id: 4,
+    //   post_id: 4,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:34',
+    // },
+    // {
+    //   id: 5,
+    //   post_id: 5,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:35',
+    // },
+    // {
+    //   id: 6,
+    //   post_id: 6,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:36',
+    // },
+    // {
+    //   id: 7,
+    //   post_id: 7,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:37',
+    // },
+    // {
+    //   id: 8,
+    //   post_id: 8,
+    //   applicant_id: 'kimcoding@naver.com',
+    //   comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
+    //   nickname: '닉네임김코딩',
+    //   createdAt: '2022-03-16 17:38',
+    // },
   ]);
   const [postIdList, setPostIdList] = useState([]);
 
   // 내가 쓴 게시물 리스트 불러오기
   useEffect(() => {
-    console.log('내가 쓴 게시물과 신청댓글을 불러옵니다.');
-
     axios({
-      url: url + `/post/${props.userInfo.user_id}`,
+      // url: url + `/post/${props.userInfo.user_id}`,
+      url: url + '/mypage/post',
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -333,9 +219,8 @@ const MyPage = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('내가 쓴 게시물 불러오기 완료');
         console.log(res);
-        setMyPostList(res);
+        setMyPostList(res.data);
       })
       .catch((err) => {
         console.log(err);
@@ -346,6 +231,7 @@ const MyPage = (props) => {
   useEffect(() => {
     axios({
       // url: url + `/comment/user/${props.userInfo.user_id}`,
+      url: url + '/mypage/comment',
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -355,8 +241,8 @@ const MyPage = (props) => {
     })
       .then((res) => {
         console.log('내가 쓴 신청댓글 불러오기 완료');
-        console.log(res);
-        setMyCommentList(res);
+        console.log(res.data.commentList);
+        setMyCommentList(res.data.commentList);
       })
       .catch((err) => {
         console.log(err);
@@ -366,7 +252,8 @@ const MyPage = (props) => {
   // 전체 신청댓글 리스트 불러오기
   useEffect(() => {
     axios({
-      url: url + `/comment`,
+      // url: url + `/comment`,
+      url: url + '/mypage/allcomment',
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -376,8 +263,8 @@ const MyPage = (props) => {
     })
       .then((res) => {
         console.log('전체 신청댓글 리스트 불러오기 완료');
-        console.log(res);
-        setAllCommentList(res);
+        console.log(res.data.commentList);
+        setAllCommentList(res.data.commentList);
       })
       .catch((err) => {
         console.log(err);
@@ -569,7 +456,8 @@ const MyPage = (props) => {
 
     if (inputNickname.length > 0) {
       axios({
-        url: url + `/users/${props.userInfo.user_id}`,
+        // url: url + `/users/${props.userInfo.user_id}`,
+        url: url + '/mypage/nickname',
         method: 'patch',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,
@@ -599,7 +487,8 @@ const MyPage = (props) => {
     console.log('비밀번호 변경 완료 버튼 클릭');
 
     axios({
-      url: url + `/users/password/${props.userInfo.user_id}`,
+      // url: url + `/users/password/${props.userInfo.user_id}`,
+      url: url + '/mypage/password',
       method: 'patch',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -612,16 +501,13 @@ const MyPage = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('변경 하고 응답옴');
+        console.log('비밀번호 변경하고 응답 옴');
         console.log(res);
-        if (res === 'no') {
-          setPasswordResponseMSG('현재 비밀번호를 올바르게 입력해주세요.');
-        } else {
-          openChangePasswordModalHandler();
-          navigate('/mypage');
-        }
+        openChangePasswordModalHandler();
+        navigate('/mypage');
       })
       .catch((err) => {
+        setPasswordResponseMSG('현재 비밀번호를 올바르게 입력해주세요.');
         console.log(err);
       });
   };
@@ -783,7 +669,7 @@ const MyPage = (props) => {
             </MyListIndexDiv>
             <MyListBoxDiv>
               {myPostList.map((post) => {
-                const stringDate = String(post.created_at).slice(5);
+                const stringDate = String(post.createdAt).slice(5);
                 return (
                   <MyListDiv key={post.id}>
                     <ListTitleDiv>
@@ -817,7 +703,7 @@ const MyPage = (props) => {
             </MyListIndexDiv>
             <MyListBoxDiv>
               {myCommentList.map((comment) => {
-                const stringDate = String(comment.created_at).slice(5);
+                const stringDate = String(comment.createdAt).slice(5);
                 return (
                   <MyListDiv key={comment.id}>
                     <ListTitleDiv>

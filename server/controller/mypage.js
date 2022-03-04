@@ -4,7 +4,7 @@ const {
   updatePassword,
   unregister,
 } = require('./functions/user');
-const { user, post, comment } = require('../models');
+const { User, Post, Comment } = require('../models');
 
 module.exports = {
   // myInfo: async (req, res) => {
@@ -25,10 +25,11 @@ module.exports = {
 
   updateNickname: async (req, res) => {
     const resObject = await updateNickname(req);
-    res.status(resObject.code).send(resObjectmessage);
+    res.status(resObject.code).send(resObject.message);
   },
 
   updatePassword: async (req, res) => {
+    console.log('0');
     const resObject = await updatePassword(req);
     res
       .status(resObject.code)
@@ -58,13 +59,12 @@ module.exports = {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
       try {
-        const postList = await post.findAll({
-          include: [{ model: post, attributes: ['title', 'created_at'] }],
-          where: { userId: userInfo.id },
-          order: [['created_at', 'DESC']],
+        const postList = await Post.findAll({
+          where: { user_id: userInfo.id },
         });
-        res.status(200).json({ postList });
+        res.status(200).json(postList);
       } catch (err) {
+        console.log('캐치');
         res.status(400).json({ message: '잘못된 요청입니다' });
       }
     }
@@ -76,10 +76,8 @@ module.exports = {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
       try {
-        const commentList = await comment.findAll({
-          include: [{ model: comment, attributes: ['content', 'created_at'] }],
-          where: { userId: userInfo.id },
-          order: [['created_at', 'DESC']],
+        const commentList = await Comment.findAll({
+          where: { applicant_id: userInfo.id },
         });
         res.status(200).json({ commentList });
       } catch (err) {
@@ -95,10 +93,7 @@ module.exports = {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
       try {
-        const commentList = await comment.findAll({
-          include: [{ model: comment, attributes: ['content', 'created_at'] }],
-          order: [['created_at', 'DESC']],
-        });
+        const commentList = await Comment.findAll({});
         res.status(200).json({ commentList });
       } catch (err) {
         res.status(400).json({ message: '잘못된 요청입니다' });

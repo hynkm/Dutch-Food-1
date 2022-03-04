@@ -15,6 +15,9 @@ import CreatePost from './pages/CreatePost';
 import EditPost from './pages/EditPost';
 import ReadPost from './pages/ReadPost';
 import MyPage from './pages/MyPage';
+import axios from 'axios';
+
+let url = 'http://localhost:8080';
 
 function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
@@ -26,6 +29,31 @@ function App() {
   });
   const [allPostList, setAllPostList] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
+
+  // // 모든 게시물 정보를 불러온다.
+  // useEffect(() => {
+  //   console.log('all');
+  //   axios({
+  //     url: url + '/main/post',
+  //     method: 'get',
+  //     headers: {
+  //       // Authorization: `Bearer ${props.accessToken}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       console.log('모든 게시물 불러왔음');
+  //       console.log(res.data.data);
+  //       setAllPostList(res.data.data);
+  //       setTimeout(() => {
+  //         console.log(allPostList);
+  //       }, 5000);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   return (
     <BrowserRouter>

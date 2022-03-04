@@ -30,34 +30,35 @@ function Main(props) {
   const [currentBoundLocation, setCurrentBoundLocation] = useState([]); // 남서쪽 위도, 남서쪽 경도, 북동쪽 위도, 북동쪽 경도
   const [filteredAllPost, setFilteredAllPost] = useState([]);
   const [isOpenBottombar, setIsOpenBottombar] = useState(true);
-  const [allPostList, setAllPostList] = useState([]);
+  // const [allPostList, setAllPostList] = useState([]);
   const openBottombarHandler = () => {
     setIsOpenBottombar(!isOpenBottombar);
   };
 
-  // 모든 게시물 정보를 불러온다.
-  useEffect(() => {
-    axios({
-      url: url + '/main/post',
-      method: 'get',
-      headers: {
-        // Authorization: `Bearer ${props.accessToken}`,
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    })
-      .then((res) => {
-        console.log('모든 게시물 불러왔음');
-        console.log(res.data.data);
-        props.setAllPostList(res.data.data);
-        setTimeout(() => {
-          console.log(props.allPostList);
-        }, 4000);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  }, []);
+  // // 모든 게시물 정보를 불러온다.
+  // useEffect(() => {
+  //   console.log('all');
+  //   axios({
+  //     url: url + '/main/post',
+  //     method: 'get',
+  //     headers: {
+  //       // Authorization: `Bearer ${props.accessToken}`,
+  //       'Content-Type': 'application/json',
+  //     },
+  //     withCredentials: true,
+  //   })
+  //     .then((res) => {
+  //       console.log('모든 게시물 불러왔음');
+  //       console.log(res.data.data);
+  //       props.setAllPostList(res.data.data);
+  //       setTimeout(() => {
+  //         console.log(props.allPostList);
+  //       }, 5000);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // }, []);
 
   // 지도 상 현재 위치가 변경될 때마다 필터링 되는 게시물 업데이트
   useEffect(() => {
