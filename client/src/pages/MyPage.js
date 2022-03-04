@@ -767,7 +767,10 @@ const MyPage = (props) => {
         </ModalBackdrop>
       ) : null}
 
-      <Header />
+      <Header
+        setIsLoginCheck={props.setIsLoginCheck}
+        isLoginCheck={props.isLoginCheck}
+      />
       <OuterDiv>
         <TopDiv>마이페이지</TopDiv>
         <MainDiv>

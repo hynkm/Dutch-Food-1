@@ -203,6 +203,7 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
         .then((res) => {
           //localStorage.setItem('accessToken', res.data.access);
           setCookie('accessToken', res.data.access);
+
           setIsLoginCheck(true);
           handleCloseModal();
         })

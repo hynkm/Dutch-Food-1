@@ -261,6 +261,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
   };
 
   useEffect(() => {
+    console.log('hi');
     if (getCookie('accessToken')) {
       setIsLoginCheck(true);
     }

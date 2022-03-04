@@ -162,11 +162,6 @@ const SignupMiniModlaView = styled.div`
   }
 `;
 
-<<<<<<< HEAD
-=======
-let url = 'https://localhost:8080';
-
->>>>>>> fbd12c79958bc3cf1aece931399e529e13a7100b
 function SignupModal({ loginModalOpen }) {
   //유저정보 담을 창
   //입력 이벤트
