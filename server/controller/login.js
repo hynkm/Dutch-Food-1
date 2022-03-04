@@ -48,6 +48,7 @@ module.exports = {
 
       delete userInfo.dataValues.password;
       const accessToken = generateAccessToken(userInfo.dataValues);
+      console.log(accessToken);
       sendAccessToken(res, accessToken);
 
       return res

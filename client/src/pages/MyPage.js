@@ -52,6 +52,7 @@ import {
 } from '../components/MyPageComponents';
 import Header from '../components/Header';
 import axios from 'axios';
+import { removeCookie } from '../components/Cookie';
 
 let url = 'http://localhost:8080';
 
@@ -425,6 +426,7 @@ const MyPage = (props) => {
   const onClickTitle = (post) => {
     console.log('내가 쓴 제목 클릭');
     props.setCurrentPost(post);
+    navigate('/readpost');
   };
 
   // 내가 쓴 신청댓글 클릭
@@ -432,18 +434,23 @@ const MyPage = (props) => {
     console.log('내가 쓴 신청댓글 클릭');
 
     axios({
-      url: url + `/post/${comment.post_id}`,
-      method: 'get',
+      // url: url + `/post/${comment.post_id}`,
+      url: url + '/mypage/commentedpost',
+      method: 'post',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
         'Content-Type': 'application/json',
+      },
+      data: {
+        post_id: comment.post_id,
       },
       withCredentials: true,
     })
       .then((res) => {
         console.log('신청 댓글의 부모 게시글 정보를 불러옴');
-        console.log(res);
-        // props.setCurrentPost(res);
+        console.log(res.data.commentedPost);
+        props.setCurrentPost(res.data.commentedPost);
+        navigate('/readpost');
       })
       .catch((err) => {
         console.log(err);
@@ -517,13 +524,18 @@ const MyPage = (props) => {
     console.log('탈퇴확인 모달창에서 탈퇴버튼 눌림');
 
     axios({
-      url: url + `/users/${props.userInfo.user_id}`,
+      // url: url + `/users/${props.userInfo.user_id}`,
+      url: url + '/mypage/users',
       method: 'delete',
       withCredentials: true,
     })
       .then((res) => {
         console.log('회원탈퇴 요청에 대한 응답이 옴');
         console.log(res);
+        openWithdrawalAlertModalHandler();
+        props.setIsLoginCheck(false);
+        removeCookie('accessToken');
+        navigate('/main');
       })
       .catch((err) => console.log(err));
   };
@@ -673,9 +685,10 @@ const MyPage = (props) => {
                 return (
                   <MyListDiv key={post.id}>
                     <ListTitleDiv>
-                      <Link to="/readpost" onClick={() => onClickTitle(post)}>
+                      {/* <Link to="/readpost" onClick={() => onClickTitle(post)}>
                         {post.title}
-                      </Link>
+                      </Link> */}
+                      <div onClick={() => onClickTitle(post)}>{post.title}</div>
                     </ListTitleDiv>
                     <ListDateDiv>{stringDate}</ListDateDiv>
                     <ListStateDiv
@@ -707,12 +720,15 @@ const MyPage = (props) => {
                 return (
                   <MyListDiv key={comment.id}>
                     <ListTitleDiv>
-                      <Link
+                      {/* <Link
                         to="/readpost"
                         onClick={() => onClickComment(comment)}
                       >
                         {comment.comment_content}
-                      </Link>
+                      </Link> */}
+                      <div onClick={() => onClickComment(comment)}>
+                        {comment.comment_content}
+                      </div>
                     </ListTitleDiv>
                     <ListDateDiv>{stringDate}</ListDateDiv>
                     <ListStateDiv
