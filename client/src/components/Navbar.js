@@ -261,9 +261,13 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
   };
 
   useEffect(() => {
+    console.log('액세스토큰 꺼낼 예정');
     if (getCookie('accessToken')) {
+      console.log('액세스토큰 꺼냈음');
+      console.log(getCookie('accessToken'));
       setIsLoginCheck(true);
     }
+    console.log('액세스토큰이 없어요.');
   }, []);
 
   return (

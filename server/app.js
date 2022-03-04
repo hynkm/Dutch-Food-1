@@ -13,6 +13,12 @@ const mypagePage = require('./router/mypagePage');
 const oauthPage = require('./router/oauthPage');
 const signupPage = require('./router/signupPage');
 
+var cookieParser = require('cookie-parser');
+app.use(cookieParser());
+app.get('/', function (req, res) {
+  console.log('Cookies: ', req.cookies);
+});
+
 sequelize
   .sync({ force: false })
   .then(() => {
