@@ -123,6 +123,7 @@ function App() {
               setAllPostList={setAllPostList}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
+              setCurrentPost={setCurrentPost}
             />
           }
         />
