@@ -203,7 +203,7 @@ const LogoutModalBtn = styled.div`
   }
 `;
 
-function Navbar({ setIsLoginCheck, isLoginCheck }) {
+function Navbar({ setIsLoginCheck, isLoginCheck, setUserInfo }) {
   let url = 'http://localhost:8080';
   const [isSidebar, setIsSidebar] = useState(false);
   const [isLoginModal, setIsLoginModal] = useState(false);
@@ -321,6 +321,7 @@ function Navbar({ setIsLoginCheck, isLoginCheck }) {
               <LoginModal
                 setIsLoginCheck={setIsLoginCheck}
                 handleCloseModal={handleCloseModal}
+                setUserInfo={setUserInfo}
               />
             </ModalView>
           </ModlaBack>

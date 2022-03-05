@@ -34,9 +34,11 @@ import {
 } from '../components/CreatePostComponents';
 import Header from '../components/Header';
 
-let url = 'https://localhost:8080';
+let url = 'http://localhost:8080';
 
 const CreatePost = (props) => {
+  const navigate = useNavigate();
+
   // 입력창 상태관리
   const [inputTitle, setInputTitle] = useState('');
   const [inputAddress, setInputAddress] = useState('');
@@ -126,7 +128,7 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        url: url + '/post',
+        url: url + '/post/post',
         method: 'post',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,
@@ -139,13 +141,14 @@ const CreatePost = (props) => {
           delivery_charge: inputFee,
           recruit_volume: selectNum,
           bank_name: selectBank,
-          accout_number: inputAccount,
+          account_number: inputAccount,
           content: textareaContent,
         },
         withCredentials: true,
       })
         .then(() => {
           console.log('게시글 작성 완료');
+          navigate('/main');
         })
         .catch((err) => console.log(err));
     } else {

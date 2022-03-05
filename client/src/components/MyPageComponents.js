@@ -58,10 +58,10 @@ export const MyListIndexDiv = styled.div`
   flex-direction: row;
   width: 98%;
   height: 6%;
-  margin-top: 1%;
   font-size: 0.7rem;
   text-align: center;
-  border-bottom: solid 1px #90c2ff;
+  /* border: solid 1px black; */
+  /* border-bottom: solid 1px #90c2ff; */
 `;
 
 export const IndexTitleDiv = styled.div`
@@ -97,6 +97,7 @@ export const MyListBoxDiv = styled.div`
     border-radius: 5px;
     background-color: #4593fc;
   }
+  border-top: solid 1px #90c2ff;
 `;
 
 export const MyListDiv = styled.div`
@@ -106,16 +107,21 @@ export const MyListDiv = styled.div`
   justify-content: center;
   width: 100%;
   height: 4rem;
-  margin-bottom: 0.5rem;
+  /* margin-bottom: 0.5rem; */
   border-bottom: dotted 1px #4593fc;
+  /* border: solid 1px black; */
+  &:hover {
+    background-color: rgba(0, 27, 55, 0.1);
+  }
 `;
 
 export const ListTitleDiv = styled.div`
   width: 60%;
   height: 100%;
-  text-align: center;
+  text-align: left;
   font-size: 0.8rem;
-  padding-top: 1.2rem;
+  padding-left: 0.2rem;
+  /* border: solid 1px black; */
 `;
 
 export const ListDateDiv = styled.div`

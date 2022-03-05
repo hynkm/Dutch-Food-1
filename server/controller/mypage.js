@@ -91,6 +91,7 @@ module.exports = {
   //모든 코멘트 불러오는 함수
   getAllComment: async (req, res) => {
     const userInfo = isAuthorized(req);
+    console.log(userInfo);
     if (!userInfo) {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
