@@ -22,13 +22,27 @@ let url = 'http://localhost:8080';
 function App() {
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
-  const [userInfo, setUserInfo] = useState({
-    id: 1,
-    user_id: 'kimcoding1@naver.com',
-    nickname: '닉네임김코딩',
-  });
+  const [userInfo, setUserInfo] = useState({});
   const [allPostList, setAllPostList] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
+
+  // 유저정보 상태관리 위해서 작성한 부분
+  useEffect(() => {
+    console.log('auth요청 직전');
+    axios
+      .get(url + '/auth', {
+        headers: { 'Content-Type': 'application/json' },
+        withCredentials: true,
+      })
+      .then((res) => {
+        console.log('유저정보 응답옴');
+        console.log(res.data.data);
+        setUserInfo(res.data.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [isLoginCheck]);
 
   // // 모든 게시물 정보를 불러온다.
   // useEffect(() => {
@@ -68,6 +82,7 @@ function App() {
               isLoginCheck={isLoginCheck}
               allPostList={allPostList}
               setAllPostList={setAllPostList}
+              setUserInfo={setUserInfo}
             />
           }
         />
@@ -87,6 +102,7 @@ function App() {
               accessToken={accessToken}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
+              setUserInfo={setUserInfo}
             />
           }
         />
@@ -96,9 +112,11 @@ function App() {
             <EditPost
               userInfo={userInfo}
               currentPost={currentPost}
+              setCurrentPost={setCurrentPost}
               accessToken={accessToken}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
+              setUserInfo={setUserInfo}
             />
           }
         />
@@ -107,7 +125,9 @@ function App() {
           element={
             <ReadPost
               userInfo={userInfo}
+              setUserInfo={setUserInfo}
               currentPost={currentPost}
+              setCurrentPost={setCurrentPost}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
             />
@@ -123,6 +143,8 @@ function App() {
               setAllPostList={setAllPostList}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}
+              setCurrentPost={setCurrentPost}
+              setUserInfo={setUserInfo}
             />
           }
         />

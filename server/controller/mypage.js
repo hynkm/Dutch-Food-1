@@ -33,11 +33,11 @@ module.exports = {
     const resObject = await updatePassword(req);
     res
       .status(resObject.code)
-      .clearCookie('accessToken', {
-        httpOnly: true,
-        secure: true,
-        sameSite: 'None',
-      })
+      // .clearCookie('accessToken', {
+      //   httpOnly: true,
+      //   secure: true,
+      //   sameSite: 'None',
+      // })
       .send(resObject.message);
   },
 
@@ -54,7 +54,9 @@ module.exports = {
   },
 
   getUserPost: async (req, res) => {
+    console.log('서버');
     const userInfo = isAuthorized(req);
+    console.log(userInfo);
     if (!userInfo) {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
@@ -89,6 +91,7 @@ module.exports = {
   //모든 코멘트 불러오는 함수
   getAllComment: async (req, res) => {
     const userInfo = isAuthorized(req);
+    console.log(userInfo);
     if (!userInfo) {
       res.status(401).json({ message: '로그인이 필요합니다' });
     } else {
@@ -96,6 +99,26 @@ module.exports = {
         const commentList = await Comment.findAll({});
         res.status(200).json({ commentList });
       } catch (err) {
+        res.status(400).json({ message: '잘못된 요청입니다' });
+      }
+    }
+  },
+
+  getCommentedPost: async (req, res) => {
+    const userInfo = isAuthorized(req);
+    const postId = req.body.post_id;
+    if (!userInfo) {
+      res.status(401).json({ message: '로그인이 필요합니다' });
+    } else {
+      try {
+        console.log(postId);
+        const commentedPost = await Post.findOne({
+          where: { id: postId },
+        });
+        console.log({ commentedPost });
+        res.status(200).json({ commentedPost });
+      } catch (err) {
+        console.log('캐치');
         res.status(400).json({ message: '잘못된 요청입니다' });
       }
     }

@@ -1,5 +1,5 @@
 const { sign, verify } = require('jsonwebtoken');
-const { User } = require('./../../models');
+const { User, Post } = require('./../../models');
 const { hashPassword } = require('../functions/security');
 const bcrypt = require('bcrypt');
 
@@ -21,19 +21,20 @@ module.exports = {
 
   sendAccessToken: (res, accessToken) => {
     console.log('토큰 보내는중');
-    res.cookie('accessToken', accessToken, {
-      httpOnly: true,
-      secure: true,
-      sameSite: 'None',
-      expires: new Date(Date.now() + 1 * 1000 * 60 * 60 * 24),
-    });
+    res
+      .cookie('accessToken', accessToken, {
+        httpOnly: false,
+        secure: true,
+        sameSite: 'None',
+        expires: new Date(Date.now() + 1 * 1000 * 60 * 60 * 24),
+      })
+      .json({ data: accessToken });
   },
 
   isAuthorized: (req) => {
-    console.log('여기');
-    console.log(req.headers.cookie);
-    const accessToken = req.headers.cookie.slice(12);
-    console.log(accessToken);
+    console.log('isAuthorized 실행');
+    // console.log(req.headers);
+    const accessToken = req.headers.cookie.split('=')[1];
     if (!accessToken) return null;
     try {
       return verify(accessToken, process.env.ACCESS_SECRET);
@@ -149,7 +150,6 @@ module.exports = {
   unregister: async (req) => {
     const resObject = {};
     const accessToken = authorized(req.cookies.accessToken);
-
     try {
       if (!accessToken) {
         resObject.code = 401;
@@ -185,15 +185,11 @@ module.exports = {
       //   throw '비밀번호를 잘못 입력하였습니다';
       // }
 
-      await User.update(
-        {
-          expiredDatetime: new Date(),
-        },
-        {
-          where: { userId: userData.dataValues.userId },
-        }
-      )
-        .then(() => {
+      await User.destroy({
+        where: { id: accessToken.id },
+      })
+        .then((data) => {
+          console.log(data);
           resObject.code = 201;
           resObject.message = '회원탈퇴 되었습니다';
         })
@@ -207,5 +203,23 @@ module.exports = {
       resObject.message = error;
     }
     return resObject;
+  },
+
+  getAllUserInfo: async (req, res) => {
+    const resObject = {};
+    try {
+      const userInfoList = await User.findAll({
+        attributes: ['id', 'email', 'nickname'],
+      });
+      resObject.code = 201;
+      resObject.message = '회원탈퇴 되었습니다';
+      resObject.data = userInfoList;
+      return resObject;
+    } catch (err) {
+      console.log(err);
+      resObject.code = 500;
+      resObject.message = '정보를 불러오는데 실패했습니다';
+      return resObject;
+    }
   },
 };

@@ -16,7 +16,7 @@ const HeaderBack = styled.div`
     margin-top: 5px;
   }
 `;
-function Header({ setIsLoginCheck, isLoginCheck }) {
+function Header({ setIsLoginCheck, isLoginCheck, setUserInfo }) {
   const navigate = useNavigate();
 
   return (

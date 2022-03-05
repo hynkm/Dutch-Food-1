@@ -60,7 +60,7 @@ export default function MainPageMap(props) {
               // 영역정보의 북동쪽 정보를 얻어옵니다
               var neLatlng = bounds.getNorthEast();
 
-              console.log(bounds);
+              // console.log(bounds);
               props.setCurrentBoundLocation([
                 swLatlng.La,
                 swLatlng.Ma,

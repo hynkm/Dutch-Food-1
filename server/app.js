@@ -12,6 +12,8 @@ const mainPage = require('./router/mainPage');
 const mypagePage = require('./router/mypagePage');
 const oauthPage = require('./router/oauthPage');
 const signupPage = require('./router/signupPage');
+const postPage = require('./router/postPage');
+const authPage = require('./router/authPage');
 
 var cookieParser = require('cookie-parser');
 app.use(cookieParser());
@@ -54,6 +56,8 @@ app.use('/main', mainPage);
 app.use('/mypage', mypagePage);
 app.use('/oauth', oauthPage);
 app.use('/signup', signupPage);
+app.use('/post', postPage);
+app.use('/auth', authPage);
 
 //let server = app.listen(HTTPS_PORT);
 // eslint-disable-next-line no-console

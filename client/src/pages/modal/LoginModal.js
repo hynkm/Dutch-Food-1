@@ -5,6 +5,7 @@ import kakaoIcon from '../../assets/icons/kakao_login_large_wide.png';
 import googleLogo from '../../assets/icons/google-logo.jpeg';
 
 import { setCookie } from '../../components/Cookie';
+import { AiFillPropertySafety } from 'react-icons/ai';
 
 const LoginInputBox = styled.input`
   width: 260px;
@@ -163,7 +164,7 @@ const AletModalView = styled.div`
 
 let url = 'http://localhost:8080';
 
-function LoginModal({ setIsLoginCheck, handleCloseModal }) {
+function LoginModal({ setIsLoginCheck, handleCloseModal, setUserInfo }) {
   const [loginUserInfo, setLoginUserInfo] = useState({
     email: '',
     password: '',
@@ -202,12 +203,29 @@ function LoginModal({ setIsLoginCheck, handleCloseModal }) {
           //localStorage.setItem('accessToken', res.data.access);
           setCookie('accessToken', res.data.data);
           setIsLoginCheck(true);
+
           handleCloseModal();
         })
         .catch((err) => {
           console.log(err, '로그인 err');
           setIsAletModal(true);
         });
+
+      // // 유저정보 상태관리 위해서 작성한 부분
+      // console.log('auth요청 직전');
+      // axios
+      //   .get(url + '/auth', {
+      //     headers: { 'Content-Type': 'application/json' },
+      //     withCredentials: true,
+      //   })
+      //   .then((res) => {
+      //     console.log('유저정보 응답옴');
+      //     console.log(res);
+      //     setUserInfo(res);
+      //   })
+      //   .catch((err) => {
+      //     console.log(err);
+      //   });
     }
   };
 
