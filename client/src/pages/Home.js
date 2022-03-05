@@ -4,9 +4,19 @@ import styled, { keyframes, createGlobalStyle } from 'styled-components';
 import { FullPage, Slide } from 'react-full-page/lib';
 
 // import { HiChevronDoubleDown } from 'react-icons/hi';
-import mapImg from '../assets/img/mapImg.png';
+import mapImg from '../assets/img/map.png';
+import pin from '../assets/img/pin.png';
 import logo7 from '../assets/logo/logo7.png';
-import phone from '../assets/img/phone.png';
+import food1 from '../assets/food/food1.png';
+import food2 from '../assets/food/food2.png';
+import food3 from '../assets/food/food3.png';
+import food4 from '../assets/food/food4.png';
+import food5 from '../assets/food/food5.png';
+import food6 from '../assets/food/food6.png';
+import food7 from '../assets/food/food7.png';
+import food8 from '../assets/food/food8.png';
+
+// import phone from '../assets/img/phone.png';
 
 const GlobalStyle = createGlobalStyle`
   h1 {
@@ -79,6 +89,7 @@ const time = keyframes`
   opacity: 1;
 }
 `;
+/*
 const PhoneBack = styled.div`
   width: 100vw;
   height: 100vh;
@@ -86,28 +97,37 @@ const PhoneBack = styled.div`
   justify-content: center;
   align-items: center;
 `;
-
 const Phone = styled.img`
   border-bottom: 2px solid rgba(0, 0, 0, 0.1);
   width: 280px;
   height: 510px;
 `;
+*/
+
+const PhoneBack = styled.div`
+  width: 100%;
+  height: 100%;
+  display: flex;
+  background-color: #afeeee;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-around;
+`;
 
 const Logo = styled.img`
   animation: ${LogoClick} 2s 1.6s;
   animation-fill-mode: forwards;
-  position: absolute;
+
   padding: 10px;
   border-radius: 30px;
-  box-shadow: 2px 5px 1px 1px #dadce0;
-  background-color: #f8f8ff;
+  /* box-shadow: 2px 5px 1px 1px #dadce0; */
+  /* background-color: #f8f8ff; */
   width: 150px;
   height: 90px;
   top: 160px;
 `;
 
 const PhoneTest = styled.div`
-  position: absolute;
   width: 243px;
   height: 405px;
   margin-top: 77px;
@@ -154,13 +174,11 @@ const PhoneBox = styled.div`
   }
 `;
 const MapImg = styled.img`
-  animation: ${time} 3s 2.5s;
-  animation-fill-mode: forwards;
-  opacity: 0;
-  position: absolute;
+  /* animation: ${time} 3s 2.5s;
+  animation-fill-mode: forwards; 
+  opacity: 0; */
   width: 350px;
-  height: 320px;
-  top: 230px;
+  height: 250px;
 `;
 
 const TextBox = styled.div`
@@ -200,7 +218,7 @@ const StartBtn = styled.div`
   animation-fill-mode: forwards;
   opacity: 0;
   cursor: pointer;
-  position: absolute;
+
   top: 480px;
   font-size: 22px;
   letter-spacing: 5px;
@@ -263,12 +281,16 @@ function Home() {
       <FullPage controls controlsProps={{ className: 'controls' }}>
         <Slide>
           <PhoneBack>
-            <Phone src={phone} />
+            {/* <Phone src={phone} /> */}
+            <div>배달비를 더치하자!</div>
             <Logo src={logo7} />
             <MapImg src={mapImg} />
             <StartBtn onClick={handelMainMove}>시작하기</StartBtn>
+            {/*
+             <Slide>
+             <PhoneBack>
             <PhoneTest>
-              <PhoneBox>
+               <PhoneBox>
                 <TextBox>
                   <span className="ba">배</span>
                   <span className="dal">달</span>
@@ -277,8 +299,11 @@ function Home() {
                 <div className="wave"></div>
                 <div className="wave one"></div>
                 <div className="wave two"></div>
-              </PhoneBox>
-            </PhoneTest>
+              </PhoneBox> 
+            </PhoneTest> 
+             <PhoneBack>
+             </Slide>
+            */}
           </PhoneBack>
         </Slide>
         {/* <Slide>
