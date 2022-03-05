@@ -54,52 +54,24 @@ import {
 import { ReadPostMap } from '../components/Map';
 import axios from 'axios';
 
-let url = 'https://localhost:8080';
+let url = 'http://localhost:8080';
 
 const ReadPost = (props) => {
   const navigate = useNavigate();
 
   const [isDuplicated, setIsDuplicated] = useState(false);
   const [selectedCommentId, setSelectedCommentId] = useState('');
-  const [commentList, setCommentList] = useState([
-    // {
-    //   id: 1,
-    //   nickname: '닉네임일코딩',
-    //   comment_content: '양념순살 1마리 같이 주문시켜주세요!',
-    //   created_at: '2022.03.01.17:31',
-    // },
-    // {
-    //   id: 2,
-    //   nickname: '닉네임이코딩',
-    //   comment_content: '양념순살 2마리 같이 주문시켜주세요!',
-    //   created_at: '2022.03.02.17:32',
-    // },
-    // {
-    //   id: 3,
-    //   nickname: '닉네임삼코딩',
-    //   comment_content: '양념순살 3마리 같이 주문시켜주세요!',
-    //   created_at: '2022.03.03.17:33',
-    // },
-    // {
-    //   id: 4,
-    //   nickname: '닉네임사코딩',
-    //   content: '양념순살 4마리 같이 주문시켜주세요!',
-    //   created_at: '2022.03.04.17:34',
-    // },
-    // {
-    //   id: 5,
-    //   nickname: '닉네임오코딩',
-    //   content: '양념순살 5마리 같이 주문시켜주세요!',
-    //   created_at: '2022.03.05.17:35',
-    // },
-  ]);
+  const [commentList, setCommentList] = useState([]);
+  const [allUserInfo, setAllUserInfo] = useState([]);
+  const [isLoginModal, setIsLoginModal] = useState(false);
 
-  // 신청댓글 리스트를 GET 요청
+  // 닉네임 요청, 신청댓글 리스트, 모든유저정보 GET 요청
   useEffect(() => {
     console.log('comment리스트를 불러옵니다.');
 
+    // 모든유저 정보
     axios({
-      url: url + `/comment/post/${props.currentPost.id}`,
+      url: url + '/post/user',
       method: 'get',
       headers: {
         // Authorization: `Bearer ${props.accessToken}`,
@@ -108,9 +80,56 @@ const ReadPost = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('신청 완료');
+        console.log('모든 유저 정보 들어옴');
         console.log(res.data);
-        setCommentList(res.data.data);
+        setAllUserInfo(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // 작성자 id로 닉네임 요청
+    axios({
+      url: url + '/post/nickname',
+      method: 'post',
+      headers: {
+        // Authorization: `Bearer ${props.accessToken}`,
+        'Content-Type': 'application/json',
+      },
+      data: {
+        id: props.currentPost.user_id,
+      },
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log('닉네임 성공');
+        console.log(res.data.nickname);
+        props.setCurrentPost({
+          ...props.currentPost,
+          nickname: res.data.nickname,
+        });
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+
+    // post id로 달린 댓글 가져오기
+    axios({
+      // url: url + `/comment/post/${props.currentPost.id}`,
+      url: url + '/post/comments',
+      method: 'post',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      data: {
+        post_id: props.currentPost.id,
+      },
+      withCredentials: true,
+    })
+      .then((res) => {
+        console.log('신청 완료');
+        console.log(res.data.commentList);
+        setCommentList(res.data.commentList);
       })
       .catch((err) => {
         console.log(err);
@@ -121,7 +140,7 @@ const ReadPost = (props) => {
   useEffect(() => {
     console.log('유저가 이미 신청한 게시글인지 확인합니다.');
     for (let i = 0; i < commentList.length; i++) {
-      if (commentList[i].nickname === props.userInfo.nickname) {
+      if (commentList[i].applicant_id === props.userInfo.id) {
         setIsDuplicated(!isDuplicated);
       }
     }
@@ -186,6 +205,8 @@ const ReadPost = (props) => {
   // 신청자 작성 내용 -> 서버로
   const onClickApplyButton = () => {
     console.log('신청하기 버튼 눌림');
+    console.log(props.userInfo);
+    console.log(props.userInfo.id);
 
     // 이미 신청한 사람이면 중복 신청 모달 띄우기
     if (isDuplicated === true) {
@@ -197,6 +218,7 @@ const ReadPost = (props) => {
     else if (textareaContent.length > 0) {
       axios({
         // url: url + '/comment',
+        url: url + '/post/comment',
         method: 'post',
         headers: {
           Authorization: `Bearer ${props.accessToken}`,
@@ -212,6 +234,8 @@ const ReadPost = (props) => {
         .then((res) => {
           console.log('신청 하고 응답옴');
           console.log(res);
+          navigate('/main');
+          navigate('/readpost');
         })
         .catch((err) => {
           console.log(err);
@@ -234,10 +258,15 @@ const ReadPost = (props) => {
 
     axios({
       // url: url + `/post:${props.currentPost.id}`,
+      url: url + '/post/post',
       method: 'delete',
+      data: {
+        id: props.currentPost.id,
+      },
       withCredentials: true,
     })
       .then((res) => {
+        console.log('삭제응답 잘 들어옴');
         console.log(res);
         navigate('/main');
       })
@@ -251,12 +280,18 @@ const ReadPost = (props) => {
 
     axios({
       // url: url + `/comment:${commentId}`,
+      url: url + '/post/comment',
       method: 'delete',
+      data: {
+        id: commentId,
+      },
       withCredentials: true,
     })
       .then((res) => {
         console.log('신청댓글 삭제 요청에 대한 응답이 옴');
         console.log(res);
+        openCommentDeleteAlertModalHandler();
+        navigate('/main');
         navigate('/readpost');
       })
       .catch((err) => console.log(err));
@@ -325,116 +360,135 @@ const ReadPost = (props) => {
       <Header
         setIsLoginCheck={props.setIsLoginCheck}
         isLoginCheck={props.isLoginCheck}
+        isLoginModal={props.isLoginModal}
+        setIsLoginModal={props.setIsLoginModal}
       />
-      <OuterDiv>
-        <PostSectionDiv>
-          <TitleBoxDiv>
-            <TitleDiv>{props.currentPost.title}</TitleDiv>
-            <NicknameSpan>{props.userInfo.nickname}</NicknameSpan>
-            <TimeSpan>{props.currentPost.created_at}</TimeSpan>
-          </TitleBoxDiv>
-          <ContentTextarea
-            value={props.currentPost.content}
-            readOnly
-          ></ContentTextarea>
-          <InformationOuterDiv>
-            <InformationBoxDiv>
-              <InformationIndexDiv>메&nbsp; 뉴</InformationIndexDiv>
-              <InformationDiv>{props.currentPost.menu}</InformationDiv>
-            </InformationBoxDiv>
-            <InformationBoxDiv>
-              <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
-              <InformationDiv>
-                {commentList.length}/{props.currentPost.recruit_volume[0]} 명
-              </InformationDiv>
-            </InformationBoxDiv>
-            <InformationBoxDiv>
-              <InformationIndexDiv>전 체 배 달 료</InformationIndexDiv>
-              <InformationDiv>{charge}</InformationDiv>
-            </InformationBoxDiv>
-          </InformationOuterDiv>
-          <BankAccountOuterDiv>
-            <BankAccountIndexDiv>
-              입금해주실 은행 및 계좌번호
-            </BankAccountIndexDiv>
-            <BankAccountBoxDiv>
-              <BankDiv>{props.currentPost.bank_name}은행</BankDiv>
-              <AccountDiv>{props.currentPost.account_number}</AccountDiv>
-            </BankAccountBoxDiv>
-          </BankAccountOuterDiv>
-          <MapBoxDiv>
-            <MapIndexDiv>
-              배달받을 장소: {props.currentPost.address}
-            </MapIndexDiv>
-            <MapDiv>
-              <ReadPostMap currentPost={props.currentPost} />
-            </MapDiv>
-          </MapBoxDiv>
-          <BottomDiv>
-            <BottomIndexDiv>원하는 메뉴 및 세부사항</BottomIndexDiv>
-            <BottomTextarea
-              placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
-              onChange={handleTextareaValue}
-            ></BottomTextarea>
-            {props.currentPost.user_id === props.userInfo.user_id ? (
-              <EditDeleteBoxDiv>
-                <EditButton onClick={onClickEditButton}>수 정</EditButton>
-                <DeleteButton onClick={openPostDeleteAlertModalHandler}>
-                  삭 제
-                </DeleteButton>
-              </EditDeleteBoxDiv>
-            ) : (
-              <>
-                {props.currentPost.recruit_volume[0] ===
-                String(commentList.length) ? (
-                  <ApplyButton disabled onClick={onClickApplyButton}>
-                    모 집 이&nbsp; 완 료 되 었 습 니 다
-                  </ApplyButton>
-                ) : (
-                  <ApplyButton onClick={onClickApplyButton}>
-                    신 청 하 기
-                  </ApplyButton>
-                )}
-              </>
-            )}
-          </BottomDiv>
-        </PostSectionDiv>
-        {commentList.length === 0 ? null : (
-          <CommentSectionDiv>
-            <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
-            <CommentOuterDiv>
-              {commentList.map((comment) => {
-                return (
-                  <CommentBoxDiv key={comment.id}>
-                    <CommentApplicantBoxDiv>
-                      <CommentApplicantNickDiv>
-                        {comment.nickname}
-                      </CommentApplicantNickDiv>
-                      <CommentApplicantTimeDiv>
-                        {comment.created_at}
-                      </CommentApplicantTimeDiv>
-                      {props.userInfo.nickname === comment.nickname ||
-                      props.userInfo.nickname === props.currentPost.nickname ? (
-                        <CommentApplicantDeleteButton
-                          onClick={() =>
-                            openCommentDeleteAlertModalHandler(comment.id)
-                          }
-                        >
-                          삭제
-                        </CommentApplicantDeleteButton>
-                      ) : null}
-                    </CommentApplicantBoxDiv>
-                    <CommentContentTextarea
-                      readOnly
-                      value={comment.content}
-                    ></CommentContentTextarea>
-                  </CommentBoxDiv>
-                );
-              })}
-            </CommentOuterDiv>
-          </CommentSectionDiv>
-        )}
-      </OuterDiv>
+      {commentList === 0 ? null : (
+        <OuterDiv>
+          <PostSectionDiv>
+            <TitleBoxDiv>
+              <TitleDiv>{props.currentPost.title}</TitleDiv>
+              <NicknameSpan>{props.currentPost.nickname}</NicknameSpan>
+              <TimeSpan>{props.currentPost.createdAt}</TimeSpan>
+            </TitleBoxDiv>
+            <ContentTextarea
+              value={props.currentPost.content}
+              readOnly
+            ></ContentTextarea>
+            <InformationOuterDiv>
+              <InformationBoxDiv>
+                <InformationIndexDiv>메&nbsp; 뉴</InformationIndexDiv>
+                <InformationDiv>{props.currentPost.menu}</InformationDiv>
+              </InformationBoxDiv>
+              <InformationBoxDiv>
+                <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
+                <InformationDiv>
+                  {/* {commentList.length}/{props.currentPost.recruit_volume[0]} 명 */}
+                </InformationDiv>
+              </InformationBoxDiv>
+              <InformationBoxDiv>
+                <InformationIndexDiv>전 체 배 달 료</InformationIndexDiv>
+                <InformationDiv>{charge}</InformationDiv>
+              </InformationBoxDiv>
+            </InformationOuterDiv>
+            <BankAccountOuterDiv>
+              <BankAccountIndexDiv>
+                입금해주실 은행 및 계좌번호
+              </BankAccountIndexDiv>
+              <BankAccountBoxDiv>
+                <BankDiv>{props.currentPost.bank_name}은행</BankDiv>
+                <AccountDiv>{props.currentPost.account_number}</AccountDiv>
+              </BankAccountBoxDiv>
+            </BankAccountOuterDiv>
+            <MapBoxDiv>
+              <MapIndexDiv>
+                배달받을 장소: {props.currentPost.address}
+              </MapIndexDiv>
+              <MapDiv>
+                <ReadPostMap currentPost={props.currentPost} />
+              </MapDiv>
+            </MapBoxDiv>
+            <BottomDiv>
+              <BottomIndexDiv>원하는 메뉴 및 세부사항</BottomIndexDiv>
+              <BottomTextarea
+                placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
+                onChange={handleTextareaValue}
+              ></BottomTextarea>
+              {props.currentPost.user_id === props.userInfo.id ? (
+                <EditDeleteBoxDiv>
+                  <EditButton onClick={onClickEditButton}>수 정</EditButton>
+                  <DeleteButton onClick={openPostDeleteAlertModalHandler}>
+                    삭 제
+                  </DeleteButton>
+                </EditDeleteBoxDiv>
+              ) : (
+                <>
+                  {props.currentPost.recruit_volume[0] ===
+                  String(commentList.length) ? (
+                    <ApplyButton disabled>
+                      모 집 이&nbsp; 완 료 되 었 습 니 다
+                    </ApplyButton>
+                  ) : (
+                    <>
+                      {props.isLoginCheck ? (
+                        <ApplyButton onClick={onClickApplyButton}>
+                          신 청 하 기
+                        </ApplyButton>
+                      ) : (
+                        <ApplyButton disabled>
+                          신청을 위해 로그인해주세요
+                        </ApplyButton>
+                      )}
+                    </>
+                  )}
+                </>
+              )}
+            </BottomDiv>
+          </PostSectionDiv>
+          {commentList.length === 0 ? null : (
+            <CommentSectionDiv>
+              <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
+              <CommentOuterDiv>
+                {commentList.map((comment) => {
+                  let userNickname = '';
+                  for (let i = 0; i < allUserInfo.length; i++) {
+                    if (allUserInfo[i].id === comment.applicant_id) {
+                      userNickname = allUserInfo[i].nickname;
+                    }
+                  }
+                  return (
+                    <CommentBoxDiv key={comment.id}>
+                      <CommentApplicantBoxDiv>
+                        <CommentApplicantNickDiv>
+                          {userNickname}
+                        </CommentApplicantNickDiv>
+                        <CommentApplicantTimeDiv>
+                          {comment.createdAt.slice(0, 10)}
+                        </CommentApplicantTimeDiv>
+                        {props.userInfo.id === comment.applicant_id ||
+                        props.userInfo.nickname ===
+                          props.currentPost.nickname ? (
+                          <CommentApplicantDeleteButton
+                            onClick={() =>
+                              openCommentDeleteAlertModalHandler(comment.id)
+                            }
+                          >
+                            삭제
+                          </CommentApplicantDeleteButton>
+                        ) : null}
+                      </CommentApplicantBoxDiv>
+                      <CommentContentTextarea
+                        readOnly
+                        value={comment.comment_content}
+                      ></CommentContentTextarea>
+                    </CommentBoxDiv>
+                  );
+                })}
+              </CommentOuterDiv>
+            </CommentSectionDiv>
+          )}
+        </OuterDiv>
+      )}
     </>
   );
 };

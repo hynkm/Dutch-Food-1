@@ -71,140 +71,8 @@ const MyPage = (props) => {
   });
   const [passwordResponseMSG, setPasswordResponseMSG] = useState('');
   const [myPostList, setMyPostList] = useState([]);
-
-  const [myCommentList, setMyCommentList] = useState([
-    // {
-    //   id: 1,
-    //   post_id: 1,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:31',
-    // },
-    // {
-    //   id: 2,
-    //   post_id: 2,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:32',
-    // },
-    // {
-    //   id: 3,
-    //   post_id: 3,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:33',
-    // },
-    // {
-    //   id: 4,
-    //   post_id: 4,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:34',
-    // },
-    // {
-    //   id: 5,
-    //   post_id: 5,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:35',
-    // },
-    // {
-    //   id: 6,
-    //   post_id: 6,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:36',
-    // },
-    // {
-    //   id: 7,
-    //   post_id: 7,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:37',
-    // },
-    // {
-    //   id: 8,
-    //   post_id: 8,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:38',
-    // },
-  ]);
-
-  const [allCommentList, setAllCommentList] = useState([
-    // {
-    //   id: 1,
-    //   post_id: 1,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 1마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:31',
-    // },
-    // {
-    //   id: 2,
-    //   post_id: 1,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 2마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:32',
-    // },
-    // {
-    //   id: 3,
-    //   post_id: 3,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 3마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:33',
-    // },
-    // {
-    //   id: 4,
-    //   post_id: 4,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 4마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:34',
-    // },
-    // {
-    //   id: 5,
-    //   post_id: 5,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 5마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:35',
-    // },
-    // {
-    //   id: 6,
-    //   post_id: 6,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 6마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:36',
-    // },
-    // {
-    //   id: 7,
-    //   post_id: 7,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 7마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:37',
-    // },
-    // {
-    //   id: 8,
-    //   post_id: 8,
-    //   applicant_id: 'kimcoding@naver.com',
-    //   comment_content: '황금올리브 8마리 같이 주문시켜주세요!',
-    //   nickname: '닉네임김코딩',
-    //   createdAt: '2022-03-16 17:38',
-    // },
-  ]);
+  const [myCommentList, setMyCommentList] = useState([]);
+  const [allCommentList, setAllCommentList] = useState([]);
   const [postIdList, setPostIdList] = useState([]);
 
   // 내가 쓴 게시물 리스트 불러오기
@@ -681,9 +549,9 @@ const MyPage = (props) => {
             </MyListIndexDiv>
             <MyListBoxDiv>
               {myPostList.map((post) => {
-                const stringDate = String(post.createdAt).slice(5);
+                const stringDate = String(post.createdAt).slice(0, 10);
                 return (
-                  <MyListDiv key={post.id}>
+                  <MyListDiv key={post.id} onClick={() => onClickTitle(post)}>
                     <ListTitleDiv>
                       {/* <Link to="/readpost" onClick={() => onClickTitle(post)}>
                         {post.title}
@@ -716,9 +584,12 @@ const MyPage = (props) => {
             </MyListIndexDiv>
             <MyListBoxDiv>
               {myCommentList.map((comment) => {
-                const stringDate = String(comment.createdAt).slice(5);
+                const stringDate = String(comment.createdAt).slice(0, 10);
                 return (
-                  <MyListDiv key={comment.id}>
+                  <MyListDiv
+                    key={comment.id}
+                    onClick={() => onClickComment(comment)}
+                  >
                     <ListTitleDiv>
                       {/* <Link
                         to="/readpost"
@@ -726,9 +597,7 @@ const MyPage = (props) => {
                       >
                         {comment.comment_content}
                       </Link> */}
-                      <div onClick={() => onClickComment(comment)}>
-                        {comment.comment_content}
-                      </div>
+                      <div>{comment.comment_content}</div>
                     </ListTitleDiv>
                     <ListDateDiv>{stringDate}</ListDateDiv>
                     <ListStateDiv
@@ -757,7 +626,7 @@ const MyPage = (props) => {
                 <InformationContentInput
                   name="id"
                   type="text"
-                  value={props.userInfo.user_id}
+                  value={props.userInfo.email}
                   readOnly
                 ></InformationContentInput>
               </MyInformationDiv>

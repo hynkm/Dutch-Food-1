@@ -34,9 +34,11 @@ import {
 } from '../components/EditPostComponents';
 import Header from '../components/Header';
 
-let url = 'https://localhost:8080';
+let url = 'http://localhost:8080';
 
 const CreatePost = (props) => {
+  const navigate = useNavigate();
+
   const [inputTitle, setInputTitle] = useState(props.currentPost.title);
   const [inputAddress, setInputAddress] = useState(props.currentPost.address);
   const [selectMenu, setSelectMenu] = useState(props.currentPost.menu);
@@ -141,7 +143,8 @@ const CreatePost = (props) => {
       textareaContent.length > 0
     ) {
       axios({
-        url: url + `/post/${props.currentPost.id}`,
+        // url: url + `/post/${props.currentPost.id}`,
+        url: url + '/post/post',
         method: 'patch',
         headers: {
           // Authorization: `Bearer ${props.accessToken}`,
@@ -149,6 +152,7 @@ const CreatePost = (props) => {
           'Content-Type': 'application/json',
         },
         data: {
+          id: props.currentPost.id,
           title: inputTitle,
           address: inputAddress,
           menu: selectMenu,
@@ -163,6 +167,19 @@ const CreatePost = (props) => {
         .then((res) => {
           console.log('게시글 수정 완료');
           console.log(res);
+          props.setCurrentPost({
+            id: props.currentPost.id,
+            user_id: props.userInfo.id,
+            title: inputTitle,
+            address: inputAddress,
+            menu: selectMenu,
+            delivery_charge: inputFee,
+            recruit_volume: selectNum,
+            bank_name: selectBank,
+            accout_number: inputAccount,
+            content: textareaContent,
+          });
+          navigate('/readpost');
         })
         .catch((err) => console.log(err));
     } else {

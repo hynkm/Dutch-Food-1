@@ -6,7 +6,7 @@ import logo from '../assets/logo/logo7.png';
 const HeaderBack = styled.div`
   position: relative;
   height: 80px;
-  background: linear-gradient(360deg, #f8f8ff, #F5F5F5);
+  background: linear-gradient(360deg, #f8f8ff, #f5f5f5);
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
   > img.logo {
     width: 140px;
@@ -16,7 +16,7 @@ const HeaderBack = styled.div`
     margin-top: 5px;
   }
 `;
-function Header({ setIsLoginCheck, isLoginCheck }) {
+function Header({ setIsLoginCheck, isLoginCheck, setUserInfo }) {
   const navigate = useNavigate();
   return (
     <>
@@ -27,7 +27,11 @@ function Header({ setIsLoginCheck, isLoginCheck }) {
           onClick={() => navigate('/main')}
           style={{ cursor: 'pointer' }}
         />
-        <Navbar setIsLoginCheck={setIsLoginCheck} isLoginCheck={isLoginCheck} />
+        <Navbar
+          setIsLoginCheck={setIsLoginCheck}
+          isLoginCheck={isLoginCheck}
+          setUserInfo={setUserInfo}
+        />
       </HeaderBack>
     </>
   );

@@ -63,12 +63,12 @@ function Main(props) {
   // 지도 상 현재 위치가 변경될 때마다 필터링 되는 게시물 업데이트
   useEffect(() => {
     setFilteredAllPost(filterPost(props.allPostList));
-    console.log(currentBoundLocation);
+    // console.log(currentBoundLocation);
   }, [currentBoundLocation]);
 
   // 화면 영역 안에 존재하는 마커 필터링하는 함수
   const filterPost = (list) => {
-    console.log(currentBoundLocation);
+    // console.log(currentBoundLocation);
     return list.filter((post) => {
       return (
         parseFloat(post.latitude) >= currentBoundLocation[0] &&
@@ -135,7 +135,9 @@ function Main(props) {
                           모집인원: {post.recruit_volume}
                         </PostVolumeDiv>
                       </PostInformationDiv>
-                      <PostDateDiv>작성시간: {post.created_at}</PostDateDiv>
+                      <PostDateDiv>
+                        작성날짜: {post.createdAt.slice(0, 10)}
+                      </PostDateDiv>
                     </PostContentDiv>
                   </PostBoxDiv>
                 );

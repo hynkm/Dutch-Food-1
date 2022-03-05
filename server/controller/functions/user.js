@@ -1,5 +1,5 @@
 const { sign, verify } = require('jsonwebtoken');
-const { User } = require('./../../models');
+const { User, Post } = require('./../../models');
 const { hashPassword } = require('../functions/security');
 const bcrypt = require('bcrypt');
 
@@ -33,6 +33,7 @@ module.exports = {
 
   isAuthorized: (req) => {
     console.log('isAuthorized 실행');
+    // console.log(req.headers);
     const accessToken = req.headers.cookie.split('=')[1];
     if (!accessToken) return null;
     try {
@@ -202,5 +203,23 @@ module.exports = {
       resObject.message = error;
     }
     return resObject;
+  },
+
+  getAllUserInfo: async (req, res) => {
+    const resObject = {};
+    try {
+      const userInfoList = await User.findAll({
+        attributes: ['id', 'email', 'nickname'],
+      });
+      resObject.code = 201;
+      resObject.message = '회원탈퇴 되었습니다';
+      resObject.data = userInfoList;
+      return resObject;
+    } catch (err) {
+      console.log(err);
+      resObject.code = 500;
+      resObject.message = '정보를 불러오는데 실패했습니다';
+      return resObject;
+    }
   },
 };
