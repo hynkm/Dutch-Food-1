@@ -67,6 +67,9 @@ const ReadPost = (props) => {
   // 로컬 스토리지에 저장된 commentList
   const savedCommentList = JSON.parse(localStorage.getItem('currentPost'));
 
+  // 로컬 스토리지 userInfo 불러오기
+  const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+
   // 닉네임 요청, 신청댓글 리스트, 모든유저정보 GET 요청
   useEffect(() => {
     // 모든유저 정보
@@ -424,7 +427,7 @@ const ReadPost = (props) => {
                     placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
                     onChange={handleTextareaValue}
                   ></BottomTextarea>
-                  {savedCommentList.user_id === props.userInfo.id ? (
+                  {savedCommentList.user_id === savedUserInfo.id ? (
                     <EditDeleteBoxDiv>
                       <EditButton onClick={onClickEditButton}>수 정</EditButton>
                       <DeleteButton onClick={openPostDeleteAlertModalHandler}>
@@ -475,8 +478,8 @@ const ReadPost = (props) => {
                             <CommentApplicantTimeDiv>
                               {comment.createdAt.slice(0, 10)}
                             </CommentApplicantTimeDiv>
-                            {props.userInfo.id === comment.applicant_id ||
-                            props.userInfo.nickname ===
+                            {savedUserInfo.id === comment.applicant_id ||
+                            savedUserInfo.nickname ===
                               savedCommentList.nickname ? (
                               <CommentApplicantDeleteButton
                                 onClick={() =>
