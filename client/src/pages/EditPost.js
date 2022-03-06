@@ -39,31 +39,24 @@ let url = 'http://localhost:8080';
 const CreatePost = (props) => {
   const navigate = useNavigate();
 
-  const [inputTitle, setInputTitle] = useState(props.currentPost.title);
-  const [inputAddress, setInputAddress] = useState(props.currentPost.address);
-  const [selectMenu, setSelectMenu] = useState(props.currentPost.menu);
-  const [selectNum, setSelectNum] = useState(props.currentPost.recruit_volume);
-  const [inputFee, setInputFee] = useState(props.currentPost.delivery_charge);
-  const [selectBank, setSelectBank] = useState(props.currentPost.bank_name);
+  // 로컬 스토리지에 저장된 currentPost
+  const savedCurrentPost = JSON.parse(localStorage.getItem('currentPost'));
+
+  // 로컬 스토리지에 저장된 userInfo
+  const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+  const [inputTitle, setInputTitle] = useState(savedCurrentPost.title);
+  const [inputAddress, setInputAddress] = useState(savedCurrentPost.address);
+  const [selectMenu, setSelectMenu] = useState(savedCurrentPost.menu);
+  const [selectNum, setSelectNum] = useState(savedCurrentPost.recruit_volume);
+  const [inputFee, setInputFee] = useState(savedCurrentPost.delivery_charge);
+  const [selectBank, setSelectBank] = useState(savedCurrentPost.bank_name);
   const [inputAccount, setInputAccount] = useState(
-    props.currentPost.account_number
+    savedCurrentPost.account_number
   );
   const [textareaContent, setTextareaContent] = useState(
-    props.currentPost.content
+    savedCurrentPost.content
   );
-
-  // useEffect(() => {
-  //   console.log('수정해야할 기존 입력값 불러오기');
-
-  //   setInputTitle(props.currentPost.title);
-  //   setInputAddress(props.currentPost.address);
-  //   setSelectMenu(props.currentPost.menu);
-  //   setSelectNum(props.currentPost.recruit_volume);
-  //   setInputFee(props.currentPost.delivery_charge);
-  //   setSelectBank(props.currentPost.bank_name);
-  //   setInputAccount(props.currentPost.account_number);
-  //   setTextareaContent(props.currentPost.content);
-  // }, []);
 
   // 도로명주소 찾기, 누락 알림 모달창 상태관리
   const [isAddressModalOpen, setIsAddressModalOpen] = useState(false);
@@ -152,7 +145,7 @@ const CreatePost = (props) => {
           'Content-Type': 'application/json',
         },
         data: {
-          id: props.currentPost.id,
+          id: savedCurrentPost.id,
           title: inputTitle,
           address: inputAddress,
           menu: selectMenu,
@@ -168,8 +161,8 @@ const CreatePost = (props) => {
           console.log('게시글 수정 완료');
           console.log(res);
           props.setCurrentPost({
-            id: props.currentPost.id,
-            user_id: props.userInfo.id,
+            id: savedCurrentPost.id,
+            user_id: savedUserInfo.id,
             title: inputTitle,
             address: inputAddress,
             menu: selectMenu,
@@ -179,6 +172,22 @@ const CreatePost = (props) => {
             accout_number: inputAccount,
             content: textareaContent,
           });
+          localStorage.setItem(
+            'currentPost',
+            JSON.stringify({
+              ...savedCurrentPost,
+              id: savedCurrentPost.id,
+              user_id: savedUserInfo.id,
+              title: inputTitle,
+              address: inputAddress,
+              menu: selectMenu,
+              delivery_charge: inputFee,
+              recruit_volume: selectNum,
+              bank_name: selectBank,
+              accout_number: inputAccount,
+              content: textareaContent,
+            })
+          );
           navigate('/readpost');
         })
         .catch((err) => console.log(err));

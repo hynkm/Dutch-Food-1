@@ -134,11 +134,11 @@ const ReadPost = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        // setCommentList(res.data.commentList);
-        localStorage.setItem(
-          'commentList',
-          JSON.stringify(res.data.commentList)
-        );
+        setCommentList(res.data.commentList);
+        // localStorage.setItem(
+        //   'commentList',
+        //   JSON.stringify(res.data.commentList)
+        // );
       })
       .catch((err) => {
         console.log(err);
@@ -148,12 +148,12 @@ const ReadPost = (props) => {
   // 게시글에 이미 신청했는지 여부
   useEffect(() => {
     console.log('유저가 이미 신청한 게시글인지 확인합니다.');
-    for (let i = 0; i < savedCommentList.length; i++) {
-      if (savedCommentList[i].applicant_id === props.userInfo.id) {
+    for (let i = 0; i < commentList.length; i++) {
+      if (commentList[i].applicant_id === savedUserInfo.id) {
         setIsDuplicated(!isDuplicated);
       }
     }
-  }, [savedCommentList]);
+  }, [commentList]);
 
   // 가격에 ',' 표시 붙이기
   let stringCharge = String(savedCurrentPost.delivery_charge);
@@ -382,7 +382,7 @@ const ReadPost = (props) => {
             isLoginModal={props.isLoginModal}
             setIsLoginModal={props.setIsLoginModal}
           />
-          {savedCommentList === 0 ? null : (
+          {commentList === 0 ? null : (
             <OuterDiv>
               <PostSectionDiv>
                 <TitleBoxDiv>
@@ -402,8 +402,8 @@ const ReadPost = (props) => {
                   <InformationBoxDiv>
                     <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
                     <InformationDiv>
-                      {savedCommentList.length}/
-                      {savedCurrentPost.recruit_volume[0]} 명
+                      {commentList.length}/{savedCurrentPost.recruit_volume[0]}{' '}
+                      명
                     </InformationDiv>
                   </InformationBoxDiv>
                   <InformationBoxDiv>
@@ -444,7 +444,7 @@ const ReadPost = (props) => {
                   ) : (
                     <>
                       {savedCurrentPost.recruit_volume[0] ===
-                      String(savedCommentList.length) ? (
+                      String(commentList.length) ? (
                         <ApplyButton disabled>
                           모 집 이&nbsp; 완 료 되 었 습 니 다
                         </ApplyButton>
@@ -465,11 +465,11 @@ const ReadPost = (props) => {
                   )}
                 </BottomDiv>
               </PostSectionDiv>
-              {savedCommentList.length === 0 ? null : (
+              {commentList.length === 0 ? null : (
                 <CommentSectionDiv>
                   <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
                   <CommentOuterDiv>
-                    {savedCommentList.map((comment) => {
+                    {commentList.map((comment) => {
                       let userNickname = '';
                       for (let i = 0; i < allUserInfo.length; i++) {
                         if (allUserInfo[i].id === comment.applicant_id) {
