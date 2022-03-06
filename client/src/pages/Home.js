@@ -6,7 +6,7 @@ import { FullPage, Slide } from 'react-full-page/lib';
 // import { HiChevronDoubleDown } from 'react-icons/hi';
 import mapImg from '../assets/img/map.png';
 import pin from '../assets/img/pin.png';
-import logo7 from '../assets/logo/logo7.png';
+import logo from '../assets/logo/logo8.png';
 import food1 from '../assets/food/food1.png';
 import food2 from '../assets/food/food2.png';
 import food3 from '../assets/food/food3.png';
@@ -108,25 +108,57 @@ const PhoneBack = styled.div`
   width: 100%;
   height: 100%;
   display: flex;
-  background-color: #afeeee;
   flex-direction: column;
   align-items: center;
   justify-content: space-around;
 `;
 
 const Logo = styled.img`
-  animation: ${LogoClick} 2s 1.6s;
-  animation-fill-mode: forwards;
-
+  /* animation: ${LogoClick} 2s 1.6s;
+  animation-fill-mode: forwards; */
   padding: 10px;
   border-radius: 30px;
   /* box-shadow: 2px 5px 1px 1px #dadce0; */
   /* background-color: #f8f8ff; */
-  width: 150px;
-  height: 90px;
+  width: 200px;
+  height: 110px;
   top: 160px;
 `;
+const MapImg = styled.img`
+  /* animation: ${time} 3s 2.5s;
+  animation-fill-mode: forwards; 
+  opacity: 0; */
+  width: 350px;
+  height: 250px;
+`;
 
+const StartBtn = styled.div`
+  /* animation: ${time} 3s 3.5s;
+  animation-fill-mode: forwards; */
+  opacity: 1;
+  cursor: pointer;
+
+  top: 480px;
+  font-size: 22px;
+  letter-spacing: 5px;
+  text-align: center;
+  line-height: 50px;
+  width: 180px;
+  height: 50px;
+  color: white;
+  border-radius: 10px;
+  background-color: #ff5e5e;
+  box-shadow: 1px 1px 1px 1px #dadce0;
+  z-index: 10;
+`;
+const Text1 = styled.div`
+  font-size: 45px;
+  color: black;
+  font-family: 'Nanum Pen Script', cursiv;
+`;
+
+/*
+핸드폰 배경
 const PhoneTest = styled.div`
   width: 243px;
   height: 405px;
@@ -173,13 +205,7 @@ const PhoneBox = styled.div`
     }
   }
 `;
-const MapImg = styled.img`
-  /* animation: ${time} 3s 2.5s;
-  animation-fill-mode: forwards; 
-  opacity: 0; */
-  width: 350px;
-  height: 250px;
-`;
+
 
 const TextBox = styled.div`
   margin-top: 150px;
@@ -212,26 +238,7 @@ const TextBox = styled.div`
     animation: ${waveText} 8s infinite linear;
   }
 `;
-
-const StartBtn = styled.div`
-  animation: ${time} 3s 3.5s;
-  animation-fill-mode: forwards;
-  opacity: 0;
-  cursor: pointer;
-
-  top: 480px;
-  font-size: 22px;
-  letter-spacing: 5px;
-  text-align: center;
-  line-height: 50px;
-  width: 180px;
-  height: 50px;
-  color: white;
-  border-radius: 10px;
-  background-color: #ff5e5e;
-  box-shadow: 1px 1px 1px 1px #dadce0;
-  z-index: 10;
-`;
+*/
 
 /*
 const LastBack = styled.div`
@@ -282,9 +289,12 @@ function Home() {
         <Slide>
           <PhoneBack>
             {/* <Phone src={phone} /> */}
-            <div>배달비를 더치하자!</div>
-            <Logo src={logo7} />
-            <MapImg src={mapImg} />
+            <Text1>배달비를 더치하자!</Text1>
+
+            <Logo src={logo} />
+            <div>
+              <MapImg src={mapImg} />
+            </div>
             <StartBtn onClick={handelMainMove}>시작하기</StartBtn>
             {/*
              <Slide>

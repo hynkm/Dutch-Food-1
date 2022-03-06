@@ -15,11 +15,18 @@ function OauthGoogle({ setIsLoginCheck }) {
     const code = hash.split('=')[1].split('&')[0];
 
     axios
-      .post('http://localhost:8080/oauth/google', code, {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      .post(
+        'http://localhost:8080/oauth/google',
+        { data: code },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
-        setCookie('accessToken', res.data.access);
+        console.log('구글 로그인 성공');
+        console.log(res.data);
+        setCookie('accessToken', res.data.data);
         setIsLoginCheck(true);
         navigate('/main');
       })

@@ -5,22 +5,27 @@ import { useNavigate } from 'react-router-dom';
 import { setCookie } from '../../components/Cookie';
 
 function OauthKakao({ setIsLoginCheck }) {
-  let url = 'http://localhost:8080';
   const navigate = useNavigate();
   let code = new URL(window.location.href).searchParams.get('code');
 
   useEffect(() => {
     axios
       //.get(`http://{서버주소}?code=${code}`) 퀴리 스트링
-      .post(url + '/oauth/kakao', code, {
-        headers: { 'Content-Type': 'application/json' },
-      })
+      .post(
+        'http://localhost:8080/oauth/kakao',
+        { data: code },
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      )
       .then((res) => {
-        setCookie('accessToken', res.data.access);
+        // console.log('카카오 로그인 데이타');
+        // console.log(res);
+        // console.log(res.data);
+        setCookie('accessToken', res.data.data);
         setIsLoginCheck(true);
         navigate('/main');
-        //! 만약 카카오 로그인한 유저가 닉네임이 없을때 닉네임만 따로 저장?
-        //! 닉네임 유무 검사후 없으면 닉네임 작성하는 모달창, 있으면 바로 로그인
       })
       .catch((err) => console.log(err, '카카오 로그인err'));
   }, []);

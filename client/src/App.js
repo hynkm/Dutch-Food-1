@@ -26,7 +26,7 @@ function App() {
   const [allPostList, setAllPostList] = useState([]);
   const [currentPost, setCurrentPost] = useState({});
 
-  // 유저정보 상태관리 위해서 작성한 부분
+  //유저정보 상태관리 위해서 작성한 부분
   useEffect(() => {
     console.log('auth요청 직전');
     axios
