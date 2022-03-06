@@ -59,7 +59,7 @@ let url = 'http://localhost:8080';
 const MyPage = (props) => {
   const navigate = useNavigate();
 
-  const [inputNickname, setInputNickname] = useState(props.userInfo.nickname);
+  const [inputNickname, setInputNickname] = useState('');
   const [inputCurrentPassword, setInputCurrentPassword] = useState('');
   const [inputNewPassword, setInputNewPassword] = useState('');
   const [inputNewPasswordConfirm, setInputNewPasswordConfirm] = useState('');
@@ -145,14 +145,13 @@ const MyPage = (props) => {
 
   // 전체 댓글 중에서 포스트 id에 해당하는 댓글 갯수
   const findCommentCount = (id) => {
-    console.log(allCommentList);
+    // console.log(allCommentList);
     let count = 0;
     for (let i = 0; i < allCommentList.length; i++) {
       if (id === allCommentList[i].post_id) {
         count++;
       }
     }
-    console.log(count);
     return count;
   };
 
@@ -644,7 +643,7 @@ const MyPage = (props) => {
                     <InformationContentInput
                       name="id"
                       type="text"
-                      value={props.userInfo.email}
+                      value={savedUserInfo.email}
                       readOnly
                     ></InformationContentInput>
                   </MyInformationDiv>
@@ -663,7 +662,7 @@ const MyPage = (props) => {
                       <InformationContentInput
                         name="nickname"
                         type="text"
-                        value={savedUserInfo.nickname}
+                        value={inputNickname}
                         onChange={handleInputValue}
                         readOnly
                       ></InformationContentInput>
