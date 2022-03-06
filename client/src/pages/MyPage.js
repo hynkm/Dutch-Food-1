@@ -75,6 +75,9 @@ const MyPage = (props) => {
   const [allCommentList, setAllCommentList] = useState([]);
   const [postIdList, setPostIdList] = useState([]);
 
+  // 로컬 스토리지 userInfo 불러오기
+  const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+
   // 내가 쓴 게시물 리스트 불러오기
   useEffect(() => {
     axios({
@@ -138,22 +141,18 @@ const MyPage = (props) => {
       .catch((err) => {
         console.log(err);
       });
-    console.log('확인');
-    for (let i = 0; i < allCommentList.length; i++) {
-      console.log(allCommentList[i].post_id);
-      postIdList.push(allCommentList[i].post_id);
-      console.log(postIdList);
-    }
   }, []);
 
   // 전체 댓글 중에서 포스트 id에 해당하는 댓글 갯수
   const findCommentCount = (id) => {
+    console.log(allCommentList);
     let count = 0;
-    for (let i = 0; i < postIdList.length; i++) {
-      if (id === postIdList[i]) {
+    for (let i = 0; i < allCommentList.length; i++) {
+      if (id === allCommentList[i].post_id) {
         count++;
       }
     }
+    console.log(count);
     return count;
   };
 
@@ -293,7 +292,9 @@ const MyPage = (props) => {
   // 내가 쓴 게시물 제목 클릭
   const onClickTitle = (post) => {
     console.log('내가 쓴 제목 클릭');
-    props.setCurrentPost(post);
+    console.log(post);
+    localStorage.setItem('currentPost', JSON.stringify(post));
+    // props.setCurrentPost(post);
     navigate('/readpost');
   };
 
@@ -317,7 +318,11 @@ const MyPage = (props) => {
       .then((res) => {
         console.log('신청 댓글의 부모 게시글 정보를 불러옴');
         console.log(res.data.commentedPost);
-        props.setCurrentPost(res.data.commentedPost);
+        localStorage.setItem(
+          'currentPost',
+          JSON.stringify(res.data.commentedPost)
+        );
+        // props.setCurrentPost(res.data.commentedPost);
         navigate('/readpost');
       })
       .catch((err) => {
@@ -410,268 +415,283 @@ const MyPage = (props) => {
 
   return (
     <>
-      {isAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>수정할 닉네임을 입력해주세요!</AlertModalDiv>
-            <AlertModalButton onClick={openAlertModalHandler}>
-              확인
-            </AlertModalButton>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
-      {isWithdrawalAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>정말 회원탈퇴를 하시겠어요?</AlertModalDiv>
-            <AlertModalButtonBoxDiv>
-              <CancelAlertModalButton onClick={openWithdrawalAlertModalHandler}>
-                취소
-              </CancelAlertModalButton>
-              <DeleteAlertModalButton onClick={onClickWithdrawalButton}>
-                탈퇴
-              </DeleteAlertModalButton>
-            </AlertModalButtonBoxDiv>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+      {allCommentList.length === 0 ? null : (
+        <>
+          {isAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>수정할 닉네임을 입력해주세요!</AlertModalDiv>
+                <AlertModalButton onClick={openAlertModalHandler}>
+                  확인
+                </AlertModalButton>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
+          {isWithdrawalAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>정말 회원탈퇴를 하시겠어요?</AlertModalDiv>
+                <AlertModalButtonBoxDiv>
+                  <CancelAlertModalButton
+                    onClick={openWithdrawalAlertModalHandler}
+                  >
+                    취소
+                  </CancelAlertModalButton>
+                  <DeleteAlertModalButton onClick={onClickWithdrawalButton}>
+                    탈퇴
+                  </DeleteAlertModalButton>
+                </AlertModalButtonBoxDiv>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      {isChangePasswordModalOpen === true ? (
-        <ModalBackdrop>
-          <ModalView>
-            <ModalDiv>
-              <ModalIndexDiv>현재 비밀번호</ModalIndexDiv>
-            </ModalDiv>
-            <ModalDiv>
-              <ModalInput
-                type="password"
-                onChange={handleInputCurrentPassword}
-                value={inputCurrentPassword}
-              ></ModalInput>
-            </ModalDiv>
-            <ModalSmallDiv>
-              <ModalMsgDiv className={'red'}>{passwordResponseMSG}</ModalMsgDiv>
-            </ModalSmallDiv>
-            <ModalDiv>
-              <ModalIndexDiv>새로운 비밀번호</ModalIndexDiv>
-            </ModalDiv>
-            <ModalDiv>
-              <ModalInput
-                type="password"
-                onChange={handleInputNewPassword}
-              ></ModalInput>
-            </ModalDiv>
-            <ModalSmallDiv>
-              <ModalMsgDiv
-                className={
-                  validityCheck.isNewPassword
-                    ? 'green'
-                    : inputNewPassword.length <= 0
-                    ? ''
-                    : 'red'
-                }
-              >
-                {validityCheck.msgNewPassword}
-              </ModalMsgDiv>
-            </ModalSmallDiv>
-            <ModalDiv>
-              <ModalIndexDiv>새로운 비밀번호 확인</ModalIndexDiv>
-            </ModalDiv>
-            <ModalDiv>
-              <ModalInput
-                type="password"
-                onChange={handleInputNewPasswordConfirm}
-              ></ModalInput>
-            </ModalDiv>
-            <ModalSmallDiv>
-              <ModalMsgDiv
-                className={
-                  validityCheck.isNewPasswordConfirm
-                    ? 'green'
-                    : inputNewPasswordConfirm.length <= 0
-                    ? ''
-                    : 'red'
-                }
-              >
-                {validityCheck.msgNewPasswordConfirm}
-              </ModalMsgDiv>
-            </ModalSmallDiv>
-            <ModalSmallDiv></ModalSmallDiv>
-            <ModalSmallDiv></ModalSmallDiv>
-            <ModalButtonBoxDiv>
-              <CancelModalButton onClick={openChangePasswordModalHandler}>
-                취소
-              </CancelModalButton>
-              <CompleteModalButton
-                onClick={onClickChangePasswordButton}
-                disabled={
-                  !validityCheck.isNewPasswordConfirm ||
-                  inputCurrentPassword.length < 8
-                }
-              >
-                완료
-              </CompleteModalButton>
-            </ModalButtonBoxDiv>
-            <ModalSmallDiv></ModalSmallDiv>
-          </ModalView>
-        </ModalBackdrop>
-      ) : null}
+          {isChangePasswordModalOpen === true ? (
+            <ModalBackdrop>
+              <ModalView>
+                <ModalDiv>
+                  <ModalIndexDiv>현재 비밀번호</ModalIndexDiv>
+                </ModalDiv>
+                <ModalDiv>
+                  <ModalInput
+                    type="password"
+                    onChange={handleInputCurrentPassword}
+                    value={inputCurrentPassword}
+                  ></ModalInput>
+                </ModalDiv>
+                <ModalSmallDiv>
+                  <ModalMsgDiv className={'red'}>
+                    {passwordResponseMSG}
+                  </ModalMsgDiv>
+                </ModalSmallDiv>
+                <ModalDiv>
+                  <ModalIndexDiv>새로운 비밀번호</ModalIndexDiv>
+                </ModalDiv>
+                <ModalDiv>
+                  <ModalInput
+                    type="password"
+                    onChange={handleInputNewPassword}
+                  ></ModalInput>
+                </ModalDiv>
+                <ModalSmallDiv>
+                  <ModalMsgDiv
+                    className={
+                      validityCheck.isNewPassword
+                        ? 'green'
+                        : inputNewPassword.length <= 0
+                        ? ''
+                        : 'red'
+                    }
+                  >
+                    {validityCheck.msgNewPassword}
+                  </ModalMsgDiv>
+                </ModalSmallDiv>
+                <ModalDiv>
+                  <ModalIndexDiv>새로운 비밀번호 확인</ModalIndexDiv>
+                </ModalDiv>
+                <ModalDiv>
+                  <ModalInput
+                    type="password"
+                    onChange={handleInputNewPasswordConfirm}
+                  ></ModalInput>
+                </ModalDiv>
+                <ModalSmallDiv>
+                  <ModalMsgDiv
+                    className={
+                      validityCheck.isNewPasswordConfirm
+                        ? 'green'
+                        : inputNewPasswordConfirm.length <= 0
+                        ? ''
+                        : 'red'
+                    }
+                  >
+                    {validityCheck.msgNewPasswordConfirm}
+                  </ModalMsgDiv>
+                </ModalSmallDiv>
+                <ModalSmallDiv></ModalSmallDiv>
+                <ModalSmallDiv></ModalSmallDiv>
+                <ModalButtonBoxDiv>
+                  <CancelModalButton onClick={openChangePasswordModalHandler}>
+                    취소
+                  </CancelModalButton>
+                  <CompleteModalButton
+                    onClick={onClickChangePasswordButton}
+                    disabled={
+                      !validityCheck.isNewPasswordConfirm ||
+                      inputCurrentPassword.length < 8
+                    }
+                  >
+                    완료
+                  </CompleteModalButton>
+                </ModalButtonBoxDiv>
+                <ModalSmallDiv></ModalSmallDiv>
+              </ModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      {isWithdrawalAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>정말 회원탈퇴를 하시겠어요?</AlertModalDiv>
-            <AlertModalButtonBoxDiv>
-              <CancelAlertModalButton onClick={openWithdrawalAlertModalHandler}>
-                취소
-              </CancelAlertModalButton>
-              <DeleteAlertModalButton onClick={onClickWithdrawalButton}>
-                탈퇴
-              </DeleteAlertModalButton>
-            </AlertModalButtonBoxDiv>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+          {isWithdrawalAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>정말 회원탈퇴를 하시겠어요?</AlertModalDiv>
+                <AlertModalButtonBoxDiv>
+                  <CancelAlertModalButton
+                    onClick={openWithdrawalAlertModalHandler}
+                  >
+                    취소
+                  </CancelAlertModalButton>
+                  <DeleteAlertModalButton onClick={onClickWithdrawalButton}>
+                    탈퇴
+                  </DeleteAlertModalButton>
+                </AlertModalButtonBoxDiv>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      <Header
-        setIsLoginCheck={props.setIsLoginCheck}
-        isLoginCheck={props.isLoginCheck}
-      />
-      <OuterDiv>
-        <TopDiv>마이페이지</TopDiv>
-        <MainDiv>
-          <MyListOuterDiv>
-            <MyListTitleDiv>내 게시글 보기</MyListTitleDiv>
-            <MyListIndexDiv>
-              <IndexTitleDiv>제목</IndexTitleDiv>
-              <IndexDateDiv>날짜</IndexDateDiv>
-              <IndexStateDiv>모집상태</IndexStateDiv>
-            </MyListIndexDiv>
-            <MyListBoxDiv>
-              {myPostList.map((post) => {
-                const stringDate = String(post.createdAt).slice(0, 10);
-                return (
-                  <MyListDiv key={post.id} onClick={() => onClickTitle(post)}>
-                    <ListTitleDiv>
-                      {/* <Link to="/readpost" onClick={() => onClickTitle(post)}>
+          <Header
+            setIsLoginCheck={props.setIsLoginCheck}
+            isLoginCheck={props.isLoginCheck}
+          />
+          <OuterDiv>
+            <TopDiv>마이페이지</TopDiv>
+            <MainDiv>
+              <MyListOuterDiv>
+                <MyListTitleDiv>내 게시글 보기</MyListTitleDiv>
+                <MyListIndexDiv>
+                  <IndexTitleDiv>제목</IndexTitleDiv>
+                  <IndexDateDiv>날짜</IndexDateDiv>
+                  <IndexStateDiv>모집상태</IndexStateDiv>
+                </MyListIndexDiv>
+                <MyListBoxDiv>
+                  {myPostList.map((post) => {
+                    const stringDate = String(post.createdAt).slice(0, 10);
+                    return (
+                      <MyListDiv
+                        key={post.id}
+                        onClick={() => onClickTitle(post)}
+                      >
+                        <ListTitleDiv>
+                          {/* <Link to="/readpost" onClick={() => onClickTitle(post)}>
                         {post.title}
                       </Link> */}
-                      <div onClick={() => onClickTitle(post)}>{post.title}</div>
-                    </ListTitleDiv>
-                    <ListDateDiv>{stringDate}</ListDateDiv>
-                    <ListStateDiv
-                      className={
-                        findCommentCount(post.id) + '명' === post.recruit_volume
-                          ? 'red'
-                          : 'blue'
-                      }
-                    >
-                      {findCommentCount(post.id) + '명' === post.recruit_volume
-                        ? '모집종료'
-                        : '모집중'}
-                    </ListStateDiv>
-                  </MyListDiv>
-                );
-              })}
-            </MyListBoxDiv>
-          </MyListOuterDiv>
-          <MyListOuterDiv>
-            <MyListTitleDiv>내 신청글 보기</MyListTitleDiv>
-            <MyListIndexDiv>
-              <IndexTitleDiv>내용</IndexTitleDiv>
-              <IndexDateDiv>날짜</IndexDateDiv>
-              <IndexStateDiv>모집상태</IndexStateDiv>
-            </MyListIndexDiv>
-            <MyListBoxDiv>
-              {myCommentList.map((comment) => {
-                const stringDate = String(comment.createdAt).slice(0, 10);
-                return (
-                  <MyListDiv
-                    key={comment.id}
-                    onClick={() => onClickComment(comment)}
-                  >
-                    <ListTitleDiv>
-                      {/* <Link
+                          <div>{post.title}</div>
+                        </ListTitleDiv>
+                        <ListDateDiv>{stringDate}</ListDateDiv>
+                        <ListStateDiv
+                          className={
+                            findCommentCount(post.id) + '명' ===
+                            post.recruit_volume
+                              ? 'red'
+                              : 'blue'
+                          }
+                        >
+                          {findCommentCount(post.id) + '명' ===
+                          post.recruit_volume
+                            ? '모집종료'
+                            : '모집중'}
+                        </ListStateDiv>
+                      </MyListDiv>
+                    );
+                  })}
+                </MyListBoxDiv>
+              </MyListOuterDiv>
+              <MyListOuterDiv>
+                <MyListTitleDiv>내 신청글 보기</MyListTitleDiv>
+                <MyListIndexDiv>
+                  <IndexTitleDiv>내용</IndexTitleDiv>
+                  <IndexDateDiv>날짜</IndexDateDiv>
+                  <IndexStateDiv>모집상태</IndexStateDiv>
+                </MyListIndexDiv>
+                <MyListBoxDiv>
+                  {myCommentList.map((comment) => {
+                    const stringDate = String(comment.createdAt).slice(0, 10);
+                    return (
+                      <MyListDiv
+                        key={comment.id}
+                        onClick={() => onClickComment(comment)}
+                      >
+                        <ListTitleDiv>
+                          {/* <Link
                         to="/readpost"
                         onClick={() => onClickComment(comment)}
                       >
                         {comment.comment_content}
                       </Link> */}
-                      <div>{comment.comment_content}</div>
-                    </ListTitleDiv>
-                    <ListDateDiv>{stringDate}</ListDateDiv>
-                    <ListStateDiv
-                      className={
-                        findCommentCount(comment.post_id) + '명' ===
-                        findPostRecruitVolume(comment.post_id)
-                          ? 'red'
-                          : 'blue'
-                      }
-                    >
-                      {findCommentCount(comment.post_id) + '명' ===
-                      findPostRecruitVolume(comment.post_id)
-                        ? '모집종료'
-                        : '모집중'}
-                    </ListStateDiv>
-                  </MyListDiv>
-                );
-              })}
-            </MyListBoxDiv>
-          </MyListOuterDiv>
-          <MyInformationOuterDiv>
-            <MyInformationTitleDiv>회원정보</MyInformationTitleDiv>
-            <MyInformationBoxDiv>
-              <MyInformationDiv>
-                <InformationIndexDiv>아이디</InformationIndexDiv>
-                <InformationContentInput
-                  name="id"
-                  type="text"
-                  value={props.userInfo.email}
-                  readOnly
-                ></InformationContentInput>
-              </MyInformationDiv>
-              <MyInformationDiv>
-                <InformationIndexDiv>닉네임</InformationIndexDiv>
-                {isNicknameInputOpen === true ? (
-                  <EditNicknameInput
-                    name="nickname"
-                    type="text"
-                    value={inputNickname}
-                    onChange={handleInputValue}
-                    placeholder="6자 이하"
-                    maxLength="6"
-                  ></EditNicknameInput>
-                ) : (
-                  <InformationContentInput
-                    name="nickname"
-                    type="text"
-                    value={inputNickname}
-                    onChange={handleInputValue}
-                    readOnly
-                  ></InformationContentInput>
-                )}
-              </MyInformationDiv>
-            </MyInformationBoxDiv>
-            <ButtonsOuterDiv>
-              {isNicknameInputOpen === true ? (
-                <EditNicknameCompleteButton onClick={editNicknameComplete}>
-                  수정 완료
-                </EditNicknameCompleteButton>
-              ) : (
-                <EditInformationButton onClick={openNicknameInputHandler}>
-                  회원정보 수정
-                </EditInformationButton>
-              )}
-              <EditPasswordButton onClick={openChangePasswordModalHandler}>
-                비밀번호 수정
-              </EditPasswordButton>
-              <WithdrawalButton onClick={openWithdrawalAlertModalHandler}>
-                회원탈퇴
-              </WithdrawalButton>
-            </ButtonsOuterDiv>
-          </MyInformationOuterDiv>
-        </MainDiv>
-      </OuterDiv>
+                          <div>{comment.comment_content}</div>
+                        </ListTitleDiv>
+                        <ListDateDiv>{stringDate}</ListDateDiv>
+                        <ListStateDiv
+                          className={
+                            findCommentCount(comment.post_id) + '명' ===
+                            findPostRecruitVolume(comment.post_id)
+                              ? 'red'
+                              : 'blue'
+                          }
+                        >
+                          {findCommentCount(comment.post_id) + '명' ===
+                          findPostRecruitVolume(comment.post_id)
+                            ? '모집종료'
+                            : '모집중'}
+                        </ListStateDiv>
+                      </MyListDiv>
+                    );
+                  })}
+                </MyListBoxDiv>
+              </MyListOuterDiv>
+              <MyInformationOuterDiv>
+                <MyInformationTitleDiv>회원정보</MyInformationTitleDiv>
+                <MyInformationBoxDiv>
+                  <MyInformationDiv>
+                    <InformationIndexDiv>아이디</InformationIndexDiv>
+                    <InformationContentInput
+                      name="id"
+                      type="text"
+                      value={props.userInfo.email}
+                      readOnly
+                    ></InformationContentInput>
+                  </MyInformationDiv>
+                  <MyInformationDiv>
+                    <InformationIndexDiv>닉네임</InformationIndexDiv>
+                    {isNicknameInputOpen === true ? (
+                      <EditNicknameInput
+                        name="nickname"
+                        type="text"
+                        value={inputNickname}
+                        onChange={handleInputValue}
+                        placeholder="6자 이하"
+                        maxLength="6"
+                      ></EditNicknameInput>
+                    ) : (
+                      <InformationContentInput
+                        name="nickname"
+                        type="text"
+                        value={savedUserInfo.nickname}
+                        onChange={handleInputValue}
+                        readOnly
+                      ></InformationContentInput>
+                    )}
+                  </MyInformationDiv>
+                </MyInformationBoxDiv>
+                <ButtonsOuterDiv>
+                  {isNicknameInputOpen === true ? (
+                    <EditNicknameCompleteButton onClick={editNicknameComplete}>
+                      수정 완료
+                    </EditNicknameCompleteButton>
+                  ) : (
+                    <EditInformationButton onClick={openNicknameInputHandler}>
+                      회원정보 수정
+                    </EditInformationButton>
+                  )}
+                  <EditPasswordButton onClick={openChangePasswordModalHandler}>
+                    비밀번호 수정
+                  </EditPasswordButton>
+                  <WithdrawalButton onClick={openWithdrawalAlertModalHandler}>
+                    회원탈퇴
+                  </WithdrawalButton>
+                </ButtonsOuterDiv>
+              </MyInformationOuterDiv>
+            </MainDiv>
+          </OuterDiv>
+        </>
+      )}
     </>
   );
 };

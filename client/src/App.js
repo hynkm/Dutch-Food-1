@@ -29,19 +29,19 @@ function App() {
   //유저정보 상태관리 위해서 작성한 부분
   useEffect(() => {
     console.log('auth요청 직전');
-    axios
-      .get(url + '/auth', {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      })
-      .then((res) => {
-        console.log('유저정보 응답옴');
-        console.log(res.data.data);
-        setUserInfo(res.data.data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    if (isLoginCheck) {
+      axios
+        .get(url + '/auth', {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        })
+        .then((res) => {
+          localStorage.setItem('userInfo', JSON.stringify(res.data.data));
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
   }, [isLoginCheck]);
 
   // // 모든 게시물 정보를 불러온다.
@@ -77,6 +77,7 @@ function App() {
           path="/main"
           element={
             <Main
+              currentPost={currentPost}
               setCurrentPost={setCurrentPost}
               setIsLoginCheck={setIsLoginCheck}
               isLoginCheck={isLoginCheck}

@@ -63,12 +63,12 @@ const ReadPost = (props) => {
   const [selectedCommentId, setSelectedCommentId] = useState('');
   const [commentList, setCommentList] = useState([]);
   const [allUserInfo, setAllUserInfo] = useState([]);
-  const [isLoginModal, setIsLoginModal] = useState(false);
+
+  // 로컬 스토리지에 저장된 commentList
+  const savedCommentList = JSON.parse(localStorage.getItem('currentPost'));
 
   // 닉네임 요청, 신청댓글 리스트, 모든유저정보 GET 요청
   useEffect(() => {
-    console.log('comment리스트를 불러옵니다.');
-
     // 모든유저 정보
     axios({
       url: url + '/post/user',
@@ -80,8 +80,6 @@ const ReadPost = (props) => {
       withCredentials: true,
     })
       .then((res) => {
-        console.log('모든 유저 정보 들어옴');
-        console.log(res.data);
         setAllUserInfo(res.data);
       })
       .catch((err) => {
@@ -97,17 +95,20 @@ const ReadPost = (props) => {
         'Content-Type': 'application/json',
       },
       data: {
-        id: props.currentPost.user_id,
+        id: savedCommentList.user_id,
+        // id: JSON.parse(localStorage.getItem('currentPost')).user_id,
       },
       withCredentials: true,
     })
       .then((res) => {
-        console.log('닉네임 성공');
-        console.log(res.data.nickname);
-        props.setCurrentPost({
-          ...props.currentPost,
-          nickname: res.data.nickname,
-        });
+        localStorage.setItem(
+          'currentPost',
+          JSON.stringify({ ...savedCommentList, nickname: res.data.nickname })
+        );
+        // props.setCurrentPost({
+        //   ...savedCommentList,
+        //   nickname: res.data.nickname,
+        // });
       })
       .catch((err) => {
         console.log(err);
@@ -115,20 +116,18 @@ const ReadPost = (props) => {
 
     // post id로 달린 댓글 가져오기
     axios({
-      // url: url + `/comment/post/${props.currentPost.id}`,
+      // url: url + `/comment/post/${savedCommentList.id}`,
       url: url + '/post/comments',
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       data: {
-        post_id: props.currentPost.id,
+        post_id: savedCommentList.id,
       },
       withCredentials: true,
     })
       .then((res) => {
-        console.log('신청 완료');
-        console.log(res.data.commentList);
         setCommentList(res.data.commentList);
       })
       .catch((err) => {
@@ -147,7 +146,7 @@ const ReadPost = (props) => {
   }, [commentList]);
 
   // 가격에 ',' 표시 붙이기
-  let stringCharge = String(props.currentPost.delivery_charge);
+  let stringCharge = String(savedCommentList.delivery_charge);
   let charge = `${stringCharge.slice(
     0,
     stringCharge.length - 3
@@ -225,7 +224,7 @@ const ReadPost = (props) => {
           'Content-Type': 'application/json',
         },
         data: {
-          post_id: props.currentPost.id,
+          post_id: savedCommentList.id,
           applicant_id: props.userInfo.id,
           comment_content: textareaContent,
         },
@@ -257,11 +256,11 @@ const ReadPost = (props) => {
     console.log('게시글 삭제 확인 모달창 삭제 버튼 클릭');
 
     axios({
-      // url: url + `/post:${props.currentPost.id}`,
+      // url: url + `/post:${savedCommentList.id}`,
       url: url + '/post/post',
       method: 'delete',
       data: {
-        id: props.currentPost.id,
+        id: savedCommentList.id,
       },
       withCredentials: true,
     })
@@ -299,195 +298,208 @@ const ReadPost = (props) => {
 
   return (
     <>
-      {isBlankAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>주문할 메뉴 및 세부사항 입력해주세요!</AlertModalDiv>
-            <AlertModalButton onClick={openBlankAlertModalHandler}>
-              확인
-            </AlertModalButton>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+      {Object.keys(savedCommentList).length === 0 ? null : (
+        <>
+          {isBlankAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>
+                  주문할 메뉴 및 세부사항 입력해주세요!
+                </AlertModalDiv>
+                <AlertModalButton onClick={openBlankAlertModalHandler}>
+                  확인
+                </AlertModalButton>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      {isDuplicateAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>이미 신청하신 게시글입니다!</AlertModalDiv>
-            <AlertModalButton onClick={openDuplicateAlertModalHandler}>
-              확인
-            </AlertModalButton>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+          {isDuplicateAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>이미 신청하신 게시글입니다!</AlertModalDiv>
+                <AlertModalButton onClick={openDuplicateAlertModalHandler}>
+                  확인
+                </AlertModalButton>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      {isPostDeleteAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>게시글을 정말 삭제 하시겠어요?</AlertModalDiv>
-            <AlertModalButtonBoxDiv>
-              <CancelAlertModalButton onClick={openPostDeleteAlertModalHandler}>
-                취소
-              </CancelAlertModalButton>
-              <DeleteAlertModalButton onClick={onClickPostDeleteButton}>
-                삭제
-              </DeleteAlertModalButton>
-            </AlertModalButtonBoxDiv>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+          {isPostDeleteAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>게시글을 정말 삭제 하시겠어요?</AlertModalDiv>
+                <AlertModalButtonBoxDiv>
+                  <CancelAlertModalButton
+                    onClick={openPostDeleteAlertModalHandler}
+                  >
+                    취소
+                  </CancelAlertModalButton>
+                  <DeleteAlertModalButton onClick={onClickPostDeleteButton}>
+                    삭제
+                  </DeleteAlertModalButton>
+                </AlertModalButtonBoxDiv>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      {isCommentDeleteAlertModalOpen === true ? (
-        <ModalBackdrop>
-          <AlertModalView>
-            <AlertModalDiv>신청내역 댓글을 정말 삭제 하시겠어요?</AlertModalDiv>
-            <AlertModalButtonBoxDiv>
-              <CancelAlertModalButton
-                onClick={openCommentDeleteAlertModalHandler}
-              >
-                취소
-              </CancelAlertModalButton>
-              <DeleteAlertModalButton
-                onClick={() => onClickCommentDeleteButton(selectedCommentId)}
-              >
-                삭제
-              </DeleteAlertModalButton>
-            </AlertModalButtonBoxDiv>
-          </AlertModalView>
-        </ModalBackdrop>
-      ) : null}
+          {isCommentDeleteAlertModalOpen === true ? (
+            <ModalBackdrop>
+              <AlertModalView>
+                <AlertModalDiv>
+                  신청내역 댓글을 정말 삭제 하시겠어요?
+                </AlertModalDiv>
+                <AlertModalButtonBoxDiv>
+                  <CancelAlertModalButton
+                    onClick={openCommentDeleteAlertModalHandler}
+                  >
+                    취소
+                  </CancelAlertModalButton>
+                  <DeleteAlertModalButton
+                    onClick={() =>
+                      onClickCommentDeleteButton(selectedCommentId)
+                    }
+                  >
+                    삭제
+                  </DeleteAlertModalButton>
+                </AlertModalButtonBoxDiv>
+              </AlertModalView>
+            </ModalBackdrop>
+          ) : null}
 
-      <Header
-        setIsLoginCheck={props.setIsLoginCheck}
-        isLoginCheck={props.isLoginCheck}
-        isLoginModal={props.isLoginModal}
-        setIsLoginModal={props.setIsLoginModal}
-      />
-      {commentList === 0 ? null : (
-        <OuterDiv>
-          <PostSectionDiv>
-            <TitleBoxDiv>
-              <TitleDiv>{props.currentPost.title}</TitleDiv>
-              <NicknameSpan>{props.currentPost.nickname}</NicknameSpan>
-              <TimeSpan>{props.currentPost.createdAt}</TimeSpan>
-            </TitleBoxDiv>
-            <ContentTextarea
-              value={props.currentPost.content}
-              readOnly
-            ></ContentTextarea>
-            <InformationOuterDiv>
-              <InformationBoxDiv>
-                <InformationIndexDiv>메&nbsp; 뉴</InformationIndexDiv>
-                <InformationDiv>{props.currentPost.menu}</InformationDiv>
-              </InformationBoxDiv>
-              <InformationBoxDiv>
-                <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
-                <InformationDiv>
-                  {/* {commentList.length}/{props.currentPost.recruit_volume[0]} 명 */}
-                </InformationDiv>
-              </InformationBoxDiv>
-              <InformationBoxDiv>
-                <InformationIndexDiv>전 체 배 달 료</InformationIndexDiv>
-                <InformationDiv>{charge}</InformationDiv>
-              </InformationBoxDiv>
-            </InformationOuterDiv>
-            <BankAccountOuterDiv>
-              <BankAccountIndexDiv>
-                입금해주실 은행 및 계좌번호
-              </BankAccountIndexDiv>
-              <BankAccountBoxDiv>
-                <BankDiv>{props.currentPost.bank_name}은행</BankDiv>
-                <AccountDiv>{props.currentPost.account_number}</AccountDiv>
-              </BankAccountBoxDiv>
-            </BankAccountOuterDiv>
-            <MapBoxDiv>
-              <MapIndexDiv>
-                배달받을 장소: {props.currentPost.address}
-              </MapIndexDiv>
-              <MapDiv>
-                <ReadPostMap currentPost={props.currentPost} />
-              </MapDiv>
-            </MapBoxDiv>
-            <BottomDiv>
-              <BottomIndexDiv>원하는 메뉴 및 세부사항</BottomIndexDiv>
-              <BottomTextarea
-                placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
-                onChange={handleTextareaValue}
-              ></BottomTextarea>
-              {props.currentPost.user_id === props.userInfo.id ? (
-                <EditDeleteBoxDiv>
-                  <EditButton onClick={onClickEditButton}>수 정</EditButton>
-                  <DeleteButton onClick={openPostDeleteAlertModalHandler}>
-                    삭 제
-                  </DeleteButton>
-                </EditDeleteBoxDiv>
-              ) : (
-                <>
-                  {props.currentPost.recruit_volume[0] ===
-                  String(commentList.length) ? (
-                    <ApplyButton disabled>
-                      모 집 이&nbsp; 완 료 되 었 습 니 다
-                    </ApplyButton>
+          <Header
+            setIsLoginCheck={props.setIsLoginCheck}
+            isLoginCheck={props.isLoginCheck}
+            isLoginModal={props.isLoginModal}
+            setIsLoginModal={props.setIsLoginModal}
+          />
+          {commentList === 0 ? null : (
+            <OuterDiv>
+              <PostSectionDiv>
+                <TitleBoxDiv>
+                  <TitleDiv>{savedCommentList.title}</TitleDiv>
+                  <NicknameSpan>{savedCommentList.nickname}</NicknameSpan>
+                  <TimeSpan>{savedCommentList.createdAt.slice(0, 10)}</TimeSpan>
+                </TitleBoxDiv>
+                <ContentTextarea
+                  value={savedCommentList.content}
+                  readOnly
+                ></ContentTextarea>
+                <InformationOuterDiv>
+                  <InformationBoxDiv>
+                    <InformationIndexDiv>메&nbsp; 뉴</InformationIndexDiv>
+                    <InformationDiv>{savedCommentList.menu}</InformationDiv>
+                  </InformationBoxDiv>
+                  <InformationBoxDiv>
+                    <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
+                    <InformationDiv>
+                      {commentList.length}/{savedCommentList.recruit_volume[0]}{' '}
+                      명
+                    </InformationDiv>
+                  </InformationBoxDiv>
+                  <InformationBoxDiv>
+                    <InformationIndexDiv>전 체 배 달 료</InformationIndexDiv>
+                    <InformationDiv>{charge}</InformationDiv>
+                  </InformationBoxDiv>
+                </InformationOuterDiv>
+                <BankAccountOuterDiv>
+                  <BankAccountIndexDiv>
+                    입금해주실 은행 및 계좌번호
+                  </BankAccountIndexDiv>
+                  <BankAccountBoxDiv>
+                    <BankDiv>{savedCommentList.bank_name}은행</BankDiv>
+                    <AccountDiv>{savedCommentList.account_number}</AccountDiv>
+                  </BankAccountBoxDiv>
+                </BankAccountOuterDiv>
+                <MapBoxDiv>
+                  <MapIndexDiv>
+                    배달받을 장소: {savedCommentList.address}
+                  </MapIndexDiv>
+                  <MapDiv>
+                    <ReadPostMap currentPost={savedCommentList} />
+                  </MapDiv>
+                </MapBoxDiv>
+                <BottomDiv>
+                  <BottomIndexDiv>원하는 메뉴 및 세부사항</BottomIndexDiv>
+                  <BottomTextarea
+                    placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
+                    onChange={handleTextareaValue}
+                  ></BottomTextarea>
+                  {savedCommentList.user_id === props.userInfo.id ? (
+                    <EditDeleteBoxDiv>
+                      <EditButton onClick={onClickEditButton}>수 정</EditButton>
+                      <DeleteButton onClick={openPostDeleteAlertModalHandler}>
+                        삭 제
+                      </DeleteButton>
+                    </EditDeleteBoxDiv>
                   ) : (
                     <>
-                      {props.isLoginCheck ? (
-                        <ApplyButton onClick={onClickApplyButton}>
-                          신 청 하 기
+                      {savedCommentList.recruit_volume[0] ===
+                      String(commentList.length) ? (
+                        <ApplyButton disabled>
+                          모 집 이&nbsp; 완 료 되 었 습 니 다
                         </ApplyButton>
                       ) : (
-                        <ApplyButton disabled>
-                          신청을 위해 로그인해주세요
-                        </ApplyButton>
+                        <>
+                          {props.isLoginCheck ? (
+                            <ApplyButton onClick={onClickApplyButton}>
+                              신 청 하 기
+                            </ApplyButton>
+                          ) : (
+                            <ApplyButton disabled>
+                              신청을 위해 로그인해주세요
+                            </ApplyButton>
+                          )}
+                        </>
                       )}
                     </>
                   )}
-                </>
+                </BottomDiv>
+              </PostSectionDiv>
+              {commentList.length === 0 ? null : (
+                <CommentSectionDiv>
+                  <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
+                  <CommentOuterDiv>
+                    {commentList.map((comment) => {
+                      let userNickname = '';
+                      for (let i = 0; i < allUserInfo.length; i++) {
+                        if (allUserInfo[i].id === comment.applicant_id) {
+                          userNickname = allUserInfo[i].nickname;
+                        }
+                      }
+                      return (
+                        <CommentBoxDiv key={comment.id}>
+                          <CommentApplicantBoxDiv>
+                            <CommentApplicantNickDiv>
+                              {userNickname}
+                            </CommentApplicantNickDiv>
+                            <CommentApplicantTimeDiv>
+                              {comment.createdAt.slice(0, 10)}
+                            </CommentApplicantTimeDiv>
+                            {props.userInfo.id === comment.applicant_id ||
+                            props.userInfo.nickname ===
+                              savedCommentList.nickname ? (
+                              <CommentApplicantDeleteButton
+                                onClick={() =>
+                                  openCommentDeleteAlertModalHandler(comment.id)
+                                }
+                              >
+                                삭제
+                              </CommentApplicantDeleteButton>
+                            ) : null}
+                          </CommentApplicantBoxDiv>
+                          <CommentContentTextarea
+                            readOnly
+                            value={comment.comment_content}
+                          ></CommentContentTextarea>
+                        </CommentBoxDiv>
+                      );
+                    })}
+                  </CommentOuterDiv>
+                </CommentSectionDiv>
               )}
-            </BottomDiv>
-          </PostSectionDiv>
-          {commentList.length === 0 ? null : (
-            <CommentSectionDiv>
-              <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
-              <CommentOuterDiv>
-                {commentList.map((comment) => {
-                  let userNickname = '';
-                  for (let i = 0; i < allUserInfo.length; i++) {
-                    if (allUserInfo[i].id === comment.applicant_id) {
-                      userNickname = allUserInfo[i].nickname;
-                    }
-                  }
-                  return (
-                    <CommentBoxDiv key={comment.id}>
-                      <CommentApplicantBoxDiv>
-                        <CommentApplicantNickDiv>
-                          {userNickname}
-                        </CommentApplicantNickDiv>
-                        <CommentApplicantTimeDiv>
-                          {comment.createdAt.slice(0, 10)}
-                        </CommentApplicantTimeDiv>
-                        {props.userInfo.id === comment.applicant_id ||
-                        props.userInfo.nickname ===
-                          props.currentPost.nickname ? (
-                          <CommentApplicantDeleteButton
-                            onClick={() =>
-                              openCommentDeleteAlertModalHandler(comment.id)
-                            }
-                          >
-                            삭제
-                          </CommentApplicantDeleteButton>
-                        ) : null}
-                      </CommentApplicantBoxDiv>
-                      <CommentContentTextarea
-                        readOnly
-                        value={comment.comment_content}
-                      ></CommentContentTextarea>
-                    </CommentBoxDiv>
-                  );
-                })}
-              </CommentOuterDiv>
-            </CommentSectionDiv>
+            </OuterDiv>
           )}
-        </OuterDiv>
+        </>
       )}
     </>
   );

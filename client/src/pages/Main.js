@@ -83,6 +83,7 @@ function Main(props) {
     console.log(post);
     props.setCurrentPost(post);
     navigate('/readpost');
+    localStorage.setItem('currentPost', JSON.stringify(post));
   };
 
   return (
