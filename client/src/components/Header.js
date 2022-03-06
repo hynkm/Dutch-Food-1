@@ -18,6 +18,7 @@ const HeaderBack = styled.div`
 `;
 function Header({ setIsLoginCheck, isLoginCheck, setUserInfo }) {
   const navigate = useNavigate();
+
   return (
     <>
       <HeaderBack>
@@ -27,11 +28,8 @@ function Header({ setIsLoginCheck, isLoginCheck, setUserInfo }) {
           onClick={() => navigate('/main')}
           style={{ cursor: 'pointer' }}
         />
-        <Navbar
-          setIsLoginCheck={setIsLoginCheck}
-          isLoginCheck={isLoginCheck}
-          setUserInfo={setUserInfo}
-        />
+
+        <Navbar setIsLoginCheck={setIsLoginCheck} isLoginCheck={isLoginCheck} />
       </HeaderBack>
     </>
   );

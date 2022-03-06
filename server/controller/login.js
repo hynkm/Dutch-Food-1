@@ -5,25 +5,20 @@ const {
   generateAccessToken,
   sendAccessToken,
   isAuthorized,
-} = require('./functions/user');
+} = require('./functions/User');
 
 module.exports = {
   login: async (req, res) => {
     console.log(req.body);
     const { email, password } = req.body;
-
     if (!email)
-      return res
-        .status(404)
-        .json({ success: false, message: '이메일을 입력해주세요' });
+      return res.json({ success: false, message: '이메일을 입력해주세요' });
     if (!password)
-      return res
-        .status(404)
-        .json({ success: false, message: '비밀번호를 입력해주세요' });
+      return res.json({ success: false, message: '비밀번호를 입력해주세요' });
     try {
       const userInfo = await User.findOne({ where: { email } });
       if (!userInfo) {
-        return res.status(404).json({
+        return res.json({
           success: false,
           message: '이메일 또는 비밀번호가 잘못되었습니다',
         });
@@ -32,23 +27,19 @@ module.exports = {
         password,
         userInfo.dataValues.password
       );
-
       if (!match) {
-        return res.status(404).json({
+        return res.json({
           success: false,
           message: '이메일 또는 비밀번호가 잘못되었습니다',
         });
       }
 
       if (userInfo.dataValues.expiredDatetime) {
-        return res
-          .status(404)
-          .json({ success: false, message: '탈퇴한 회원입니다' });
+        return res.json({ success: false, message: '탈퇴한 회원입니다' });
       }
 
       delete userInfo.dataValues.password;
       const accessToken = generateAccessToken(userInfo.dataValues);
-      console.log(accessToken);
       sendAccessToken(res, accessToken);
 
       return res
@@ -61,7 +52,7 @@ module.exports = {
   checkToken: (req, res) => {
     const accessToken = isAuthorized(req);
     if (!accessToken)
-      return res.status(404).json({
+      return res.json({
         success: false,
         loginId: null,
         message: '로그아웃 상태입니다',

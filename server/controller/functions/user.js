@@ -33,14 +33,17 @@ module.exports = {
 
   isAuthorized: (req) => {
     console.log('isAuthorized 실행');
-    // console.log(req.headers);
-    const accessToken = req.headers.cookie.split('=')[1];
-    if (!accessToken) return null;
-    try {
-      return verify(accessToken, process.env.ACCESS_SECRET);
-    } catch (err) {
-      console.log(err);
-      return null;
+    //console.log(req.headers);
+    if (req.headers.cookie) {
+      const accessToken = req.headers.cookie.split('=')[1];
+
+      if (!accessToken) return null;
+      try {
+        return verify(accessToken, process.env.ACCESS_SECRET);
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
     }
   },
 
@@ -79,7 +82,8 @@ module.exports = {
     //   resObject.code = 400;
     //   throw '비밀번호를 잘못 입력하였습니다';
     // }
-
+    console.log('마이페이지 유저정보 수정');
+    console.log(req.body);
     await User.update(req.body, {
       where: { id: accessToken.id },
     })

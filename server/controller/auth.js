@@ -4,7 +4,7 @@ module.exports = {
   auth: (req, res) => {
     console.log('로그인 서버 들어옴?');
     const userInfo = isAuthorized(req);
-    console.log(userInfo);
+    //console.log(userInfo);
     try {
       if (!userInfo) {
         res.status(400).json({ message: '잘못된 요청입니다' });

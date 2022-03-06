@@ -187,14 +187,11 @@ function LoginModal({ setIsLoginCheck, handleCloseModal, setUserInfo }) {
   };
 
   const handleLoginClick = async () => {
+    // let 조회 = getCookie('Token');
+    //console.log(조회);
     if (!loginUserInfo.email || !loginUserInfo.password) {
-      //삭제 : removeCookie('yunhoToken');
-      //생성 : setCookie('yunhoToken', '123456');
-      //let 조회 = getCookie('yunhoToken');
-      //console.log(조회);
       setIsAletModal(true);
     } else {
-      console.log(loginUserInfo);
       axios
         .post(url + '/login', loginUserInfo, {
           headers: { 'Content-Type': 'application/json' },
@@ -202,8 +199,8 @@ function LoginModal({ setIsLoginCheck, handleCloseModal, setUserInfo }) {
         })
         //
         .then((res) => {
+          console.log(res, '응답!');
           //localStorage.setItem('accessToken', res.data.access);
-          console.log(res.data);
           setCookie('accessToken', res.data.data);
           setIsLoginCheck(true);
 

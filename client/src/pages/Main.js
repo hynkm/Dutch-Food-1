@@ -22,7 +22,7 @@ import {
   PostDateDiv,
 } from '../components/MainComponents';
 
-let url = 'http://localhost:8080';
+let url = 'https://localhost:8080';
 
 function Main(props) {
   const navigate = useNavigate();
