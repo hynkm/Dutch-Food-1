@@ -20,6 +20,8 @@ export default function MainPageMap(props) {
       .then((res) => {
         console.log('모든 게시물 불러왔음');
         console.log(res.data.data);
+        localStorage.setItem('allPostList', JSON.stringify(res.data.data));
+
         const data = res.data.data;
         // 지도를 담을 영역의 DOM 레퍼런스
         let mapContainer = document.getElementById('map');

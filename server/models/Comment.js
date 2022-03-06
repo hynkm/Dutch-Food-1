@@ -13,8 +13,8 @@ module.exports = class Comment extends Sequelize.Model {
         comment_content: {
           //seqelize는 기본적으로 pr키 아이디가 생략되었음.
           type: Sequelize.STRING(100),
-          allowNull: false,
-          unique: true,
+          // allowNull: false,
+          // unique: true,
         },
       },
       {
