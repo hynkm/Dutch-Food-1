@@ -59,7 +59,11 @@ let url = 'http://localhost:8080';
 const MyPage = (props) => {
   const navigate = useNavigate();
 
-  const [inputNickname, setInputNickname] = useState('');
+  // 로컬 스토리지 userInfo 불러오기
+  const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+  const savedAllPostList = JSON.parse(localStorage.getItem('allPostList'));
+
+  const [inputNickname, setInputNickname] = useState(savedUserInfo.nickname);
   const [inputCurrentPassword, setInputCurrentPassword] = useState('');
   const [inputNewPassword, setInputNewPassword] = useState('');
   const [inputNewPasswordConfirm, setInputNewPasswordConfirm] = useState('');
@@ -74,9 +78,6 @@ const MyPage = (props) => {
   const [myCommentList, setMyCommentList] = useState([]);
   const [allCommentList, setAllCommentList] = useState([]);
   const [postIdList, setPostIdList] = useState([]);
-
-  // 로컬 스토리지 userInfo 불러오기
-  const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
 
   // 내가 쓴 게시물 리스트 불러오기
   useEffect(() => {
@@ -145,21 +146,22 @@ const MyPage = (props) => {
 
   // 전체 댓글 중에서 포스트 id에 해당하는 댓글 갯수
   const findCommentCount = (id) => {
-    // console.log(allCommentList);
+    console.log(allCommentList);
     let count = 0;
     for (let i = 0; i < allCommentList.length; i++) {
       if (id === allCommentList[i].post_id) {
         count++;
       }
     }
+    console.log(count);
     return count;
   };
 
   // 게시글 중에서 포스트 id에 해당되는 모집인원 몇명인지
   const findPostRecruitVolume = (id) => {
-    for (let i = 0; i < props.allPostList.length; i++) {
-      if (props.allPostList[i].id === id) {
-        return props.allPostList[i].recruit_volume;
+    for (let i = 0; i < savedAllPostList.length; i++) {
+      if (savedAllPostList[i].id === id) {
+        return savedAllPostList[i].recruit_volume;
       }
     }
   };

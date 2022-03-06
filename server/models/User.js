@@ -31,10 +31,15 @@ module.exports = class User extends Sequelize.Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Post), { foreignKey: 'user_id', sourceKey: 'id' };
-    db.User.hasMany(db.Comment, {
-      foreignKey: 'applicant_id',
-      sourceKey: 'id',
-    });
+    db.User.hasMany(db.Post),
+      {
+        foreignKey: 'user_id',
+        sourceKey: 'id',
+      };
+    db.User.hasMany(db.Comment),
+      {
+        foreignKey: 'applicant_id',
+        sourceKey: 'id',
+      };
   }
 };

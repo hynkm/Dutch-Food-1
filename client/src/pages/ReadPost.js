@@ -64,11 +64,14 @@ const ReadPost = (props) => {
   const [commentList, setCommentList] = useState([]);
   const [allUserInfo, setAllUserInfo] = useState([]);
 
-  // 로컬 스토리지에 저장된 commentList
-  const savedCommentList = JSON.parse(localStorage.getItem('currentPost'));
+  // 로컬 스토리지에 저장된 currentPost
+  const savedCurrentPost = JSON.parse(localStorage.getItem('currentPost'));
 
-  // 로컬 스토리지 userInfo 불러오기
+  // 로컬 스토리지에 저장된 userInfo
   const savedUserInfo = JSON.parse(localStorage.getItem('userInfo'));
+
+  // 로컬 스토리지에 저장된 commentList
+  const savedCommentList = JSON.parse(localStorage.getItem('commentList'));
 
   // 닉네임 요청, 신청댓글 리스트, 모든유저정보 GET 요청
   useEffect(() => {
@@ -98,7 +101,7 @@ const ReadPost = (props) => {
         'Content-Type': 'application/json',
       },
       data: {
-        id: savedCommentList.user_id,
+        id: savedCurrentPost.user_id,
         // id: JSON.parse(localStorage.getItem('currentPost')).user_id,
       },
       withCredentials: true,
@@ -106,10 +109,10 @@ const ReadPost = (props) => {
       .then((res) => {
         localStorage.setItem(
           'currentPost',
-          JSON.stringify({ ...savedCommentList, nickname: res.data.nickname })
+          JSON.stringify({ ...savedCurrentPost, nickname: res.data.nickname })
         );
         // props.setCurrentPost({
-        //   ...savedCommentList,
+        //   ...savedCurrentPost,
         //   nickname: res.data.nickname,
         // });
       })
@@ -119,19 +122,23 @@ const ReadPost = (props) => {
 
     // post id로 달린 댓글 가져오기
     axios({
-      // url: url + `/comment/post/${savedCommentList.id}`,
+      // url: url + `/comment/post/${savedCurrentPost.id}`,
       url: url + '/post/comments',
       method: 'post',
       headers: {
         'Content-Type': 'application/json',
       },
       data: {
-        post_id: savedCommentList.id,
+        post_id: savedCurrentPost.id,
       },
       withCredentials: true,
     })
       .then((res) => {
-        setCommentList(res.data.commentList);
+        // setCommentList(res.data.commentList);
+        localStorage.setItem(
+          'commentList',
+          JSON.stringify(res.data.commentList)
+        );
       })
       .catch((err) => {
         console.log(err);
@@ -141,15 +148,15 @@ const ReadPost = (props) => {
   // 게시글에 이미 신청했는지 여부
   useEffect(() => {
     console.log('유저가 이미 신청한 게시글인지 확인합니다.');
-    for (let i = 0; i < commentList.length; i++) {
-      if (commentList[i].applicant_id === props.userInfo.id) {
+    for (let i = 0; i < savedCommentList.length; i++) {
+      if (savedCommentList[i].applicant_id === props.userInfo.id) {
         setIsDuplicated(!isDuplicated);
       }
     }
-  }, [commentList]);
+  }, [savedCommentList]);
 
   // 가격에 ',' 표시 붙이기
-  let stringCharge = String(savedCommentList.delivery_charge);
+  let stringCharge = String(savedCurrentPost.delivery_charge);
   let charge = `${stringCharge.slice(
     0,
     stringCharge.length - 3
@@ -227,8 +234,8 @@ const ReadPost = (props) => {
           'Content-Type': 'application/json',
         },
         data: {
-          post_id: savedCommentList.id,
-          applicant_id: props.userInfo.id,
+          post_id: savedCurrentPost.id,
+          applicant_id: savedUserInfo.id,
           comment_content: textareaContent,
         },
         withCredentials: true,
@@ -259,11 +266,11 @@ const ReadPost = (props) => {
     console.log('게시글 삭제 확인 모달창 삭제 버튼 클릭');
 
     axios({
-      // url: url + `/post:${savedCommentList.id}`,
+      // url: url + `/post:${savedCurrentPost.id}`,
       url: url + '/post/post',
       method: 'delete',
       data: {
-        id: savedCommentList.id,
+        id: savedCurrentPost.id,
       },
       withCredentials: true,
     })
@@ -301,7 +308,7 @@ const ReadPost = (props) => {
 
   return (
     <>
-      {Object.keys(savedCommentList).length === 0 ? null : (
+      {Object.keys(savedCurrentPost).length === 0 ? null : (
         <>
           {isBlankAlertModalOpen === true ? (
             <ModalBackdrop>
@@ -375,28 +382,28 @@ const ReadPost = (props) => {
             isLoginModal={props.isLoginModal}
             setIsLoginModal={props.setIsLoginModal}
           />
-          {commentList === 0 ? null : (
+          {savedCommentList === 0 ? null : (
             <OuterDiv>
               <PostSectionDiv>
                 <TitleBoxDiv>
-                  <TitleDiv>{savedCommentList.title}</TitleDiv>
-                  <NicknameSpan>{savedCommentList.nickname}</NicknameSpan>
-                  <TimeSpan>{savedCommentList.createdAt.slice(0, 10)}</TimeSpan>
+                  <TitleDiv>{savedCurrentPost.title}</TitleDiv>
+                  <NicknameSpan>{savedCurrentPost.nickname}</NicknameSpan>
+                  <TimeSpan>{savedCurrentPost.createdAt.slice(0, 10)}</TimeSpan>
                 </TitleBoxDiv>
                 <ContentTextarea
-                  value={savedCommentList.content}
+                  value={savedCurrentPost.content}
                   readOnly
                 ></ContentTextarea>
                 <InformationOuterDiv>
                   <InformationBoxDiv>
                     <InformationIndexDiv>메&nbsp; 뉴</InformationIndexDiv>
-                    <InformationDiv>{savedCommentList.menu}</InformationDiv>
+                    <InformationDiv>{savedCurrentPost.menu}</InformationDiv>
                   </InformationBoxDiv>
                   <InformationBoxDiv>
                     <InformationIndexDiv>모 집 상 태</InformationIndexDiv>
                     <InformationDiv>
-                      {commentList.length}/{savedCommentList.recruit_volume[0]}{' '}
-                      명
+                      {savedCommentList.length}/
+                      {savedCurrentPost.recruit_volume[0]} 명
                     </InformationDiv>
                   </InformationBoxDiv>
                   <InformationBoxDiv>
@@ -409,16 +416,16 @@ const ReadPost = (props) => {
                     입금해주실 은행 및 계좌번호
                   </BankAccountIndexDiv>
                   <BankAccountBoxDiv>
-                    <BankDiv>{savedCommentList.bank_name}은행</BankDiv>
-                    <AccountDiv>{savedCommentList.account_number}</AccountDiv>
+                    <BankDiv>{savedCurrentPost.bank_name}은행</BankDiv>
+                    <AccountDiv>{savedCurrentPost.account_number}</AccountDiv>
                   </BankAccountBoxDiv>
                 </BankAccountOuterDiv>
                 <MapBoxDiv>
                   <MapIndexDiv>
-                    배달받을 장소: {savedCommentList.address}
+                    배달받을 장소: {savedCurrentPost.address}
                   </MapIndexDiv>
                   <MapDiv>
-                    <ReadPostMap currentPost={savedCommentList} />
+                    <ReadPostMap currentPost={savedCurrentPost} />
                   </MapDiv>
                 </MapBoxDiv>
                 <BottomDiv>
@@ -427,7 +434,7 @@ const ReadPost = (props) => {
                     placeholder="이곳에 작성한 내용은 아래 신청내역에서 확인할 수 있습니다."
                     onChange={handleTextareaValue}
                   ></BottomTextarea>
-                  {savedCommentList.user_id === savedUserInfo.id ? (
+                  {savedCurrentPost.user_id === savedUserInfo.id ? (
                     <EditDeleteBoxDiv>
                       <EditButton onClick={onClickEditButton}>수 정</EditButton>
                       <DeleteButton onClick={openPostDeleteAlertModalHandler}>
@@ -436,8 +443,8 @@ const ReadPost = (props) => {
                     </EditDeleteBoxDiv>
                   ) : (
                     <>
-                      {savedCommentList.recruit_volume[0] ===
-                      String(commentList.length) ? (
+                      {savedCurrentPost.recruit_volume[0] ===
+                      String(savedCommentList.length) ? (
                         <ApplyButton disabled>
                           모 집 이&nbsp; 완 료 되 었 습 니 다
                         </ApplyButton>
@@ -458,11 +465,11 @@ const ReadPost = (props) => {
                   )}
                 </BottomDiv>
               </PostSectionDiv>
-              {commentList.length === 0 ? null : (
+              {savedCommentList.length === 0 ? null : (
                 <CommentSectionDiv>
                   <CommentIndexDiv>신 청 내 역</CommentIndexDiv>
                   <CommentOuterDiv>
-                    {commentList.map((comment) => {
+                    {savedCommentList.map((comment) => {
                       let userNickname = '';
                       for (let i = 0; i < allUserInfo.length; i++) {
                         if (allUserInfo[i].id === comment.applicant_id) {
@@ -480,7 +487,7 @@ const ReadPost = (props) => {
                             </CommentApplicantTimeDiv>
                             {savedUserInfo.id === comment.applicant_id ||
                             savedUserInfo.nickname ===
-                              savedCommentList.nickname ? (
+                              savedCurrentPost.nickname ? (
                               <CommentApplicantDeleteButton
                                 onClick={() =>
                                   openCommentDeleteAlertModalHandler(comment.id)
