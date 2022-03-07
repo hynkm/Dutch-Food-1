@@ -20,6 +20,7 @@ import axios from 'axios';
 let url = 'http://localhost:8080';
 
 function App() {
+  //  주석 추가
   const [isLoginCheck, setIsLoginCheck] = useState(false);
   const [accessToken, setAccessToken] = useState('');
   const [userInfo, setUserInfo] = useState({});
