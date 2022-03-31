@@ -428,7 +428,8 @@ const MyPage = (props) => {
               </AlertModalView>
             </ModalBackdrop>
           ) : null}
-          {isWithdrawalAlertModalOpen === true ? (
+
+          {/* {isWithdrawalAlertModalOpen === true ? (
             <ModalBackdrop>
               <AlertModalView>
                 <AlertModalDiv>정말 회원탈퇴를 하시겠어요?</AlertModalDiv>
@@ -444,7 +445,7 @@ const MyPage = (props) => {
                 </AlertModalButtonBoxDiv>
               </AlertModalView>
             </ModalBackdrop>
-          ) : null}
+          ) : null} */}
 
           {isChangePasswordModalOpen === true ? (
             <ModalBackdrop>

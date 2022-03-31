@@ -64,7 +64,7 @@ const ReadPost = (props) => {
   const [commentList, setCommentList] = useState([]);
   const [allUserInfo, setAllUserInfo] = useState([]);
 
-  // 로컬 스토리지에 저장된 currentPost
+  // 로컬 스토리지에 저장된 crrentPost
   const savedCurrentPost = JSON.parse(localStorage.getItem('currentPost'));
 
   // 로컬 스토리지에 저장된 userInfo
